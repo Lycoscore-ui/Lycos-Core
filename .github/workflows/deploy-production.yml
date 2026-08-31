@@ -1,0 +1,52 @@
+﻿name: Deploy to Production (Afrihost)
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    name: Build & Deploy to Afrihost Production
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: v2-development/frontend/package-lock.json
+
+      - name: Install Frontend Dependencies
+        working-directory: v2-development/frontend
+        run: npm ci
+
+      - name: Build Production Assets
+        working-directory: v2-development/frontend
+        run: npm run build
+
+      - name: Prepare Public Distribution Payload
+        run: |
+          mkdir -p dist_payload
+          # Copy all server public files (PHP handlers, media, index.html)
+          cp -r app/public/* dist_payload/
+          # Ensure compiled assets from frontend build are synced
+          cp -r v2-development/frontend/dist/assets/* dist_payload/assets/
+          # Ensure latest compiled index.html is used
+          cp v2-development/frontend/dist/index.html dist_payload/index.html
+
+      - name: Deploy to Afrihost via FTP / FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.AFRIHOST_SERVER }}
+          username: ${{ secrets.AFRIHOST_USERNAME }}
+          password: ${{ secrets.AFRIHOST_PASSWORD }}
+          server-dir: ${{ secrets.AFRIHOST_REMOTE_DIR || 'public_html/' }}
+          local-dir: dist_payload/
+          protocol: ftps
+          dangerous-clean-slate: false
