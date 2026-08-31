@@ -36,5 +36,7 @@ jobs:
           password: ${{ secrets.AFRIHOST_PASSWORD }}
           server-dir: ${{ secrets.AFRIHOST_REMOTE_DIR || 'public_html/' }}
           local-dir: dist/
-          protocol: ftps
+          protocol: ${{ secrets.AFRIHOST_PROTOCOL || 'ftp' }}
+          port: ${{ secrets.AFRIHOST_PORT || 21 }}
+          security: ${{ secrets.AFRIHOST_SECURITY || 'loose' }}
           dangerous-clean-slate: false
