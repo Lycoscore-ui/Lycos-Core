@@ -1,0 +1,14 @@
+﻿---
+deployment:
+  tasks:
+    - export DEPLOYPATH=$(pwd)/
+    - /bin/cp -a index.html $DEPLOYPATH 2>/dev/null || true
+    - /bin/cp -a .htaccess $DEPLOYPATH 2>/dev/null || true
+    - /bin/cp -a cipher.php $DEPLOYPATH 2>/dev/null || true
+    - /bin/cp -a favicon.png $DEPLOYPATH 2>/dev/null || true
+    - /bin/cp -a favicon.svg $DEPLOYPATH 2>/dev/null || true
+    - /bin/cp -a world.svg $DEPLOYPATH 2>/dev/null || true
+    - /bin/cp -a icons.svg $DEPLOYPATH 2>/dev/null || true
+    - /bin/cp -a assets $DEPLOYPATH 2>/dev/null || true
+    - /bin/cp -a media $DEPLOYPATH 2>/dev/null || true
+    - /bin/cp -a api $DEPLOYPATH 2>/dev/null || true
