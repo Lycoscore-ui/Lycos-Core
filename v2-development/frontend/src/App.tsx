@@ -439,7 +439,7 @@ export default function App() {
 
   // Dynamically load and initialize mesh.js script once for global canvas portal
   useEffect(() => {
-    let script = document.querySelector('script[src="/media/mesh.js"]') as HTMLScriptElement
+    let script = document.querySelector('script[src*="mesh.js"]') as HTMLScriptElement
 
     const handleScriptLoad = () => {
       if (typeof (window as any).initMesh === 'function') {
@@ -452,7 +452,7 @@ export default function App() {
 
     if (!script) {
       script = document.createElement('script')
-      script.src = '/media/mesh.js'
+      script.src = './media/mesh.js'
       script.async = true
       script.onload = handleScriptLoad
       document.body.appendChild(script)
@@ -1177,7 +1177,7 @@ export default function App() {
       {/* Floating Header */}
       <header className={`floating-header ${scrolled ? 'scrolled' : ''}`}>
         <a href="#" className="header-logo" onClick={(e) => { e.preventDefault(); navigateTo('home'); }}>
-          <img src="/media/LYCOS-CORE-lOGOTYPE-300x100.png" alt="Lycos Core Logo" style={{ height: '3rem', display: 'block' }} />
+          <img src="./media/LYCOS-CORE-lOGOTYPE-300x100.png" alt="Lycos Core Logo" style={{ height: '3rem', display: 'block' }} />
         </a>
         <nav className="header-nav">
           <ul>

@@ -1,4 +1,4 @@
-﻿name: Deploy to Production (Afrihost)
+name: Deploy to Production (Afrihost)
 
 on:
   push:
@@ -33,8 +33,8 @@ jobs:
       - name: Prepare Public Distribution Payload
         run: |
           mkdir -p dist_payload
-          # Copy all server public files (PHP handlers, media, index.html)
-          cp -r app/public/* dist_payload/
+          # Copy all server public files including .htaccess and dotfiles
+          cp -a app/public/. dist_payload/
           # Ensure compiled assets from frontend build are synced
           cp -r v2-development/frontend/dist/assets/* dist_payload/assets/
           # Ensure latest compiled index.html is used

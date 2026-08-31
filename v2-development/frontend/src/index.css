@@ -675,7 +675,7 @@ h6 {
   pointer-events: none;
   will-change: transform;
   background-image:
-    linear-gradient(#050d1aa6, #050d1aa6), url(/media/Parallax.png);
+    linear-gradient(#050d1aa6, #050d1aa6), url(../media/Parallax.png);
   background-position: 50%;
   background-repeat: no-repeat;
   background-size: cover;

@@ -1,4 +1,4 @@
-﻿name: Deploy to Staging (Afrihost)
+name: Deploy to Staging (Afrihost)
 
 on:
   push:
@@ -33,7 +33,8 @@ jobs:
       - name: Prepare Staging Distribution Payload
         run: |
           mkdir -p dist_payload
-          cp -r app/public/* dist_payload/
+          # Copy all server public files including .htaccess and dotfiles
+          cp -a app/public/. dist_payload/
           cp -r v2-development/frontend/dist/assets/* dist_payload/assets/
           cp v2-development/frontend/dist/index.html dist_payload/index.html
 
