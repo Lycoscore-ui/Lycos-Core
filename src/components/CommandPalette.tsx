@@ -214,7 +214,16 @@ const SEARCH_DATABASE: SearchItem[] = [
     description: 'Ethical model guardrails, human-in-the-loop triggers, and explainability audit logs.',
     slug: 'responsible-ai-policy',
     iconName: 'Shield',
-    tags: ['responsible ai', 'ethics', 'guardrails', 'human in the loop']
+    tags: ['ethics', 'responsible ai', 'safety', 'bias', 'audit']
+  },
+  {
+    id: 'system-splash',
+    title: 'Splash & Coming Soon // Public Initialization Preview',
+    category: 'Protocols and Incubation',
+    description: 'Executive briefing intake, 3D Cipher volumetric particle sphere, and readiness telemetry.',
+    slug: 'coming-soon',
+    iconName: 'Zap',
+    tags: ['splash', 'coming soon', 'launch', 'briefing', 'preview', 'initialization']
   }
 ];
 

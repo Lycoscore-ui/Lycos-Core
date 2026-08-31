@@ -34,6 +34,7 @@ import RegionSelector from './components/RegionSelector'
 import CommandPalette from './components/CommandPalette'
 import NavigationHUD from './components/NavigationHUD'
 import LinkedInConnect from './components/LinkedInConnect'
+import SplashPage from './pages/SplashPage'
 
 // Register GSAP Plugins
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
@@ -307,7 +308,8 @@ export default function App() {
 
   // Cipher AI Chatbot Hero Morphing and Controlled Open State
   const [isCipherOpen, setIsCipherOpen] = useState(false)
-  const isHeroState = slug === 'home' && activeSection === 0
+  const isSplash = slug === 'home' || slug === 'coming-soon' || slug === 'splash' || !slug || slug === 'index.html'
+  const isHeroState = (slug === 'portal' || slug === 'wip') && activeSection === 0
 
   // Command Palette State
   const [isCmdPaletteOpen, setIsCmdPaletteOpen] = useState(false)
@@ -1175,7 +1177,8 @@ export default function App() {
       <div className="particles-bg" />
 
       {/* Floating Header */}
-      <header className={`floating-header ${scrolled ? 'scrolled' : ''}`}>
+      {!isSplash && (
+        <header className={`floating-header ${scrolled ? 'scrolled' : ''}`}>
         <a href="#" className="header-logo" onClick={(e) => { e.preventDefault(); navigateTo('home'); }}>
           <img src="./media/LYCOS-CORE-lOGOTYPE-300x100.png" alt="Lycos Core Logo" style={{ height: '3rem', display: 'block' }} />
         </a>
@@ -1257,9 +1260,10 @@ export default function App() {
           </button>
         </div>
       </header>
+      )}
 
-      {slug === 'home' ? (
-        /* Horizontal Sections Wrapper (Home Page) */
+      {(slug === 'portal' || slug === 'wip') ? (
+        /* Horizontal Sections Wrapper (Full Platform / WIP Portal) */
         <div key="home-wrapper" className="scroll-wrapper" ref={containerRef}>
           
           {/* Section 1: Hero */}
@@ -1605,7 +1609,10 @@ export default function App() {
               <ResponsibleAIPage />
             </div>
           )}
-          {!['home','ai-products','tech-services','incubation-hub','who-we-are','how-we-operate','governance-security','case-studies','insights','articles','incubation/kinetic','incubation/apex','incubation/citadel','knowledge-base','faqs','terms-of-use','privacy-policy','responsible-ai-policy'].includes(slug) && (
+          {isSplash && (
+            <SplashPage />
+          )}
+          {!isSplash && !['portal','wip','ai-products','tech-services','incubation-hub','who-we-are','how-we-operate','governance-security','case-studies','insights','articles','incubation/kinetic','incubation/apex','incubation/citadel','knowledge-base','faqs','terms-of-use','privacy-policy','responsible-ai-policy'].includes(slug) && (
             /* Vertical Sections Wrapper (Subpages like ai-consulting) */
             <div key="subpage-wrapper" id="subpage-wrapper" className="vertical-scroll-wrapper" ref={containerRef}>
           {pageData.layout ? pageData.layout.map((block: any, idx: number) => {
@@ -1690,7 +1697,7 @@ export default function App() {
       )}
 
       {/* Append Global Footer to all non-home subpages */}
-      {slug !== 'home' && (
+      {slug !== 'home' && !isSplash && (
         <footer style={{ width: '100%', backgroundColor: '#050d1a', borderTop: '1px solid rgba(255,255,255,0.1)', padding: '2rem 1.5rem', color: 'var(--text-gray)', fontSize: '0.85rem' }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1.5rem' }}>
             <div>© 2026 Lycos Core LLC. All rights reserved.</div>
@@ -1705,8 +1712,8 @@ export default function App() {
         </footer>
       )}
 
-      {/* Navigation HUD (Home page only) */}
-      {slug === 'home' && (
+      {/* Navigation HUD (Portal / WIP horizontal page only) */}
+      {(slug === 'portal' || slug === 'wip') && (
         <NavigationHUD 
           currentSection={activeSection} 
           totalSections={5} 
@@ -1749,21 +1756,25 @@ export default function App() {
       )}
 
       {/* Global Fixed Particle Sphere Portal Canvas (Single Continuous Element) */}
-      <div
-        className={`global-sphere-container ${
-          isHeroState ? 'sphere-hero' : 'sphere-docked'
-        }`}
-        onClick={() => setIsCipherOpen((prev) => !prev)}
-        title="Interact with Cipher AI Representative"
-      >
-        <canvas id="network-canvas" width="500" height="500" />
-      </div>
+      {!isSplash && (
+        <>
+          <div
+            className={`global-sphere-container ${
+              isHeroState ? 'sphere-hero' : 'sphere-docked'
+            }`}
+            onClick={() => setIsCipherOpen((prev) => !prev)}
+            title="Interact with Cipher AI Representative"
+          >
+            <canvas id="network-canvas" width="500" height="500" />
+          </div>
 
-      {/* Cipher Persona AI Chat Widget (ALWAYS Bottom-Right Docked) */}
-      <CipherWidget
-        isOpenControlled={isCipherOpen}
-        onToggleControlled={() => setIsCipherOpen((prev) => !prev)}
-      />
+          {/* Cipher Persona AI Chat Widget (ALWAYS Bottom-Right Docked) */}
+          <CipherWidget
+            isOpenControlled={isCipherOpen}
+            onToggleControlled={() => setIsCipherOpen((prev) => !prev)}
+          />
+        </>
+      )}
     </div>
   )
 }
