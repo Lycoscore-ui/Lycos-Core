@@ -402,10 +402,18 @@ export default function App() {
     return () => window.removeEventListener('popstate', handlePopState)
   }, [])
 
-  // Fetch page data from local Payload CMS if running
+  // Fetch page data from Payload CMS (Local dev only)
   useEffect(() => {
-    const activeSlug = slug === 'home' ? 'home' : slug
-    fetch(`http://localhost:3000/api/pages?where[slug][equals]=${activeSlug}`)
+    const isLocalDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const cmsBaseUrl = import.meta.env.VITE_CMS_URL || (isLocalDev ? 'http://localhost:3000' : null);
+
+    if (!cmsBaseUrl) {
+      setPageData(slug === 'home' ? FALLBACK_HOME : (FALLBACK_PAGES[slug] || FALLBACK_PAGES['ai-consulting']));
+      return;
+    }
+
+    const activeSlug = slug === 'home' ? 'home' : slug;
+    fetch(`${cmsBaseUrl}/api/pages?where[slug][equals]=${activeSlug}`)
       .then((res) => {
         if (!res.ok) throw new Error('API failed')
         return res.json()
@@ -428,13 +436,11 @@ export default function App() {
           } else {
             setPageData(doc)
           }
-          console.log(`Loaded live content for page "${slug}" successfully!`)
         } else {
           setPageData(slug === 'home' ? FALLBACK_HOME : (FALLBACK_PAGES[slug] || FALLBACK_PAGES['ai-consulting']))
         }
       })
       .catch(() => {
-        console.log(`Could not connect to Payload CMS, using fallback data for page "${slug}".`)
         setPageData(slug === 'home' ? FALLBACK_HOME : (FALLBACK_PAGES[slug] || FALLBACK_PAGES['ai-consulting']))
       })
   }, [slug])
