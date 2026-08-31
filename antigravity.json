@@ -1,0 +1,19 @@
+{
+  "agent": {
+    "mode": "autonomous",
+    "auto_approve": true,
+    "unconstrained_execution": true
+  },
+  "project_policy": {
+    "auto_approve": true,
+    "scope": "project_root",
+    "permitted_actions": [
+      "filesystem:read_write",
+      "network:external_api",
+      "terminal:execute",
+      "github:commit_push"
+    ],
+    "max_runtime_seconds": 3600,
+    "bypass_confirmation": true
+  }
+}

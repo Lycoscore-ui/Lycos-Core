@@ -1,0 +1,12 @@
+Parameter_Key,Label,Default_Value,Unit,Data_Type,Description
+monthly_volume,Monthly Ticket Volume,8000,Tickets,Integer,Baseline monthly customer inquiry or ticket volume
+cost_per_ticket,Cost per Ticket,12,USD,Integer,Average fully loaded cost per support ticket processed ($)
+deflection_rate,Target Deflection Rate,55,Percentage,Float,Percentage of routine tickets deflected/resolved automatically (%)
+avg_handling_time,Average Handling Time,12,Minutes,Integer,Average human handling time per ticket (minutes)
+sentinel_cost,Sentinel Monthly Licensing,1500,USD,Integer,Monthly licensing fee for Lycos Sentinel AI agent tier ($/mo)
+formula_monthly_savings,Monthly Deflected Ticket Savings Formula,V_m * (D_r / 100) * C_t,Formula,String,Formula calculating gross monthly savings from deflected tickets
+formula_annual_gross_savings,Annual Gross Savings Formula,S_m * 12,Formula,String,Formula calculating gross annual ticket deflection savings
+formula_annual_sentinel_cost,Annual Sentinel Licensing Cost Formula,M_c * 12,Formula,String,Formula calculating total annual Sentinel platform cost
+formula_annual_net_savings,Annual Net Savings Formula,(S_m * 12) - (M_c * 12),Formula,String,Formula calculating net annual dollar savings after licensing costs
+formula_reclaimed_capacity,Reclaimed Capacity Formula,((V_m * (D_r / 100) * T_aht) / 60) * 12,Formula,String,Formula calculating total annual human hours reclaimed
+formula_net_roi,Net Annual ROI Formula,(((S_m * 12) - (M_c * 12)) / (M_c * 12)) * 100,Formula,String,Formula calculating net annual percentage ROI on Sentinel investment

@@ -1,0 +1,82 @@
+[13-Jun-2026 09:47:28 UTC] PHP Fatal error:  Uncaught ArgumentCountError: 3 arguments are required, 2 given in C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-admin\includes\class-bulk-upgrader-skin.php:208
+Stack trace:
+#0 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-admin\includes\class-bulk-upgrader-skin.php(208): sprintf('%1$s installed ...', 'Contact Form 7')
+#1 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-content\themes\flatsome\inc\classes\class-tgm-plugin-activation.php(3638): Bulk_Upgrader_Skin->after('Contact Form 7')
+#2 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-admin\includes\class-wp-upgrader.php(948): TGMPA_Bulk_Installer_Skin->after()
+#3 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-content\themes\flatsome\inc\classes\class-tgm-plugin-activation.php(3258): WP_Upgrader->run(Array)
+#4 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-content\themes\flatsome\inc\classes\class-tgm-plugin-activation.php(3363): TGMPA_Bulk_Installer->run(Array)
+#5 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-content\themes\flatsome\inc\classes\class-tgm-plugin-activation.php(2977): TGMPA_Bulk_Installer->bulk_install(Array)
+#6 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-content\themes\flatsome\inc\classes\class-tgm-plugin-activation.php(743): TGMPA_List_Table->process_bulk_actions()
+#7 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-includes\class-wp-hook.php(341): TGM_Plugin_Activation->install_plugins_page('')
+#8 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters('', Array)
+#9 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#10 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-admin\admin.php(264): do_action('appearance_page...')
+#11 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-admin\themes.php(10): require_once('C:\\Users\\Homeba...')
+#12 {main}
+  thrown in C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-admin\includes\class-bulk-upgrader-skin.php on line 208
+[13-Jun-2026 09:47:35 UTC] PHP Fatal error:  Uncaught ArgumentCountError: 3 arguments are required, 2 given in C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-admin\includes\class-bulk-upgrader-skin.php:208
+Stack trace:
+#0 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-admin\includes\class-bulk-upgrader-skin.php(208): sprintf('%1$s installed ...', 'Nextend Social ...')
+#1 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-content\themes\flatsome\inc\classes\class-tgm-plugin-activation.php(3638): Bulk_Upgrader_Skin->after('Nextend Social ...')
+#2 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-admin\includes\class-wp-upgrader.php(948): TGMPA_Bulk_Installer_Skin->after()
+#3 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-content\themes\flatsome\inc\classes\class-tgm-plugin-activation.php(3258): WP_Upgrader->run(Array)
+#4 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-content\themes\flatsome\inc\classes\class-tgm-plugin-activation.php(3363): TGMPA_Bulk_Installer->run(Array)
+#5 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-content\themes\flatsome\inc\classes\class-tgm-plugin-activation.php(2977): TGMPA_Bulk_Installer->bulk_install(Array)
+#6 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-content\themes\flatsome\inc\classes\class-tgm-plugin-activation.php(743): TGMPA_List_Table->process_bulk_actions()
+#7 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-includes\class-wp-hook.php(341): TGM_Plugin_Activation->install_plugins_page('')
+#8 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters('', Array)
+#9 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#10 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-admin\admin.php(264): do_action('appearance_page...')
+#11 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-admin\themes.php(10): require_once('C:\\Users\\Homeba...')
+#12 {main}
+  thrown in C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-admin\includes\class-bulk-upgrader-skin.php on line 208
+[13-Jun-2026 09:48:52 UTC] PHP Fatal error:  Uncaught ArgumentCountError: 3 arguments are required, 2 given in C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-admin\includes\class-bulk-upgrader-skin.php:208
+Stack trace:
+#0 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-admin\includes\class-bulk-upgrader-skin.php(208): sprintf('%1$s installed ...', 'WooCommerce')
+#1 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-content\themes\flatsome\inc\classes\class-tgm-plugin-activation.php(3638): Bulk_Upgrader_Skin->after('WooCommerce')
+#2 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-admin\includes\class-wp-upgrader.php(948): TGMPA_Bulk_Installer_Skin->after()
+#3 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-content\themes\flatsome\inc\classes\class-tgm-plugin-activation.php(3258): WP_Upgrader->run(Array)
+#4 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-content\themes\flatsome\inc\classes\class-tgm-plugin-activation.php(3363): TGMPA_Bulk_Installer->run(Array)
+#5 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-content\themes\flatsome\inc\classes\class-tgm-plugin-activation.php(2977): TGMPA_Bulk_Installer->bulk_install(Array)
+#6 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-content\themes\flatsome\inc\classes\class-tgm-plugin-activation.php(743): TGMPA_List_Table->process_bulk_actions()
+#7 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-includes\class-wp-hook.php(341): TGM_Plugin_Activation->install_plugins_page('')
+#8 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-includes\class-wp-hook.php(365): WP_Hook->apply_filters('', Array)
+#9 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-includes\plugin.php(522): WP_Hook->do_action(Array)
+#10 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-admin\admin.php(264): do_action('appearance_page...')
+#11 C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-admin\themes.php(10): require_once('C:\\Users\\Homeba...')
+#12 {main}
+  thrown in C:\Users\Homebase\Local Sites\lycoscore\app\public\wp-admin\includes\class-bulk-upgrader-skin.php on line 208
+[14-Jun-2026 06:40:40 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[14-Jun-2026 07:07:53 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[14-Jun-2026 07:23:39 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[14-Jun-2026 07:32:42 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[14-Jun-2026 08:22:49 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[14-Jun-2026 08:26:51 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[18-Jun-2026 06:57:22 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[18-Jun-2026 07:09:43 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[18-Jun-2026 07:32:12 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[18-Jun-2026 07:37:13 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[18-Jun-2026 08:32:14 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[18-Jun-2026 08:45:21 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[18-Jun-2026 15:41:05 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[18-Jun-2026 15:48:41 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[18-Jun-2026 16:07:31 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[18-Jun-2026 16:24:41 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[19-Jun-2026 07:46:12 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[19-Jun-2026 08:28:29 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[19-Jun-2026 08:51:53 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[19-Jun-2026 09:09:58 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[19-Jun-2026 09:14:01 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[19-Jun-2026 09:16:02 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[19-Jun-2026 09:20:04 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[19-Jun-2026 10:04:17 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[19-Jun-2026 14:19:31 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[19-Jun-2026 14:49:39 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[19-Jun-2026 14:49:39 UTC] Cron reschedule event error for hook: jetpack_clean_nonces, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"hourly","args":[],"interval":3600}
+[19-Jun-2026 15:15:30 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[22-Jun-2026 06:58:35 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[22-Jun-2026 07:15:48 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[26-Jun-2026 08:11:46 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[26-Jun-2026 09:34:56 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: invalid_schedule, Error message: Event schedule does not exist., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[28-Jun-2026 09:22:00 UTC] Cron reschedule event error for hook: pum_daily_scheduled_events, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"daily","args":[],"interval":86400}
+[29-Jun-2026 09:32:22 UTC] Cron reschedule event error for hook: wp_privacy_delete_old_export_files, Error code: could_not_set, Error message: The cron event list could not be saved., Data: {"schedule":"hourly","args":[],"interval":3600}

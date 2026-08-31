@@ -1,0 +1,26 @@
+continent_id,country_id,display_name,country_currency_code,avg_salary,operating_cost,avg_increase,avg_inflation,Why?
+Africa,GH,Ghana,GHS,215,350,0.11,0.15,
+Africa,MZ,Mozambique,MZN,400,450,0.07,0.03,
+Africa,ZA,South Africa,ZAR,615,250,0.06,0.03,
+Africa,BW,Botswana,BWP,405,280,0.07,0.03,
+Africa,ZM,Zambia,ZMW,210,320,0.14,0.13,
+Africa,UG,Uganda,UGX,350,290,0.08,0.04,
+Africa,KE,Kenya,KES,405,230,0.09,0.04,
+Africa,TZ,Tanzania,TZS,400,270,0.09,0.03,
+Africa,SC,Seychelles,SCR,915,450,0.08,0.00,
+Africa,MU,Mauritius,MUR,625,220,0.05,0.04,
+Africa,NG,Nigeria,NGN,102,310,0.24,0.23,
+Oceania,NZ,New Zealand,NZD,3145,550,0.05,0.03,
+Oceania,AU,Australia,AUD,3540,680,0.04,0.04,
+North America,,United States,,,,,,
+North America,,Mexico,,,,,,
+North America,,Canada,,,,,,
+South America,,Colombia,,,,,,"Bogotá and Medellín have become major hubs for Business Process Outsourcing (BPO) with a deep talent pool experienced in managing sophisticated, multi-channel customer journeys"
+South America,,Argentina,,,,,,"The country has a very strong reputation for high-end technical and creative roles, making it the premier choice if your virtual agent requires advanced customization, specialized coding, or complex integration with legacy enterprise systems."
+South America,,Chile,,,,,,"Chile consistently ranks at the top of the region for digital infrastructure, reliable power grids, and internet connectivity—factors that are critical for an ""always-on"" end-to-end virtual agent."
+Europe,,Germany,,,,,,"Germany is the epicenter of EU-compliant AI infrastructure. With massive hosting presence in Frankfurt and Berlin, you can ensure that both data storage and AI inference remain within EU borders, satisfying the strictest interpretations of the EU AI Act."
+Europe,,Poland,,,,,,"It offers an ideal combination of lower operational costs (30%–50% cheaper than Western Europe) and a highly skilled, multilingual talent pool (English, German, French). Crucially, being within the EU means it provides full GDPR/AI Act compliance without the ""third-country"" data transfer risks."
+Europe,,Lithuania,,,,,,"It consistently ranks near the top of Europe in digital intensity and growth. It has moved beyond being just a ""cost-center"" and is now home to specialized ""managed delivery"" AI firms (like Ainora) that build, deploy, and manage AI voice agents as a complete service."
+Asia,,Philippines,,,,,,"The workforce has deep cultural and linguistic alignment with Western consumers. In 2026, the industry is shifting aggressively toward ""AI-Augmented Agents,"" meaning local BPO providers are already retraining their staff to manage the human side of your Alpha orchestrator."
+Asia,,Singapore,,,,,,"Singapore is treating AI as a national capability. Its regulatory framework is world-class, and its infrastructure is arguably the most resilient in Asia. If your clients are in the financial, government, or high-end tech sectors, a ""Singapore-hosted"" badge for Warden provides immediate institutional trust."
+Asia,,Vietnam,,,,,,"Vietnam boasts the second-highest AI adoption rate in Southeast Asia as of early 2026. The government is actively building a sovereign AI cloud infrastructure, providing a stable foundation for high-complexity tasks"

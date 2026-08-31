@@ -1,0 +1,14 @@
+Parameter_Key,Label,Default_Value,Unit,Data_Type,Description
+working_capital,Working Capital,3500000,USD,Integer,Total inventory or working capital under management ($)
+carrying_cost_rate,Carrying Cost Rate,28,Percentage,Float,Annual holding/carrying cost rate (%)
+forecast_error_rate,Baseline Forecast Error Rate,22,Percentage,Float,Baseline demand forecasting error rate (%)
+idle_cost,Monthly Idle Labor & Capacity Loss,12500,USD,Integer,Monthly cost incurred from idle capacity/labor due to misaligned demand ($)
+out_of_stock_cost,Monthly Out-of-Stock Sales Loss,18000,USD,Integer,Monthly lost revenue from stockouts and inventory unfulfillment ($)
+accuracy_boost,Vanguard Accuracy Boost,45,Percentage,Float,Expected percentage reduction in forecast error with Vanguard (%)
+platform_cost,Vanguard Monthly Licensing,3000,USD,Integer,Enterprise monthly subscription cost for Lycos Vanguard ($/mo)
+formula_working_capital_reclaimed,Working Capital Reclaimed Formula,(W_c * (E_f / 100) * (B_a / 100)) * (H_r / 100),Formula,String,Formula calculating annual carrying cost saved via inventory optimization
+formula_demand_capacity_recovery,Capacity & Demand Recovery Formula,((I_m + C_o) * 12) * (B_a / 100),Formula,String,Formula calculating avoided idle labor & lost demand recovery
+formula_total_gross_benefit,Total Gross Benefit Formula,S_w + S_c,Formula,String,Formula summing annual working capital reclaimed and demand capacity recovery
+formula_annual_vanguard_cost,Annual Vanguard Cost Formula,H_c * 12,Formula,String,Formula calculating annual Vanguard licensing cost
+formula_net_economic_impact,Net Economic Impact Formula,B_total - I_annual,Formula,String,Formula calculating net annual economic gain after licensing costs
+formula_net_roi,Net ROI Percentage Formula,((B_total - I_annual) / I_annual) * 100,Formula,String,Formula calculating net annual percentage return on investment

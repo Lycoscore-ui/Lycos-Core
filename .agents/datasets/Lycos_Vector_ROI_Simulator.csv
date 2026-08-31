@@ -1,0 +1,12 @@
+Parameter_Key,Label,Default_Value,Unit,Data_Type,Description
+monthly_transactions,Monthly Document Volume,5000,Documents,Integer,Monthly volume of unstructured documents or files processed
+handling_time,Manual Handling Time per Document,25,Minutes,Integer,Manual human processing time required per document (minutes)
+labor_cost,Fully Loaded Labor Cost,30,USD,Integer,Hourly rate for document processing personnel ($/hr)
+error_rate,Baseline Manual Error Rate,8,Percentage,Float,Baseline manual data entry error rate (%)
+error_correction_cost,Error Correction Cost Constant,45,USD,Integer,Fixed cost incurred to remediate a single document data entry error ($)
+automation_rate,Vector Target Automation Rate,75,Percentage,Float,Target percentage of document processing automated by Vector (%)
+vector_cost,Vector Monthly System Cost,2500,USD,Integer,Monthly license and compute cost for Lycos Vector engine ($/mo)
+formula_labor_savings,Annual Labor Savings Formula,((T_m * A_r * H_f) / 60) * L_c * 12,Formula,String,Formula calculating annual labor costs saved via document automation
+formula_error_savings,Annual Error Correction Savings Formula,(T_m * A_r * E_r) * C_e * 12,Formula,String,Formula calculating annual savings from avoided document entry errors
+formula_annual_vector_cost,Annual Vector Licensing Cost Formula,V_c * 12,Formula,String,Formula calculating total annual platform cost for Vector
+formula_net_roi,Net Annual ROI Formula,(((S_l + S_e) - (V_c * 12)) / (V_c * 12)) * 100,Formula,String,Formula calculating net percentage ROI on Vector document intelligence

@@ -1,0 +1,49 @@
+{
+  "target_folder": "Lycos Calculators",
+  "generated_at": "2026-08-01T12:52:50+02:00",
+  "standard_headers": [
+    "Parameter_Key",
+    "Label",
+    "Default_Value",
+    "Unit",
+    "Data_Type",
+    "Description"
+  ],
+  "calculators": [
+    {
+      "title": "Lycos Vanguard ROI Simulator",
+      "spreadsheet_id": "1f39KOm3F2m1xesYouv1WJnk7vwVrvn_lgXLSPM367",
+      "source_file": "v2-development/frontend/src/components/VanguardROISimulator.tsx",
+      "row_count": 13,
+      "csv_file": ".agents/datasets/Lycos_Vanguard_ROI_Simulator.csv"
+    },
+    {
+      "title": "Lycos Aegis ROI Simulator",
+      "spreadsheet_id": "1S1QUyB7S9ZKs2_fojJhbjBgXMJtyyrNUUvjK8uX_5cw",
+      "source_file": "v2-development/frontend/src/components/AegisROISimulator.tsx",
+      "row_count": 13,
+      "csv_file": ".agents/datasets/Lycos_Aegis_ROI_Simulator.csv"
+    },
+    {
+      "title": "Lycos Sentinel ROI Simulator",
+      "spreadsheet_id": "17t90G8L2rW4Yo2uz0KyfrAz4wVknBMkwRCGA9P8Iab8",
+      "source_file": "v2-development/frontend/src/components/ROISimulatorSection.tsx",
+      "row_count": 11,
+      "csv_file": ".agents/datasets/Lycos_Sentinel_ROI_Simulator.csv"
+    },
+    {
+      "title": "Lycos Synapse ROI Simulator",
+      "spreadsheet_id": "1ILoIGzTRWrhEO1TeCXxPXGdTeREvQI-kGpkMs4u2sb0",
+      "source_file": "v2-development/frontend/src/components/SynapseROISimulator.tsx",
+      "row_count": 12,
+      "csv_file": ".agents/datasets/Lycos_Synapse_ROI_Simulator.csv"
+    },
+    {
+      "title": "Lycos Vector ROI Simulator",
+      "spreadsheet_id": "1rvYG61ilSA87lPKzmBcKwFKoLPov9cpYtNEoA9TFwxk",
+      "source_file": "v2-development/frontend/src/components/VectorROISimulator.tsx",
+      "row_count": 11,
+      "csv_file": ".agents/datasets/Lycos_Vector_ROI_Simulator.csv"
+    }
+  ]
+}

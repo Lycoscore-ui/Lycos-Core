@@ -1,0 +1,2 @@
+2026/08/01 12:24:44 [notice] 27140#8196: signal process started
+2026/08/01 12:24:44 [error] 27140#8196: CreateFile() "C:\Users\potta\Local Sites\lycos-core/logs/nginx.pid" failed (2: The system cannot find the file specified)

@@ -1,0 +1,6 @@
+{
+  "name": "Strategic AI Pillar Mockups",
+  "description": "High-fidelity, interactive mockups for the core Pillars of Growth: Tech Services, Incubation Hub, and AI Products, featuring responsive data playpens, real-time agentic workspaces, and custom-styled metrics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

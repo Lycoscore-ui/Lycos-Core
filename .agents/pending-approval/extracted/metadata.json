@@ -1,0 +1,6 @@
+{
+  "name": "Lycoscore Strategic Intelligence Portal",
+  "description": "Strategic AI intelligence, original insights, curated industry articles, and enterprise-grade case study implementations managed via Payload CMS and integrated into a modern React architecture.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

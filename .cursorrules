@@ -1,0 +1,7 @@
+# Home Assistant Approval Pipeline Rules
+- Before presenting a major code modification plan, deployment phase, or multi-file architectural change for user review, you MUST use the `home-assistant` MCP tool.
+- Call the appropriate service to set `input_select.antigravity_build_status` to "Pending".
+- Once the state is set to "Pending", enter a polling loop. Check the state of `input_select.antigravity_build_status` every 5 seconds.
+- Do NOT proceed with file modifications, code injection, or terminal compilation steps while the state remains "Pending".
+- If the state changes to "Approved", log a message acknowledging the remote mobile sign-off, reset the helper state to a neutral state if needed, and execute the plan autonomously.
+- If the state changes to "Rejected", immediately halt the implementation plan and ask the user for new instructions in the chat.

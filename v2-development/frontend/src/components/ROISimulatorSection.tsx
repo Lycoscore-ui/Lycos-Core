@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Calculator, TrendingUp, Clock, ShieldCheck } from 'lucide-react';
+import { Calculator, TrendingUp, Clock, ShieldCheck, FileDown } from 'lucide-react';
 import { fetchCalculatorConfig } from '../utils/calculatorConfig';
 import { useRegion } from '../context/RegionContext';
+import ExecutiveBriefModal, { type SimulatorBriefData } from './ExecutiveBriefModal';
 
 export default function ROISimulatorSection() {
   const { formatCurrency, country } = useRegion();
+  const [isBriefOpen, setIsBriefOpen] = useState(false);
 
   // 1. Inputs with operational baselines
   const [monthlyVolume, setMonthlyVolume] = useState<number>(8000); // SV_m
@@ -58,12 +60,42 @@ export default function ROISimulatorSection() {
     }
   }, [monthlyVolume, costPerTicket, deflectionRate, avgHandlingTime, sentinelCost]);
 
+  const briefData: SimulatorBriefData = {
+    productName: 'Lycos Sentinel',
+    tagline: 'Autonomous Customer Operations and Resolution Deflection Engine',
+    metrics: [
+      { label: 'Annual Net Savings', value: formatCurrency(annualNetSavings), isHighlight: true },
+      { label: 'Reclaimed Capacity', value: `${reclaimedCapacity.toLocaleString()} hrs / yr` },
+      { label: 'Annual Net ROI', value: `${annualRoi}%` },
+    ],
+    inputs: [
+      { label: 'Monthly Ticket Volume', value: `${monthlyVolume.toLocaleString()} tickets` },
+      { label: 'Cost Per Ticket Baseline', value: formatCurrency(costPerTicket) },
+      { label: 'Target Deflection Rate', value: `${deflectionRate}%` },
+      { label: 'Average Handling Time', value: `${avgHandlingTime} minutes` },
+      { label: 'Monthly Sentinel Platform Cost', value: formatCurrency(sentinelCost) },
+    ],
+    calculatedOutputs: [
+      { label: 'Annual Gross Resolution Savings', value: formatCurrency(monthlyVolume * (deflectionRate / 100) * costPerTicket * 12) },
+      { label: 'Annual Platform Investment', value: formatCurrency(sentinelCost * 12) },
+      { label: 'Annual Net Projected Savings', value: formatCurrency(annualNetSavings), highlight: true },
+      { label: 'Total Annual Reclaimed Hours', value: `${reclaimedCapacity.toLocaleString()} hours`, highlight: true },
+    ],
+  };
+
   return (
     <div style={{ marginTop: '4rem', marginBottom: '4rem' }}>
       
+      {/* Executive Brief Modal */}
+      <ExecutiveBriefModal
+        isOpen={isBriefOpen}
+        onClose={() => setIsBriefOpen(false)}
+        data={briefData}
+      />
+
       {/* Callout Banner */}
       <div className="glass-panel" style={{ padding: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '2rem', marginBottom: '2rem' }}>
-        <div style={{ maxWidth: '80%' }}>
+        <div style={{ maxWidth: '75%' }}>
           <span style={{ fontSize: '0.75rem', color: 'var(--accent)', letterSpacing: '1px', textTransform: 'uppercase', fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>
             ROI Simulator
           </span>
@@ -74,8 +106,17 @@ export default function ROISimulatorSection() {
             Use our operational simulator below to map your current conversation volume against target deflection rates and instantly see the capital and capacity reclaimed by Lycos Sentinel.
           </p>
         </div>
-        <div style={{ color: 'var(--accent)', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-color)', padding: '0.75rem', borderRadius: '8px', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-          <Calculator size={28} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <button 
+            className="cta-secondary"
+            onClick={() => setIsBriefOpen(true)}
+            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 1.1rem', fontSize: '0.8rem', whiteSpace: 'nowrap' }}
+          >
+            <FileDown size={15} /> EXPORT ROI MODEL (.PDF)
+          </button>
+          <div style={{ color: 'var(--accent)', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-color)', padding: '0.75rem', borderRadius: '8px', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+            <Calculator size={28} />
+          </div>
         </div>
       </div>
 

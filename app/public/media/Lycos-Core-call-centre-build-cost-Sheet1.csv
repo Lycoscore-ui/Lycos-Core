@@ -1,0 +1,2 @@
+initial_cost,year_one_retainer,year_two_retainer,year_three_retainer,year_four_retainer,year_five_retainer,avg_inflation,voice_per_query,llm_per_query
+100000,10000,5000,5000,5000,5000,6,0.1,0.01

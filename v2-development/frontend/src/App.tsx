@@ -10,7 +10,8 @@ import {
   Activity, 
   TrendingUp, 
   CheckCircle, 
-  Info 
+  Info,
+  Search 
 } from 'lucide-react'
 import AIProductsSection from './components/AIProductsSection'
 import TechServicesSection from './components/TechServicesSection'
@@ -30,6 +31,9 @@ import { TermsOfUsePage, PrivacyPolicyPage, ResponsibleAIPage } from './pages/Le
 import CipherWidget from './components/CipherWidget'
 import AttestationModal from './components/AttestationModal'
 import RegionSelector from './components/RegionSelector'
+import CommandPalette from './components/CommandPalette'
+import NavigationHUD from './components/NavigationHUD'
+import LinkedInConnect from './components/LinkedInConnect'
 
 // Register GSAP Plugins
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
@@ -304,6 +308,37 @@ export default function App() {
   // Cipher AI Chatbot Hero Morphing and Controlled Open State
   const [isCipherOpen, setIsCipherOpen] = useState(false)
   const isHeroState = slug === 'home' && activeSection === 0
+
+  // Command Palette State
+  const [isCmdPaletteOpen, setIsCmdPaletteOpen] = useState(false)
+
+  // Global Command Palette Key Listener (Cmd+K / Ctrl+K)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsCmdPaletteOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // Global Mouse Coordinate Tracking for Interactive Radial Card Glow
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const cards = document.querySelectorAll('.glass-panel, .baseline-card, .protocol-card, .roi-card, .case-sidebar-item');
+      cards.forEach((card) => {
+        const rect = (card as HTMLElement).getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        (card as HTMLElement).style.setProperty('--mouse-x', `${x}px`);
+        (card as HTMLElement).style.setProperty('--mouse-y', `${y}px`);
+      });
+    };
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [slug]);
 
   // Client Navigation helper
   const navigateTo = (newSlug: string) => {
@@ -1121,6 +1156,16 @@ export default function App() {
 
   return (
     <div style={{ position: 'relative' }} ref={rootRef} className={slug === 'home' ? 'horizontal-layout' : 'vertical-layout'}>
+      {/* Film grain subtle cinematic overlay */}
+      <div className="film-grain-overlay" />
+
+      {/* Global Command Palette (Cmd + K / Ctrl + K) */}
+      <CommandPalette 
+        isOpen={isCmdPaletteOpen} 
+        onClose={() => setIsCmdPaletteOpen(false)} 
+        onNavigate={navigateTo} 
+      />
+
       {/* First-time landing regional compliance & currency attestation */}
       <AttestationModal />
 
@@ -1197,9 +1242,20 @@ export default function App() {
             ))}
           </ul>
         </nav>
-        <button className="btn-solid" style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }} onClick={() => scrollToSection(4)}>
-          INITIATE CONNECTION
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <button 
+            className="cmd-palette-trigger-btn"
+            onClick={() => setIsCmdPaletteOpen(true)}
+            title="Quick Search (Cmd+K / Ctrl+K)"
+          >
+            <Search size={13} className="neon-icon" />
+            <span>SEARCH</span>
+            <kbd>⌘K</kbd>
+          </button>
+          <button className="btn-solid" style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }} onClick={() => scrollToSection(4)}>
+            INITIATE CONNECTION
+          </button>
+        </div>
       </header>
 
       {slug === 'home' ? (
@@ -1623,22 +1679,7 @@ export default function App() {
                   Consult directly with our system architects. We analyze complex enterprise bottlenecks, establish quantitative viability vectors, and engineer precision deployment roadmaps.
                 </p>
                 {/* Official LinkedIn Social Link */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '0.5rem' }}>
-                  <a 
-                    href="https://www.linkedin.com/company/lycos-core" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: '#8CFF32', textDecoration: 'none', fontWeight: 600, fontSize: '0.95rem' }}
-                  >
-                    <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" style={{ width: '20px', height: '20px', fill: '#8CFF32' }}>
-                      <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.74a1.62 1.62 0 1 0 0 3.24 1.62 1.62 0 0 0 0-3.24z"/>
-                    </svg>
-                    Connect on LinkedIn
-                  </a>
-                </div>
-
-                {/* Homepage Region & Currency Selector */}
-                <RegionSelector variant="contact" />
+                <LinkedInConnect />
               </div>
             </div>
 
@@ -1664,17 +1705,13 @@ export default function App() {
         </footer>
       )}
 
-      {/* Navigation Indicators (Home page only) */}
+      {/* Navigation HUD (Home page only) */}
       {slug === 'home' && (
-        <div className="scroll-indicator">
-          {[0, 1, 2, 3, 4].map((dot) => (
-            <div 
-              key={dot} 
-              className={`scroll-dot ${activeSection === dot ? 'active' : ''}`} 
-              onClick={() => scrollToSection(dot)}
-            />
-          ))}
-        </div>
+        <NavigationHUD 
+          currentSection={activeSection} 
+          totalSections={5} 
+          onSectionClick={scrollToSection} 
+        />
       )}
 
       {/* Info Modal */}

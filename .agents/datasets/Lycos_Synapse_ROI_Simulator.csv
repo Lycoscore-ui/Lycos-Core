@@ -1,0 +1,13 @@
+Parameter_Key,Label,Default_Value,Unit,Data_Type,Description
+monthly_synced_records,Monthly Synced Records,3500,Records,Integer,Number of data records synced across enterprise systems per month
+time_per_sync,Manual Processing Time per Sync,15,Minutes,Integer,Time spent manually syncing or re-keying a single record (minutes)
+employee_hour_cost,Employee Hourly Labor Cost,30,USD,Integer,Fully loaded hourly cost per operational employee ($/hr)
+monthly_delayed_tx,Monthly Delayed / Errored Transactions,120,Transactions,Integer,Monthly volume of transactions delayed or corrupted by sync latency
+revenue_leakage,Revenue Leakage per Errored Tx,75,USD,Integer,Average financial penalty or lost revenue per sync failure ($)
+sync_accuracy,Automated Sync Accuracy Rate,98,Percentage,Float,Percentage accuracy achieved by automated Synapse pipeline (%)
+monthly_synapse_cost,Synapse Monthly Platform Cost,2000,USD,Integer,Monthly subscription cost for Lycos Synapse data integration ($/mo)
+formula_annual_labor_savings,Annual Labor Savings Formula,((R_m * (A_s / 100) * S_t) / 60) * L_c * 12,Formula,String,Formula calculating annual labor cost saved by automating data sync
+formula_annual_leakage_recovered,Annual Revenue Leakage Recovered Formula,(D_m * (A_s / 100) * R_l) * 12,Formula,String,Formula calculating annual revenue loss recovered by error elimination
+formula_total_benefit,Total Annual Gross Benefit Formula,S_a + S_r,Formula,String,Formula combining labor cost savings and revenue leakage recovery
+formula_annual_investment,Annual Synapse Cost Formula,S_c * 12,Formula,String,Formula calculating annual platform investment for Synapse
+formula_net_roi,Net Annual ROI Formula,((B_total - C_annual) / C_annual) * 100,Formula,String,Formula calculating net percentage ROI on Synapse platform

@@ -1,0 +1,14 @@
+Parameter_Key,Label,Default_Value,Unit,Data_Type,Description
+records_held,PII / Sensitive Records Held,15000,Records,Integer,Number of sensitive customer or compliance records managed
+cost_per_record,Cost per Compromised Record,165,USD,Integer,Industry average cost per breached/compromised record ($)
+audit_overhead,Annual Audit & Compliance Overhead,45000,USD,Integer,Annual labor and consulting cost spent on manual security audits ($)
+incident_probability,Annual Incident Probability,4,Percentage,Float,Estimated annual probability of a security breach or compliance fine (%)
+reduction_efficacy,Risk Mitigation Efficacy,95,Percentage,Float,Risk reduction efficiency achieved by Lycos Aegis deployment (%)
+monthly_cost,Aegis Monthly Licensing,3500,USD,Integer,Monthly license cost for Lycos Aegis security engine ($/mo)
+audit_savings_multiplier,Audit Cost Reduction Factor,0.5,Multiplier,Float,Constant fraction of audit overhead saved via automated reporting (50%)
+formula_calc_ale,Annual Loss Expectancy (ALE) Formula,(N_rec * C_rec) * (P_i / 100),Formula,String,Formula calculating baseline expected annual financial loss from breaches
+formula_mitigated_exposure,Mitigated Loss Exposure Formula,ALE * (E_r / 100),Formula,String,Formula calculating annual breach exposure reduced by Aegis
+formula_audit_savings,Annual Audit Savings Formula,A_o * 0.50,Formula,String,Formula calculating annual compliance overhead cost savings
+formula_annual_investment,Annual Investment Formula,G_c * 12,Formula,String,Formula calculating annual Aegis licensing investment
+formula_total_benefit,Total Benefit Formula,S_r + S_c,Formula,String,Formula combining risk exposure mitigated and audit cost savings
+formula_net_roi,Net Annual ROI Formula,((B_total - I_annual) / I_annual) * 100,Formula,String,Formula calculating net percentage ROI on Aegis platform
