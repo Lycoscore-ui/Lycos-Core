@@ -34,7 +34,7 @@ jobs:
           server: ${{ secrets.AFRIHOST_SERVER }}
           username: ${{ secrets.AFRIHOST_USERNAME }}
           password: ${{ secrets.AFRIHOST_PASSWORD }}
-          server-dir: ${{ secrets.AFRIHOST_STAGING_DIR || 'public_html/staging/' }}
+          server-dir: ${{ secrets.AFRIHOST_STAGING_DIR || 'staging.lycoscore.com/' }}
           local-dir: dist/
           protocol: ftps
           dangerous-clean-slate: false
