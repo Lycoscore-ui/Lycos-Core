@@ -31,9 +31,9 @@ jobs:
 
       - name: Deploy to Afrihost Production via Direct FTP
         env:
-          FTP_SERVER: ${{ secrets.AFRIHOST_PROD_SERVER || secrets.AFRIHOST_SERVER }}
+          FTP_SERVER: ${{ secrets.AFRIHOST_PROD_SERVER || secrets.AFRIHOST_SERVER || 'ftp.lycoscore.com' }}
           FTP_USER: ${{ secrets.AFRIHOST_PROD_USERNAME }}
           FTP_PASSWORD: ${{ secrets.AFRIHOST_PROD_PASSWORD }}
           FTP_PORT: ${{ secrets.AFRIHOST_PORT || 21 }}
-          FTP_DIR: ${{ secrets.AFRIHOST_PROD_DIR || 'public_html/' }}
+          FTP_DIR: ${{ secrets.AFRIHOST_PROD_DIR || './' }}
         run: node scripts/deploy-ftp.js
