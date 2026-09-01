@@ -1,8 +1,9 @@
 name: Deploy to Production (Afrihost)
 
-# STRICT PRODUCTION GATE: Manual Approval & Trigger Only
-# Live production will NEVER deploy automatically on push.
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
