@@ -38,7 +38,7 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
         },
         {
           heading: '2. Intellectual Property and System Assets',
-          body: 'All proprietary neural architectures, algorithmic models, software suites, trade secrets, logos, and written content displayed on Lycos Core remain the exclusive intellectual property of Lycos Core LLC.'
+          body: 'All proprietary neural architectures, algorithmic models, software suites, trade secrets, logos, and written content displayed on Lycos Core remain the exclusive intellectual property of Lycos Core.'
         },
         {
           heading: '3. Platform Usage and Warranties',

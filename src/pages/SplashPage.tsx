@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { ShieldCheck, Activity, Globe2, X, ArrowLeft } from 'lucide-react';
+import { Activity, X, ArrowLeft } from 'lucide-react';
 import LinkedInConnect from '../components/LinkedInConnect';
 
 interface LegalContent {
@@ -21,7 +21,7 @@ const LEGAL_DOCS: Record<string, LegalContent> = {
       },
       {
         heading: '2. Intellectual Property and System Assets',
-        body: 'All proprietary neural architectures, algorithmic models, software suites, trade secrets, logos, and written content displayed on Lycos Core remain the exclusive intellectual property of Lycos Core LLC.'
+        body: 'All proprietary neural architectures, algorithmic models, software suites, trade secrets, logos, and written content displayed on Lycos Core remain the exclusive intellectual property of Lycos Core.'
       },
       {
         heading: '3. Platform Usage and Warranties',
@@ -71,9 +71,40 @@ const LEGAL_DOCS: Record<string, LegalContent> = {
 
 export default function SplashPage() {
   const [activeLegalModal, setActiveLegalModal] = useState<string | null>(null);
+  const [readinessVal, setReadinessVal] = useState(0.0);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  // Initialize rotating 3D particle sphere on canvas
+  // Set page title for splash page and restore on unmount
+  useEffect(() => {
+    const originalTitle = document.title;
+    document.title = "Lycos Core | Initializing";
+    return () => {
+      document.title = originalTitle;
+    };
+  }, []);
+
+  // Dynamic count up to 98.4%
+  useEffect(() => {
+    const target = 98.4;
+    const duration = 1800;
+    const startTime = performance.now();
+
+    const animateCount = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      const current = easeOut * target;
+      setReadinessVal(parseFloat(current.toFixed(1)));
+
+      if (progress < 1) {
+        requestAnimationFrame(animateCount);
+      }
+    };
+
+    requestAnimationFrame(animateCount);
+  }, []);
+
+  // Initialize dense, prominent rotating 3D particle sphere
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -91,46 +122,46 @@ export default function SplashPage() {
       isOuter: boolean;
     }> = [];
 
-    const particleCount = 750;
+    const particleCount = 820;
     const phi = Math.PI * (Math.sqrt(5) - 1);
     const outerCount = Math.floor(particleCount * 0.7);
     const innerCount = particleCount - outerCount;
 
-    // Outer Sphere
+    // Outer Sphere (Radius: 165)
     for (let i = 0; i < outerCount; i++) {
       const y = 1 - (i / (outerCount - 1)) * 2;
       const radiusAtY = Math.sqrt(1 - y * y);
       const theta = phi * i;
       const x = Math.cos(theta) * radiusAtY;
       const z = Math.sin(theta) * radiusAtY;
-      const r = 112 + (Math.random() - 0.5) * 16;
+      const r = 165 + (Math.random() - 0.5) * 16;
 
       particles.push({
         lx: x * r,
         ly: y * r,
         lz: z * r,
-        size: 0.75 + Math.random() * 0.9,
-        alpha: 0.35 + Math.random() * 0.45,
+        size: 0.95 + Math.random() * 0.9,
+        alpha: 0.45 + Math.random() * 0.45,
         speed: 0.6 + Math.random() * 0.4,
         isOuter: true,
       });
     }
 
-    // Inner Core
+    // Inner Core Sphere (Radius: 90)
     for (let i = 0; i < innerCount; i++) {
       const y = 1 - (i / (innerCount - 1)) * 2;
       const radiusAtY = Math.sqrt(1 - y * y);
       const theta = phi * i;
       const x = Math.cos(theta) * radiusAtY;
       const z = Math.sin(theta) * radiusAtY;
-      const r = 60 + (Math.random() - 0.5) * 10;
+      const r = 90 + (Math.random() - 0.5) * 12;
 
       particles.push({
         lx: x * r,
         ly: y * r,
         lz: z * r,
-        size: 1.1 + Math.random() * 1.0,
-        alpha: 0.7 + Math.random() * 0.3,
+        size: 1.35 + Math.random() * 1.1,
+        alpha: 0.8 + Math.random() * 0.2,
         speed: 1.0 + Math.random() * 0.5,
         isOuter: false,
       });
@@ -145,7 +176,7 @@ export default function SplashPage() {
       const centerY = canvas.height / 2;
       const fov = 340;
 
-      angleY += 0.007;
+      angleY += 0.008;
       angleX = 0.2 + Math.sin(angleY * 0.5) * 0.1;
 
       const cosX = Math.cos(angleX);
@@ -153,7 +184,6 @@ export default function SplashPage() {
       const cosY = Math.cos(angleY);
       const sinY = Math.sin(angleY);
 
-      // Project and sort by depth
       const projected = particles.map((p) => {
         const x1 = p.lx * cosY - p.lz * sinY;
         const z1 = p.lz * cosY + p.lx * sinY;
@@ -161,7 +191,7 @@ export default function SplashPage() {
         const y1 = p.ly * cosX - z1 * sinX;
         const z2 = z1 * cosX + p.ly * sinX;
 
-        const scale = fov / (fov + z2 + 200);
+        const scale = fov / (fov + z2 + 180);
         const px = centerX + x1 * scale;
         const py = centerY + y1 * scale;
 
@@ -171,7 +201,7 @@ export default function SplashPage() {
           scale,
           z: z2,
           size: p.size * scale,
-          alpha: Math.max(0.1, Math.min(1, p.alpha * (scale * 1.2))),
+          alpha: Math.max(0.12, Math.min(1, p.alpha * (scale * 1.25))),
           isOuter: p.isOuter,
         };
       });
@@ -180,11 +210,11 @@ export default function SplashPage() {
 
       projected.forEach((p) => {
         ctx.beginPath();
-        ctx.arc(p.px, p.py, Math.max(0.5, p.size), 0, Math.PI * 2);
+        ctx.arc(p.px, p.py, Math.max(0.65, p.size), 0, Math.PI * 2);
         if (p.isOuter) {
-          ctx.fillStyle = `rgba(140, 255, 50, ${p.alpha * 0.75})`;
+          ctx.fillStyle = `rgba(140, 255, 50, ${p.alpha * 0.85})`;
         } else {
-          ctx.fillStyle = `rgba(138, 157, 248, ${p.alpha * 0.9})`;
+          ctx.fillStyle = `rgba(138, 157, 248, ${p.alpha * 0.95})`;
         }
         ctx.fill();
       });
@@ -203,31 +233,21 @@ export default function SplashPage() {
 
   return (
     <div className="splash-viewport">
-      {/* Top Header */}
-      <header className="splash-header">
-        <div className="splash-header-inner">
-          <div className="splash-brand">
-            <img
-              src="./media/LYCOS-CORE-lOGOTYPE-300x100.png"
-              alt="Lycos Core Logo"
-              className="splash-logo"
-            />
-          </div>
-
-          <div className="splash-status-pill">
-            <span className="splash-status-indicator" />
-            <span className="splash-status-text">SYSTEM INITIALIZATION // STAGING STABLE</span>
-          </div>
-        </div>
-      </header>
-
       {/* Main Centerpiece */}
       <main className="splash-main">
         <div className="splash-content-grid">
-          {/* Left Text Column */}
+          {/* Left Text Column with Prominent Hero Logo */}
           <div className="splash-text-col">
+            <div className="splash-brand-hero">
+              <img
+                src="./media/LYCOS-CORE-lOGOTYPE-600x200.png"
+                alt="Lycos Core Logo"
+                className="splash-hero-logo"
+              />
+            </div>
+
             <div className="splash-tagline">
-              // COGNITIVE INFRASTRUCTURE & APEX INTELLIGENCE
+              // COGNITIVE INFRASTRUCTURE // APEX INTELLIGENCE
             </div>
 
             <h1 className="splash-title">
@@ -241,50 +261,41 @@ export default function SplashPage() {
             <p className="splash-description">
               We architect bespoke cognitive architectures, orchestrate enterprise-grade agentic frameworks, and operate a high-velocity incubation hub to trial next-generation solutions. Our public deployment sequence is currently active.
             </p>
-
-            {/* Telemetry Indicator Row */}
-            <div className="splash-telemetry-row">
-              <div className="splash-telemetry-item">
-                <div className="splash-telemetry-icon">
-                  <Activity size={18} className="neon-icon" />
-                </div>
-                <div>
-                  <div className="splash-telemetry-val">98.4%</div>
-                  <div className="splash-telemetry-lbl">Synthesis Readiness</div>
-                </div>
-              </div>
-
-              <div className="splash-telemetry-item">
-                <div className="splash-telemetry-icon">
-                  <ShieldCheck size={18} className="neon-icon" />
-                </div>
-                <div>
-                  <div className="splash-telemetry-val">ZERO-TRUST</div>
-                  <div className="splash-telemetry-lbl">Enclave Security</div>
-                </div>
-              </div>
-
-              <div className="splash-telemetry-item">
-                <div className="splash-telemetry-icon">
-                  <Globe2 size={18} className="neon-icon" />
-                </div>
-                <div>
-                  <div className="splash-telemetry-val">5 HUBS</div>
-                  <div className="splash-telemetry-lbl">Global Operational Nodes</div>
-                </div>
-              </div>
-            </div>
           </div>
 
-          {/* Right Volumetric Canvas Column */}
+          {/* Right Volumetric Visual Block - Uniformly Centered Stack */}
           <div className="splash-visual-col">
             <div className="splash-canvas-wrapper">
+              {/* Top Status Pill - Center Aligned */}
+              <div className="splash-status-pill desktop-only">
+                <span className="splash-status-indicator" />
+                <span className="splash-status-text">SYSTEM INITIALIZATION // STAGING STABLE</span>
+              </div>
+
+              {/* Dynamic 98.4% Readiness Counter Badge */}
+              <div className="splash-readiness-badge">
+                <div className="splash-readiness-icon-wrap">
+                  <Activity size={16} className="neon-icon" />
+                </div>
+                <div className="splash-readiness-details">
+                  <div className="splash-readiness-val">
+                    {readinessVal.toFixed(1)}%
+                  </div>
+                  <div className="splash-readiness-lbl">
+                    Core Synthesis Readiness
+                  </div>
+                </div>
+              </div>
+
+              {/* 3D Cipher Particle Sphere Canvas */}
               <canvas
                 ref={canvasRef}
-                width={540}
-                height={540}
+                width={480}
+                height={480}
                 className="splash-network-canvas"
               />
+              
+              {/* Bottom Cipher Status Tag */}
               <div className="splash-canvas-overlay-tag">
                 <span className="splash-pulse-dot" />
                 <span>CIPHER // 3D COGNITIVE ORCHESTRATION</span>
@@ -298,7 +309,7 @@ export default function SplashPage() {
       <footer className="splash-footer">
         <div className="splash-footer-inner">
           <div className="splash-footer-copy">
-            © 2026 Lycos Core LLC. All rights reserved. Precision machine intelligence.
+            © 2026 Lycos Core. All rights reserved. Precision machine intelligence.
           </div>
 
           <div className="splash-footer-social">
@@ -328,7 +339,7 @@ export default function SplashPage() {
         </div>
       </footer>
 
-      {/* Standalone Legal Modal Overlay (Keeps user on Splash Page) */}
+      {/* Standalone Legal Modal Overlay */}
       {activeDoc && (
         <div className="splash-modal-overlay" onClick={() => setActiveLegalModal(null)}>
           <div className="splash-modal-card glass-panel" onClick={(e) => e.stopPropagation()}>
