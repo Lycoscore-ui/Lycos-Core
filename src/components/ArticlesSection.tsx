@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import type { CuratedArticle } from '../types/cms';
-import { mockArticles } from '../data/mockCmsData';
+import { getPublishedArticles } from '../services/adminStorage';
 import { Search, ExternalLink, Calendar, MessageSquareQuote, Newspaper, AlertTriangle, CheckCircle2 } from 'lucide-react';
 import LinkedInConnect from './LinkedInConnect';
 
@@ -8,7 +8,8 @@ interface ArticlesSectionProps {
   articlesList?: CuratedArticle[];
 }
 
-export default function ArticlesSection({ articlesList = mockArticles }: ArticlesSectionProps) {
+export default function ArticlesSection({ articlesList }: ArticlesSectionProps) {
+  const effectiveArticles = articlesList || getPublishedArticles();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedImportance, setSelectedImportance] = useState<string>('All');
 
@@ -19,7 +20,7 @@ export default function ArticlesSection({ articlesList = mockArticles }: Article
   const [contactSubmitted, setContactSubmitted] = useState(false);
 
   const filteredArticles = useMemo(() => {
-    return articlesList.filter((item) => {
+    return effectiveArticles.filter((item) => {
       const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
                             item.customSummary.toLowerCase().includes(searchTerm.toLowerCase()) ||
                             item.sourceName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -27,7 +28,7 @@ export default function ArticlesSection({ articlesList = mockArticles }: Article
       const matchesImportance = selectedImportance === 'All' || item.importance === selectedImportance;
       return matchesSearch && matchesImportance;
     });
-  }, [articlesList, searchTerm, selectedImportance]);
+  }, [effectiveArticles, searchTerm, selectedImportance]);
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();

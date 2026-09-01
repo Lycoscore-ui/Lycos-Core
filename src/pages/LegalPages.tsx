@@ -28,7 +28,7 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
   const contentMap = {
     terms: {
       breadcrumb: '// CORE > // LEGAL > // WEBSITE TERMS OF USE',
-      eyebrow: '// LEGAL FRAMEWORK',
+      eyebrow: '// Legal Framework',
       title: 'Website Terms of Use',
       lastUpdated: 'August 4, 2026',
       sections: [
@@ -48,7 +48,7 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
     },
     privacy: {
       breadcrumb: '// CORE > // LEGAL > // PRIVACY POLICY',
-      eyebrow: '// DATA GOVERNANCE',
+      eyebrow: '// Data Governance',
       title: 'Privacy Policy',
       lastUpdated: 'August 4, 2026',
       sections: [
@@ -68,7 +68,7 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
     },
     'responsible-ai': {
       breadcrumb: '// CORE > // LEGAL > // RESPONSIBLE USE OF AI POLICY',
-      eyebrow: '// ALGORITHMIC ETHICS',
+      eyebrow: '// Algorithmic Ethics',
       title: 'Responsible Use of AI Policy',
       lastUpdated: 'August 4, 2026',
       sections: [
@@ -105,22 +105,13 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
     <>
       {/* Above-the-Fold Dedicated Hero Section (Strictly 100vh) */}
       <section id="legal-hero" className="section hero-fullscreen-section">
-        <div className="hero-grid">
+        <div className="hero-grid" style={{ alignItems: 'center' }}>
           <div>
-            <div className="breadcrumb-text">{data.breadcrumb}</div>
             <h1 className="hero-heading">
               {data.title}<span className="brand-dot">.</span>
             </h1>
             
-            <div className="hero-tags-row">
-              {[data.eyebrow, 'Corporate Telemetry', 'Zero-Trust Auditing'].map((tag, tIdx) => (
-                <span key={tIdx} className="hero-pill-badge">
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            <p className="hero-body-copy">
+            <p className="hero-body-copy" style={{ marginBottom: '2rem' }}>
               Please review the sovereign legal terms, operational boundaries, and compliance frameworks governing the Lycos Core network.
             </p>
             
@@ -146,32 +137,30 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
             </div>
           </div>
 
-          {/* Right Hero Baseline Gauge Widget matching Gold-Standard */}
-          <div className="hero-gauge-wrapper">
-            <div className="baseline-card hero-gauge-card">
-              <span className="hero-gauge-tag">
-                // COMPLIANCE TELEMETRY
-              </span>
-              
-              <div className="hero-gauge-svg-container">
-                <svg width="100%" height="100%" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="8" />
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="#8CFF32" strokeWidth="8" strokeDasharray="251.2" strokeDashoffset="0" strokeLinecap="round" />
-                </svg>
-                <div className="hero-gauge-number-wrap">
-                  <span className="count-up-trigger stat-metric" data-target="100" data-percent="true">100%</span>
-                </div>
+          {/* Right Column: Full-width double-height stacked pills */}
+          <div className="legal-hero-pills-container" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '1.25rem', width: '100%', maxWidth: '440px', marginLeft: 'auto' }}>
+            {[data.eyebrow, 'Corporate Telemetry', 'Zero-Trust Auditing'].map((tag, tIdx) => (
+              <div 
+                key={tIdx} 
+                className="hero-pill-badge legal-pill-expanded"
+                style={{ 
+                  width: '100%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  padding: '1.15rem 1.75rem', 
+                  fontSize: '1.05rem', 
+                  fontWeight: 600,
+                  textTransform: 'none',
+                  textAlign: 'center',
+                  borderRadius: '36px',
+                  boxShadow: '0 4px 20px rgba(138, 75, 243, 0.15)',
+                  letterSpacing: '0.5px'
+                }}
+              >
+                {tag}
               </div>
-
-              {/* Metric Label Strictly Underneath */}
-              <span className="hero-gauge-label">
-                Policy Regulatory Alignment
-              </span>
-
-              <div className="hero-gauge-status">
-                <CheckCircle2 size={16} className="neon-icon" /> Fully Standards Compliant
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>

@@ -97,56 +97,28 @@ export const HowWeOperateSection: React.FC = () => {
   return (
     <>
       {/* Above-the-Fold Dedicated Hero Section (Strictly 100vh) */}
-      <section id="operate-hero" className="section hero-fullscreen-section">
-        <div className="hero-grid">
-          <div>
-            <div className="eyebrow-tagline-green">
-              // OPERATIONAL PARADIGM
-            </div>
-            <h1 className="hero-heading">
-              Synchronized Runs. Absolute Accountability<span className="brand-dot">.</span>
-            </h1>
-            
-            <div className="hero-tags-row">
-              {['Telemetry diagnosis', 'Target architecture', 'Weekly system demos'].map((tag, tIdx) => (
-                <span key={tIdx} className="hero-pill-badge">
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            <p className="hero-body-copy">
-              We operate on high-velocity sprint cycles defined by absolute transparency, real-time telemetry, and a dedicated, named squad from day one. Every run is systematically structured and continuously benchmarked.
-            </p>
+      <section id="operate-hero" className="section hero-fullscreen-section" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
+        <div style={{ maxWidth: '1100px', width: '100%', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+          <div className="eyebrow-tagline-green" style={{ marginBottom: '1rem' }}>
+            // OPERATIONAL PARADIGM
+          </div>
+          <h1 className="hero-heading" style={{ marginBottom: '1.25rem', lineHeight: '1.2' }}>
+            <span>Synchronized Runs</span><span className="brand-dot">.</span>
+            <br />
+            <span style={{ color: 'var(--text-gray, #94a3b8)' }}>Absolute Accountability</span><span className="brand-dot">.</span>
+          </h1>
+          
+          <div className="hero-tags-row" style={{ justifyContent: 'center', marginBottom: '1.5rem' }}>
+            {['Telemetry diagnosis', 'Target architecture', 'Weekly system demos'].map((tag, tIdx) => (
+              <span key={tIdx} className="hero-pill-badge">
+                {tag}
+              </span>
+            ))}
           </div>
 
-          {/* Right Hero Baseline Gauge Widget matching Gold-Standard */}
-          <div className="hero-gauge-wrapper">
-            <div className="baseline-card hero-gauge-card">
-              <span className="hero-gauge-tag">
-                // VELOCITY TELEMETRY ACTIVE
-              </span>
-              
-              <div className="hero-gauge-svg-container">
-                <svg width="100%" height="100%" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="8" />
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="#8CFF32" strokeWidth="8" strokeDasharray="251.2" strokeDashoffset="0" strokeLinecap="round" />
-                </svg>
-                <div className="hero-gauge-number-wrap">
-                  <span className="count-up-trigger stat-metric" data-target="100" data-percent="true">100%</span>
-                </div>
-              </div>
-
-              {/* Metric Label Strictly Underneath */}
-              <span className="hero-gauge-label">
-                Operational Telemetry Uptime
-              </span>
-
-              <div className="hero-gauge-status">
-                <CheckCircle2 size={16} className="neon-icon" /> Systems Fully Operational
-              </div>
-            </div>
-          </div>
+          <p className="hero-body-copy" style={{ maxWidth: '840px', margin: '0 auto', textAlign: 'center' }}>
+            We operate on high-velocity sprint cycles defined by absolute transparency, real-time telemetry, and a dedicated, named squad from day one. Every run is systematically structured and continuously benchmarked.
+          </p>
         </div>
       </section>
 

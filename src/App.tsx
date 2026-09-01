@@ -35,6 +35,7 @@ import CommandPalette from './components/CommandPalette'
 import NavigationHUD from './components/NavigationHUD'
 import LinkedInConnect from './components/LinkedInConnect'
 import SplashPage from './pages/SplashPage'
+import AdminPage from './pages/AdminPage'
 
 // Register GSAP Plugins
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
@@ -309,6 +310,7 @@ export default function App() {
   // Cipher AI Chatbot Hero Morphing and Controlled Open State
   const [isCipherOpen, setIsCipherOpen] = useState(false)
   const isSplash = slug === 'coming-soon' || slug === 'splash'
+  const isAdmin = slug === 'admin' || (typeof window !== 'undefined' && window.location.hostname.startsWith('admin.'))
   const isHeroState = (slug === 'home' || slug === 'portal' || slug === 'wip' || !slug) && activeSection === 0
 
   // Command Palette State
@@ -1162,6 +1164,10 @@ export default function App() {
     return false;
   };
 
+  if (isAdmin) {
+    return <AdminPage />;
+  }
+
   return (
     <div style={{ position: 'relative' }} ref={rootRef} className={slug === 'home' ? 'horizontal-layout' : 'vertical-layout'}>
       {/* Film grain subtle cinematic overlay */}
@@ -1255,11 +1261,10 @@ export default function App() {
           <button 
             className="cmd-palette-trigger-btn"
             onClick={() => setIsCmdPaletteOpen(true)}
-            title="Quick Search (Cmd+K / Ctrl+K)"
+            title="Quick Search"
           >
             <Search size={13} className="neon-icon" />
             <span>SEARCH</span>
-            <kbd>⌘K</kbd>
           </button>
           <button className="btn-solid" style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }} onClick={() => scrollToSection(4)}>
             INITIATE CONNECTION
