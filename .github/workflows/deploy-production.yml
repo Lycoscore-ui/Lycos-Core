@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js Environment
         uses: actions/setup-node@v4
@@ -39,3 +41,4 @@ jobs:
           port: ${{ secrets.AFRIHOST_PORT || 21 }}
           security: ${{ secrets.AFRIHOST_SECURITY || 'loose' }}
           dangerous-clean-slate: false
+          log-level: verbose
