@@ -30,16 +30,11 @@ jobs:
       - name: Build Staging Assets
         run: npm run build
 
-      - name: Deploy to Afrihost Staging via FTP / FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.AFRIHOST_SERVER }}
-          username: ${{ secrets.AFRIHOST_USERNAME }}
-          password: ${{ secrets.AFRIHOST_PASSWORD }}
-          server-dir: ${{ secrets.AFRIHOST_STAGING_DIR || 'staging.lycoscore.com/' }}
-          local-dir: dist/
-          protocol: ${{ secrets.AFRIHOST_PROTOCOL || 'ftp' }}
-          port: ${{ secrets.AFRIHOST_PORT || 21 }}
-          security: ${{ secrets.AFRIHOST_SECURITY || 'loose' }}
-          dangerous-clean-slate: false
-          log-level: verbose
+      - name: Deploy to Afrihost Staging via Direct FTP
+        env:
+          FTP_SERVER: ${{ secrets.AFRIHOST_SERVER }}
+          FTP_USER: ${{ secrets.AFRIHOST_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.AFRIHOST_PASSWORD }}
+          FTP_PORT: ${{ secrets.AFRIHOST_PORT || 21 }}
+          FTP_DIR: ${{ secrets.AFRIHOST_STAGING_DIR || './' }}
+        run: node scripts/deploy-ftp.js
