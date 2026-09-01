@@ -1,9 +1,10 @@
-﻿# ==============================================================================
+# ==============================================================================
 # Apache 2.4 Production Configuration (cPanel / MariaDB 10.11 / Afrihost)
 # Optimized for Lycos Core Headless React SPA + PHP Microservices
 # ==============================================================================
 
 # 1. Server Security & Directory Browsing Prevention
+DirectoryIndex index.html index.php default.html
 Options -Indexes +FollowSymLinks
 AddDefaultCharset UTF-8
 

@@ -1,4 +1,4 @@
-﻿import * as ftp from 'basic-ftp';
+import * as ftp from 'basic-ftp';
 import path from 'path';
 
 async function deploy() {
@@ -36,6 +36,14 @@ async function deploy() {
     const distPath = path.resolve('dist');
     console.log(`Uploading contents of ${distPath} to ${targetDir}...`);
     
+    // Remove Afrihost default parking index.php if present so index.html takes precedence
+    try {
+      await client.remove('index.php');
+      console.log('✓ Cleaned up old default index.php parking page from root');
+    } catch (e) {
+      // Ignored if file doesn't exist
+    }
+
     // Upload dist directory directly to target directory
     await client.uploadFromDir(distPath, targetDir);
 
