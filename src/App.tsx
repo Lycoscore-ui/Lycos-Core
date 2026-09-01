@@ -308,8 +308,8 @@ export default function App() {
 
   // Cipher AI Chatbot Hero Morphing and Controlled Open State
   const [isCipherOpen, setIsCipherOpen] = useState(false)
-  const isSplash = slug === 'home' || slug === 'coming-soon' || slug === 'splash' || !slug || slug === 'index.html'
-  const isHeroState = (slug === 'portal' || slug === 'wip') && activeSection === 0
+  const isSplash = slug === 'coming-soon' || slug === 'splash'
+  const isHeroState = (slug === 'home' || slug === 'portal' || slug === 'wip' || !slug) && activeSection === 0
 
   // Command Palette State
   const [isCmdPaletteOpen, setIsCmdPaletteOpen] = useState(false)
@@ -1268,8 +1268,8 @@ export default function App() {
       </header>
       )}
 
-      {(slug === 'portal' || slug === 'wip') ? (
-        /* Horizontal Sections Wrapper (Full Platform / WIP Portal) */
+      {(slug === 'home' || slug === 'portal' || slug === 'wip' || !slug) ? (
+        /* Horizontal Sections Wrapper (Full Platform / Main Website) */
         <div key="home-wrapper" className="scroll-wrapper" ref={containerRef}>
           
           {/* Section 1: Hero */}
@@ -1703,10 +1703,10 @@ export default function App() {
       )}
 
       {/* Append Global Footer to all non-home subpages */}
-      {slug !== 'home' && !isSplash && (
+      {slug !== 'home' && slug !== 'portal' && slug !== 'wip' && slug !== '' && !isSplash && (
         <footer style={{ width: '100%', backgroundColor: '#050d1a', borderTop: '1px solid rgba(255,255,255,0.1)', padding: '2rem 1.5rem', color: 'var(--text-gray)', fontSize: '0.85rem' }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1.5rem' }}>
-            <div>© 2026 Lycos Core LLC. All rights reserved.</div>
+            <div>© 2026 Lycos Core. All rights reserved.</div>
             <RegionSelector variant="footer" />
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', alignItems: 'center' }}>
               <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('knowledge-base'); }} style={{ color: 'var(--text-gray)', textDecoration: 'none', transition: 'color 0.2s' }}>Master Knowledge Base</a>
@@ -1718,8 +1718,8 @@ export default function App() {
         </footer>
       )}
 
-      {/* Navigation HUD (Portal / WIP horizontal page only) */}
-      {(slug === 'portal' || slug === 'wip') && (
+      {/* Navigation HUD (Horizontal page only) */}
+      {(slug === 'home' || slug === 'portal' || slug === 'wip' || !slug) && (
         <NavigationHUD 
           currentSection={activeSection} 
           totalSections={5} 
