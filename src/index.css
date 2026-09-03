@@ -6454,10 +6454,55 @@ h6 {
   justify-content: space-between;
 }
 
+.admin-repo-filter-bar {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.admin-repo-filter-bar .admin-genre-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 20px;
+}
+
 .admin-pub-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 0.75rem;
+  gap: 0.5rem;
+}
+
+.admin-pub-corner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.admin-badge-owned {
+  background: rgba(140, 255, 50, 0.12);
+  border: 1px solid rgba(140, 255, 50, 0.45);
+  color: var(--accent, #8CFF32);
+}
+
+.admin-badge-curated {
+  background: rgba(0, 240, 255, 0.12);
+  border: 1px solid rgba(0, 240, 255, 0.45);
+  color: #00F0FF;
 }
 
 .admin-pub-title {
@@ -6681,6 +6726,101 @@ h6 {
     grid-template-columns: 1fr;
   }
   .admin-candidate-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Unsplash 3-Column Thumbnail Grid & Card Styles */
+.admin-unsplash-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.admin-unsplash-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-unsplash-card:hover {
+  border-color: rgba(140, 255, 50, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+.admin-unsplash-card.selected {
+  border-color: #8CFF32;
+  box-shadow: 0 0 16px rgba(140, 255, 50, 0.35), inset 0 0 0 1px #8CFF32;
+  background: rgba(140, 255, 50, 0.05);
+}
+
+.admin-unsplash-thumb-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #090e17;
+}
+
+.admin-unsplash-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.admin-unsplash-card:hover .admin-unsplash-thumb {
+  transform: scale(1.05);
+}
+
+.admin-unsplash-selected-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: #8CFF32;
+  color: #05080f;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.5px;
+}
+
+.admin-unsplash-info {
+  padding: 0.5rem 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.admin-unsplash-alt {
+  font-size: 0.72rem;
+  color: #cbd5e1;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-unsplash-credit {
+  font-size: 0.65rem;
+  color: #8CFF32;
+  opacity: 0.85;
+}
+
+@media (max-width: 640px) {
+  .admin-unsplash-grid {
     grid-template-columns: 1fr;
   }
 }

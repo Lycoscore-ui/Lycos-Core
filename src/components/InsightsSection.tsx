@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import type { Insight } from '../types/cms';
-import { mockInsights } from '../data/mockCmsData';
+import { getPublishedInsights } from '../services/adminStorage';
 import NewsletterCTA from './NewsletterCTA';
 import { Search, Clock, ArrowRight, X, Sparkles, CheckCircle2 } from 'lucide-react';
 import LinkedInConnect from './LinkedInConnect';
@@ -9,7 +9,8 @@ interface InsightsSectionProps {
   insightsList?: Insight[];
 }
 
-export default function InsightsSection({ insightsList = mockInsights }: InsightsSectionProps) {
+export default function InsightsSection({ insightsList }: InsightsSectionProps) {
+  const effectiveInsights = insightsList || getPublishedInsights();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [activeInsight, setActiveInsight] = useState<Insight | null>(null);
@@ -38,14 +39,14 @@ export default function InsightsSection({ insightsList = mockInsights }: Insight
   }, []);
 
   const filteredInsights = useMemo(() => {
-    return insightsList.filter((item) => {
+    return effectiveInsights.filter((item) => {
       const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
                             item.summary.toLowerCase().includes(searchTerm.toLowerCase()) ||
                             item.tags.some(t => t.toLowerCase().includes(searchTerm.toLowerCase()));
       const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory;
       return matchesSearch && matchesCategory && item.status === 'Published';
     });
-  }, [insightsList, searchTerm, selectedCategory]);
+  }, [effectiveInsights, searchTerm, selectedCategory]);
 
   const featuredInsight = useMemo(() => {
     return filteredInsights[0] || null;

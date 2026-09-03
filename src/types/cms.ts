@@ -31,12 +31,16 @@ export interface CuratedArticle {
   url: string;
   sourceName: string;
   publishedDate: string;
-  category: 'AI Policy' | 'Tech Trends' | 'Research Breakthroughs' | 'Core Infrastructure';
+  category: 'AI Policy' | 'Tech Trends' | 'Research Breakthroughs' | 'Core Infrastructure' | 'AI Governance' | 'Agentic Frameworks' | 'Neural Architectures' | 'Strategic Advisory' | string;
   customSummary: string;
   commentary: string; // Our team's custom strategic insight
   curator: string;
   importance: 'Low' | 'Medium' | 'High' | 'Critical';
   tags: string[];
+  imageUrl?: string;
+  photographer?: string;
+  contentType?: 'owned_insight' | 'curated_news'; // Owned Industry Insights vs Curated Tech News
+  content?: string; // Full markdown / HTML body for Owned Industry Insights
 }
 
 export interface CaseStudyMetric {

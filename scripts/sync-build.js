@@ -1,4 +1,4 @@
-﻿import fs from 'fs';
+import fs from 'fs';
 import path from 'path';
 
 const distDir = path.resolve('dist');
@@ -19,6 +19,14 @@ if (fs.existsSync(path.join(distDir, 'assets'))) {
 if (fs.existsSync(path.join(distDir, 'index.html'))) {
   fs.copyFileSync(path.join(distDir, 'index.html'), path.join(appPublicDir, 'index.html'));
   console.log('✓ index.html synchronized to ./app/public/index.html');
+}
+
+// 3. Sync media directories if present
+const publicMediaDir = path.resolve('app/public/media');
+const distMediaDir = path.resolve('dist/media');
+if (fs.existsSync(publicMediaDir)) {
+  fs.cpSync(publicMediaDir, distMediaDir, { recursive: true, force: true });
+  console.log('✓ Media assets synchronized to ./dist/media');
 }
 
 console.log('Build synchronization completed successfully.');

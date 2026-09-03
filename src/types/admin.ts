@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @license
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -21,6 +21,16 @@ export interface CandidateArticle {
   tags: string[];
 }
 
+export interface UnsplashImageOption {
+  id: string;
+  url: string; // High-resolution regular size URL
+  thumb: string; // Thumbnail URL for grid selection
+  alt: string;
+  photographer: string;
+  photographerUrl?: string;
+  downloadLocation?: string;
+}
+
 export interface GeneratedArticleDraft {
   id: string;
   candidateId?: string;
@@ -28,7 +38,7 @@ export interface GeneratedArticleDraft {
   sourceName: string;
   sourceUrl: string;
   publishedDate: string;
-  category: 'AI Policy' | 'Tech Trends' | 'Research Breakthroughs' | 'Core Infrastructure' | 'Agentic Systems';
+  category: 'AI Policy' | 'Tech Trends' | 'Research Breakthroughs' | 'Core Infrastructure' | 'Agentic Systems' | 'AI Governance' | 'Agentic Frameworks' | 'Neural Architectures' | 'Strategic Advisory' | string;
   importance: 'Low' | 'Medium' | 'High' | 'Critical';
   tags: string[];
   customSummary: string;
@@ -36,7 +46,11 @@ export interface GeneratedArticleDraft {
   content: string; // Full body
   imageUrl: string;
   imagePrompt?: string;
+  imageSearchQuery?: string;
+  imageOptions?: UnsplashImageOption[];
+  selectedImageOptionId?: string;
   curator: string;
+  contentType?: 'owned_insight' | 'curated_news';
   linkedInPost: {
     headline: string;
     body: string;
@@ -49,6 +63,8 @@ export interface GeneratedArticleDraft {
 export interface N8nWebhookConfig {
   searchWebhookUrl: string;
   generateWebhookUrl: string;
+  industrySearchWebhookUrl: string;
+  industryScrapeWebhookUrl: string;
   publishLinkedInWebhookUrl: string;
   deployStagingWebhookUrl: string;
   deployProductionWebhookUrl: string;
