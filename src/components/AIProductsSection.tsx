@@ -273,7 +273,7 @@ export default function AIProductsSection() {
 
                 <div className="anatomy-list">
                   <div className="anatomy-item">
-                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" style={{ color: "#8ce63f" }} /></div>
+                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" /></div>
                     <div>
                       <h4 className="faq-btn-text">Dynamic Intent Routing</h4>
                       <p className="service-desc">
@@ -283,7 +283,7 @@ export default function AIProductsSection() {
                   </div>
 
                   <div className="anatomy-item">
-                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" style={{ color: "#8ce63f" }} /></div>
+                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" /></div>
                     <div>
                       <h4 className="faq-btn-text">The Guardrail Shield (PII Scrubbing)</h4>
                       <p className="service-desc">
@@ -293,7 +293,7 @@ export default function AIProductsSection() {
                   </div>
 
                   <div className="anatomy-item">
-                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" style={{ color: "#8ce63f" }} /></div>
+                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" /></div>
                     <div>
                       <h4 className="faq-btn-text">Contextual Memory Vault</h4>
                       <p className="service-desc">
@@ -303,7 +303,7 @@ export default function AIProductsSection() {
                   </div>
 
                   <div className="anatomy-item">
-                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" style={{ color: "#8ce63f" }} /></div>
+                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" /></div>
                     <div>
                       <h4 className="faq-btn-text">Multi-Modal Pipeline</h4>
                       <p className="service-desc">
@@ -514,7 +514,7 @@ export default function AIProductsSection() {
 
                 <div className="anatomy-list">
                   <div className="anatomy-item">
-                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" style={{ color: "#8ce63f" }} /></div>
+                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" /></div>
                     <div>
                       <h4 className="faq-btn-text">Intelligent Ingestion Pipeline</h4>
                       <p className="service-desc">
@@ -524,7 +524,7 @@ export default function AIProductsSection() {
                   </div>
 
                   <div className="anatomy-item">
-                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" style={{ color: "#8ce63f" }} /></div>
+                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" /></div>
                     <div>
                       <h4 className="faq-btn-text">Dynamic Workflow Router</h4>
                       <p className="service-desc">
@@ -534,7 +534,7 @@ export default function AIProductsSection() {
                   </div>
 
                   <div className="anatomy-item">
-                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" style={{ color: "#8ce63f" }} /></div>
+                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" /></div>
                     <div>
                       <h4 className="faq-btn-text">The Zero-Error Guardrail</h4>
                       <p className="service-desc">
@@ -544,7 +544,7 @@ export default function AIProductsSection() {
                   </div>
 
                   <div className="anatomy-item">
-                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" style={{ color: "#8ce63f" }} /></div>
+                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" /></div>
                     <div>
                       <h4 className="faq-btn-text">The Scale Coefficient</h4>
                       <p className="service-desc">
@@ -758,7 +758,7 @@ export default function AIProductsSection() {
 
                 <div className="anatomy-list">
                   <div className="anatomy-item">
-                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" style={{ color: "#8ce63f" }} /></div>
+                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" /></div>
                     <div>
                       <h4 className="faq-btn-text">Sovereign Cloud Isolation</h4>
                       <p className="service-desc">
@@ -768,7 +768,7 @@ export default function AIProductsSection() {
                   </div>
 
                   <div className="anatomy-item">
-                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" style={{ color: "#8ce63f" }} /></div>
+                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" /></div>
                     <div>
                       <h4 className="faq-btn-text">Cryptographic PII Masking</h4>
                       <p className="service-desc">
@@ -778,7 +778,7 @@ export default function AIProductsSection() {
                   </div>
 
                   <div className="anatomy-item">
-                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" style={{ color: "#8ce63f" }} /></div>
+                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" /></div>
                     <div>
                       <h4 className="faq-btn-text">Audit Log Telemetry</h4>
                       <p className="service-desc">
@@ -788,7 +788,7 @@ export default function AIProductsSection() {
                   </div>
 
                   <div className="anatomy-item">
-                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" style={{ color: "#8ce63f" }} /></div>
+                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" /></div>
                     <div>
                       <h4 className="faq-btn-text">Access Gateway Rules</h4>
                       <p className="service-desc">
@@ -1016,7 +1016,7 @@ export default function AIProductsSection() {
 
                 <div className="anatomy-list">
                   <div className="anatomy-item">
-                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" style={{ color: "#8ce63f" }} /></div>
+                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" /></div>
                     <div>
                       <h4 className="faq-btn-text">Administrative Eradicator</h4>
                       <p className="service-desc">
@@ -1026,7 +1026,7 @@ export default function AIProductsSection() {
                   </div>
 
                   <div className="anatomy-item">
-                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" style={{ color: "#8ce63f" }} /></div>
+                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" /></div>
                     <div>
                       <h4 className="faq-btn-text">Pipeline Plumber</h4>
                       <p className="service-desc">
@@ -1036,7 +1036,7 @@ export default function AIProductsSection() {
                   </div>
 
                   <div className="anatomy-item">
-                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" style={{ color: "#8ce63f" }} /></div>
+                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" /></div>
                     <div>
                       <h4 className="faq-btn-text">Infrastructure Sovereignty</h4>
                       <p className="service-desc">
@@ -1046,7 +1046,7 @@ export default function AIProductsSection() {
                   </div>
 
                   <div className="anatomy-item">
-                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" style={{ color: "#8ce63f" }} /></div>
+                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" /></div>
                     <div>
                       <h4 className="faq-btn-text">Multi-System Schema Alignment</h4>
                       <p className="service-desc">
@@ -1257,7 +1257,7 @@ export default function AIProductsSection() {
 
                 <div className="anatomy-list">
                   <div className="anatomy-item">
-                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" style={{ color: "#8ce63f" }} /></div>
+                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" /></div>
                     <div>
                       <h4 className="faq-btn-text">Advanced Telemetry Engine</h4>
                       <p className="service-desc">
@@ -1267,7 +1267,7 @@ export default function AIProductsSection() {
                   </div>
 
                   <div className="anatomy-item">
-                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" style={{ color: "#8ce63f" }} /></div>
+                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" /></div>
                     <div>
                       <h4 className="faq-btn-text">Capital Liberator</h4>
                       <p className="service-desc">
@@ -1277,7 +1277,7 @@ export default function AIProductsSection() {
                   </div>
 
                   <div className="anatomy-item">
-                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" style={{ color: "#8ce63f" }} /></div>
+                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" /></div>
                     <div>
                       <h4 className="faq-btn-text">Capacity Stabilizer</h4>
                       <p className="service-desc">
@@ -1287,7 +1287,7 @@ export default function AIProductsSection() {
                   </div>
 
                   <div className="anatomy-item">
-                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" style={{ color: "#8ce63f" }} /></div>
+                    <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" /></div>
                     <div>
                       <h4 className="faq-btn-text">Strategic Telescope</h4>
                       <p className="service-desc">

@@ -857,15 +857,15 @@ export default function App() {
     }
 
     return (
-      <section key={idx} id="block-hero" className="section subpage-hero-section" style={{ display: 'flex', alignItems: 'center' }}>
-        <div className="subpage-hero-grid hero-two-column-grid" style={{ width: '100%', maxWidth: '1200px', display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '3rem', alignItems: 'center' }}>
+      <section key={idx} id="block-hero" className="section hero-fullscreen-section subpage-hero-section">
+        <div className="subpage-hero-grid hero-two-column-grid">
           <div>
             {/* Standardized Green Eyebrow Tagline */}
-            <div className="eyebrow-tagline-green" style={{ color: '#8ce63f', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: 700, marginBottom: '1rem', fontFamily: 'monospace' }}>
+            <div className="eyebrow-tagline-green">
               {block.tagline || '// ENTERPRISE INTELLIGENCE ARCHITECTURE'}
             </div>
             
-            <h1 className="hero-heading subpage-hero-title" style={{ fontSize: '3.6rem', lineHeight: '1.15', marginBottom: '1.5rem', fontFamily: 'var(--font-title)', color: '#FFFFFF' }}>
+            <h1 className="hero-heading subpage-hero-title">
               {block.title ? (
                 <>{block.title.replace(/\.$/, '')}<span className="accent-period">.</span></>
               ) : (
@@ -873,17 +873,17 @@ export default function App() {
               )}
             </h1>
             
-            <div className="hero-tags-row subpage-tags-row" style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
+            <div className="hero-tags-row subpage-tags-row">
               {taglines.map((tag: string, tIdx: number) => (
-                <span key={tIdx} className="hero-pill-badge" style={{ background: 'rgba(138, 75, 243, 0.1)', color: 'var(--accent)', border: '1px solid rgba(138, 75, 243, 0.2)', padding: '0.35rem 1rem', borderRadius: '20px', fontSize: '0.9rem', fontWeight: 600 }}>{tag}</span>
+                <span key={tIdx} className="hero-pill-badge">{tag}</span>
               ))}
             </div>
 
-            <p className="hero-body-copy" style={{ color: 'var(--text-gray)', fontSize: '1.1rem', marginBottom: '2.5rem', maxWidth: '600px', lineHeight: '1.6' }}>
+            <p className="hero-body-copy">
               {bodyCopy}
             </p>
 
-            <div className="subpage-hero-cta-row hero-cta-group" style={{ display: 'flex', gap: '1.5rem' }}>
+            <div className="subpage-hero-cta-row hero-cta-group">
               <button className="cta-primary" onClick={() => scrollToSection(4)}>
                 {(block.exploreBtnText || 'INITIALIZE CONSULTATION').toUpperCase()}
               </button>
@@ -897,7 +897,7 @@ export default function App() {
           </div>
 
           {/* Visual Bespoke Card: Tiered Architecture Stack */}
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <div className="hero-gauge-wrapper">
             <div className="baseline-card hero-gauge-card">
               <span className="hero-gauge-tag">// COGNITIVE STRATEGY MATRIX</span>
               
@@ -923,7 +923,7 @@ export default function App() {
                       <span className="matrix-tier-tag tier-2">L2</span>
                       <span className="matrix-tier-title">Data & Pipeline Stack</span>
                     </div>
-                    <div className="matrix-tier-indicator" style={{ color: '#c084fc' }}>
+                    <div className="matrix-tier-indicator matrix-purple-indicator">
                       <span>-42ms</span>
                     </div>
                   </div>
@@ -934,7 +934,7 @@ export default function App() {
                       <span className="matrix-tier-tag tier-3">L3</span>
                       <span className="matrix-tier-title">Enterprise Ops & Edge</span>
                     </div>
-                    <div className="matrix-tier-indicator" style={{ color: '#00f0ff' }}>
+                    <div className="matrix-tier-indicator matrix-cyan-indicator">
                       <span>100% SCALE</span>
                     </div>
                   </div>
@@ -956,14 +956,14 @@ export default function App() {
 
   const renderMetricsBlock = (block: any, idx: number) => {
     return (
-      <section key={idx} id="block-metrics" className="section" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-        <div className="outcome-stats-grid" style={{ width: '100%', maxWidth: '1200px' }}>
+      <section key={idx} id="block-metrics" className="section">
+        <div className="outcome-stats-grid subpage-block-container">
           {block.metrics.map((m: any, mIdx: number) => (
             <div key={mIdx} className="baseline-card outcome-stat-card">
-              <div className="count-up-trigger stat-metric" data-target={m.value.replace(/[^0-9.]/g, '')} data-percent={m.value.includes('%')} style={{ color: '#8ce63f', fontSize: '2.5rem', fontWeight: 800, fontFamily: 'var(--font-title)' }}>
+              <div className="count-up-trigger stat-metric" data-target={m.value.replace(/[^0-9.]/g, '')} data-percent={m.value.includes('%')}>
                 {m.value}
               </div>
-              <div className="stat-label" style={{ color: 'var(--text-gray)', fontSize: '0.85rem', marginTop: '0.5rem' }}>{m.label}</div>
+              <div className="stat-label">{m.label}</div>
             </div>
           ))}
         </div>
@@ -973,21 +973,21 @@ export default function App() {
 
   const renderPillarsBlock = (block: any, idx: number) => {
     return (
-      <section key={idx} id="block-pillars" className="section" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          <h2 style={{ fontSize: '2.5rem', marginBottom: '0.75rem', textTransform: 'none', fontFamily: 'var(--font-title)' }}>
-            Our Core <span style={{ color: '#8CFF32' }}>Protocols</span>
+      <section key={idx} id="block-pillars" className="section">
+        <div className="subpage-block-header">
+          <h2 className="subpage-block-title">
+            Our Core <span className="brand-dot">Protocols</span>
           </h2>
-          <p style={{ color: 'var(--text-gray)', fontSize: '1rem', maxWidth: '750px', margin: '0 auto', lineHeight: '1.6' }}>
+          <p className="subpage-block-desc">
             Lycos Core orchestrates a complete AI lifecycle through foundational protocols designed for strategic transformation, end-to-end systems, venture growth, and specialized business solutions.
           </p>
         </div>
 
-        <div className="services-grid">
+        <div className="services-grid subpage-block-container">
           {block.items.map((item: any, cIdx: number) => (
-            <div key={cIdx} className="glass-panel purple-glow-card" style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between', padding: '2rem', minHeight: '280px', border: '1px solid rgba(138, 75, 243, 0.15)' }}>
+            <div key={cIdx} className="glass-panel purple-glow-card service-panel-card">
               <div>
-                <div style={{ marginBottom: '1.25rem' }}>
+                <div className="service-icon-wrap">
                   <div className="icon-badge">
                     {cIdx === 0 && <Cpu size={32} className="neon-icon" />}
                     {cIdx === 1 && <Layers size={32} className="neon-icon" />}
@@ -995,11 +995,11 @@ export default function App() {
                     {cIdx === 3 && <TrendingUp size={32} className="neon-icon" />}
                   </div>
                 </div>
-                <h3 style={{ fontSize: '1.35rem', marginBottom: '1rem', color: 'var(--text-primary)' }}>{item.title}</h3>
-                <p style={{ color: 'var(--text-gray)', fontSize: '0.92rem', lineHeight: '1.5' }}>{item.description}</p>
+                <h3 className="service-card-title">{item.title}</h3>
+                <p className="service-card-desc">{item.description}</p>
               </div>
               <button 
-                className="btn-link" 
+                className="btn-link service-card-link" 
                 onClick={() => {
                   const el = document.getElementById('block-deepDive');
                   if (el) {
@@ -1010,7 +1010,6 @@ export default function App() {
                     });
                   }
                 }} 
-                style={{ marginTop: '2rem', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#8ce63f' }}
               >
                 INSPECT PROTOCOL &gt;
               </button>
@@ -1023,29 +1022,29 @@ export default function App() {
 
   const renderFrameworkBlock = (block: any, idx: number) => {
     return (
-      <section key={idx} id="block-framework" className="section" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          <h2 style={{ fontSize: '2.5rem', marginBottom: '0.75rem', textTransform: 'none', fontFamily: 'var(--font-title)' }}>
-            Our Strategic <span style={{ color: '#8CFF32' }}>Framework</span>
+      <section key={idx} id="block-framework" className="section">
+        <div className="subpage-block-header">
+          <h2 className="subpage-block-title">
+            Our Strategic <span className="brand-dot">Framework</span>
           </h2>
-          <p style={{ color: 'var(--text-gray)', fontSize: '1rem', maxWidth: '750px', margin: '0 auto', lineHeight: '1.6' }}>
+          <p className="subpage-block-desc">
             A systematic four-phase methodology that transforms enterprise AI concepts into measurable financial yield through precise engineering, zero-trust governance, and real-time telemetry.
           </p>
         </div>
 
         {/* 4 Horizontal Glass Cards Layout */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem', width: '100%', maxWidth: '1200px' }}>
+        <div className="subpage-framework-grid">
           {block.steps.map((step: any, sIdx: number) => (
-            <div key={sIdx} className="baseline-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', height: '100%' }}>
-              <span style={{ fontSize: '0.85rem', fontFamily: 'monospace', fontWeight: 700, color: '#8CFF32', marginBottom: '0.5rem', display: 'block' }}>0{sIdx + 1}</span>
-              <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'white', marginBottom: '0.75rem', lineHeight: '1.3' }}>{step.title.split(': ')[1] || step.title}</h3>
-              <p style={{ color: 'var(--text-gray)', fontSize: '0.88rem', lineHeight: '1.5', marginBottom: '1rem', flexGrow: 1 }}>
-                <strong style={{ color: '#8CFF32' }}>Focus:</strong> {step.focus}
+            <div key={sIdx} className="baseline-card subpage-framework-card">
+              <span className="subpage-framework-step-num">0{sIdx + 1}</span>
+              <h3 className="subpage-framework-step-title">{step.title.split(': ')[1] || step.title}</h3>
+              <p className="subpage-framework-focus">
+                <strong className="accent-dot">Focus:</strong> {step.focus}
               </p>
-              <ul style={{ listStyle: 'none', paddingLeft: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+              <ul className="subpage-framework-deliverables-list">
                 {(Array.isArray(step.deliverables) ? step.deliverables : (typeof step.deliverables === 'string' ? step.deliverables.split('\n').map((d: string) => d.trim()).filter(Boolean) : [])).map((d: string, dIdx: number) => (
-                  <li key={dIdx} style={{ fontSize: '0.8rem', color: 'var(--text-gray)', display: 'flex', gap: '0.4rem', alignItems: 'flex-start', lineHeight: '1.4' }}>
-                    <span style={{ color: '#8CFF32', flexShrink: 0 }}>•</span> {d}
+                  <li key={dIdx} className="subpage-framework-deliverable-item">
+                    <span className="accent-dot">•</span> {d}
                   </li>
                 ))}
               </ul>
@@ -1065,27 +1064,27 @@ export default function App() {
     ];
 
     return (
-      <section key={idx} id="block-deepDive" className="section" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-          <h2 style={{ fontSize: '2.5rem', marginBottom: '0.75rem', textTransform: 'none', fontFamily: 'var(--font-title)' }}>
-            Core Services <span style={{ color: '#8CFF32' }}>Deep Dive</span>
+      <section key={idx} id="block-deepDive" className="section">
+        <div className="subpage-block-header">
+          <h2 className="subpage-block-title">
+            Core Services <span className="brand-dot">Deep Dive</span>
           </h2>
-          <p style={{ color: 'var(--text-gray)', fontSize: '1rem' }}>{block.subtitle}</p>
+          <p className="subpage-block-desc">{block.subtitle}</p>
         </div>
 
         <div className="deep-dive-grid">
           {block.panels.map((panel: any, pIdx: number) => (
             <div key={pIdx} className="deep-dive-panel">
-              <span className="eyebrow-tagline" style={{ display: 'block', marginBottom: '0.5rem' }}>
+              <span className="eyebrow-tagline-green">
                 {eyebrows[pIdx % eyebrows.length]}
               </span>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '1.25rem', color: '#FFFFFF' }}>{panel.title}</h3>
-              <p style={{ color: 'var(--text-gray)', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '1.5rem' }}>{panel.overview}</p>
+              <h3 className="service-heading">{panel.title}</h3>
+              <p className="service-desc">{panel.overview}</p>
               
-              <ul className="deep-dive-bullets" style={{ margin: 0, paddingLeft: 0 }}>
+              <ul className="deep-dive-bullets">
                 {(Array.isArray(panel.focusAreas) ? panel.focusAreas : (typeof panel.focusAreas === 'string' ? panel.focusAreas.split('\n').map((fa: string) => fa.trim()).filter(Boolean) : [])).map((fa: string, faIdx: number) => (
-                  <li key={faIdx} style={{ color: 'var(--text-gray)', fontSize: '0.85rem', marginBottom: '0.6rem', display: 'flex', gap: '0.5rem', alignItems: 'flex-start', lineHeight: '1.4' }}>
-                    <CheckCircle size={15} className="neon-icon" style={{ flexShrink: 0 }} /> {fa}
+                  <li key={faIdx}>
+                    <CheckCircle size={15} className="neon-icon" /> {fa}
                   </li>
                 ))}
               </ul>
@@ -1114,41 +1113,41 @@ export default function App() {
     const resultsList = Array.isArray(rawResults) ? rawResults : (typeof rawResults === 'string' ? rawResults.split('\n').map((r: string) => r.trim()).filter(Boolean) : [])
 
     return (
-      <section key={idx} id="block-useCase" className="section" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          <h2 style={{ fontSize: '2.5rem', marginBottom: '0.75rem', textTransform: 'none', fontFamily: 'var(--font-title)' }}>
-            Featured <span style={{ color: '#8CFF32' }}>Use Case</span>
+      <section key={idx} id="block-useCase" className="section">
+        <div className="subpage-block-header">
+          <h2 className="subpage-block-title">
+            Featured <span className="brand-dot">Use Case</span>
           </h2>
-          <p style={{ color: 'var(--text-gray)', fontSize: '1rem', maxWidth: '750px', margin: '0 auto', lineHeight: '1.6' }}>
+          <p className="subpage-block-desc">
             Discover how Lycos Core deployed edge-integrated predictive maintenance to eliminate factory downtime and deliver immediate, measurable ROI for a global manufacturing leader.
           </p>
         </div>
 
-        <div className="subpage-usecase-grid" style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '4rem', width: '100%', maxWidth: '1200px', alignItems: 'start' }}>
-          <div className="glass-panel" style={{ padding: '3rem', border: '1px solid rgba(255,255,255,0.05)' }}>
-            <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: 600, display: 'block', marginBottom: '1rem' }}>{block.badge}</span>
-            <h3 style={{ fontSize: '1.8rem', marginBottom: '1.5rem', color: 'white' }}>{block.title}</h3>
+        <div className="subpage-usecase-wrapper">
+          <div className="glass-panel subpage-usecase-main">
+            <span className="subpage-usecase-badge">{block.badge}</span>
+            <h3 className="subpage-usecase-title">{block.title}</h3>
             
-            <div style={{ marginBottom: '1.5rem' }}>
-              <strong style={{ color: 'var(--accent)', fontSize: '0.9rem', display: 'block', marginBottom: '0.25rem' }}>Client Context:</strong>
-              <p style={{ color: 'var(--text-gray)', fontSize: '0.95rem', lineHeight: '1.5', margin: 0 }}>{clientContext}</p>
+            <div className="subpage-usecase-row">
+              <strong className="subpage-usecase-row-label">Client Context:</strong>
+              <p className="subpage-usecase-row-text">{clientContext}</p>
             </div>
 
-            <div style={{ marginBottom: '1.5rem' }}>
-              <strong style={{ color: 'var(--accent)', fontSize: '0.9rem', display: 'block', marginBottom: '0.25rem' }}>Problem:</strong>
-              <p style={{ color: 'var(--text-gray)', fontSize: '0.95rem', lineHeight: '1.5', margin: 0 }}>{problem}</p>
+            <div className="subpage-usecase-row">
+              <strong className="subpage-usecase-row-label">Problem:</strong>
+              <p className="subpage-usecase-row-text">{problem}</p>
             </div>
 
             <div>
-              <strong style={{ color: 'var(--accent)', fontSize: '0.9rem', display: 'block', marginBottom: '0.25rem' }}>Solution:</strong>
-              <p style={{ color: 'var(--text-gray)', fontSize: '0.95rem', lineHeight: '1.5', margin: 0 }}>{solution}</p>
+              <strong className="subpage-usecase-row-label">Solution:</strong>
+              <p className="subpage-usecase-row-text">{solution}</p>
             </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-            <div className="glass-panel" style={{ padding: '2.5rem', border: '1px solid rgba(138, 75, 243, 0.2)' }}>
-              <h4 style={{ fontSize: '1.2rem', marginBottom: '1.5rem', color: 'white' }}>Results and Achievements</h4>
-              <ul style={{ listStyle: 'none', paddingLeft: 0, margin: 0 }}>
+          <div className="subpage-usecase-side-col">
+            <div className="glass-panel subpage-usecase-side-panel">
+              <h4 className="subpage-usecase-side-heading">Results and Achievements</h4>
+              <ul className="subpage-usecase-results-list">
                 {resultsList.map((res: string, rIdx: number) => {
                   const match = res.match(/^(\d+%|\w+)\s+(.*)$/)
                   const numVal = match ? parseFloat(match[1]) : 0
@@ -1156,11 +1155,11 @@ export default function App() {
                   const label = match ? match[2] : res
 
                   return (
-                    <li key={rIdx} style={{ display: 'flex', gap: '1rem', alignItems: 'center', color: 'var(--text-gray)', fontSize: '0.95rem', marginBottom: '1.25rem', lineHeight: '1.4' }}>
+                    <li key={rIdx} className="subpage-usecase-result-item">
                       {hasNum ? (
-                        <div className="count-up-trigger" data-target={numVal} data-percent={res.includes('%')} style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--accent)', fontFamily: 'var(--font-title)', minWidth: '60px' }}>0</div>
+                        <div className="count-up-trigger subpage-usecase-metric-num" data-target={numVal} data-percent={res.includes('%')}>0</div>
                       ) : (
-                        <CheckCircle size={18} style={{ color: 'var(--accent)', flexShrink: 0 }} />
+                        <CheckCircle size={18} className="neon-icon" />
                       )}
                       <div>{label}</div>
                     </li>
@@ -1169,7 +1168,7 @@ export default function App() {
               </ul>
             </div>
 
-            <button className="cta-primary" style={{ alignSelf: 'stretch', justifyContent: 'center' }} onClick={() => scrollToSection(4)}>
+            <button className="cta-primary" onClick={() => scrollToSection(4)}>
               {block.ctaText || block.insightLink || 'Read Full Use Case'}
             </button>
           </div>
@@ -1261,7 +1260,7 @@ export default function App() {
   }
 
   return (
-    <div style={{ position: 'relative' }} ref={rootRef} className={slug === 'home' ? 'horizontal-layout' : 'vertical-layout'}>
+    <div ref={rootRef} className={`app-root-container ${slug === 'home' ? 'horizontal-layout' : 'vertical-layout'}`}>
       {/* Film grain subtle cinematic overlay */}
       <div className="film-grain-overlay" />
 
@@ -1358,7 +1357,7 @@ export default function App() {
               <Search size={13} className="neon-icon" />
               <span>SEARCH</span>
             </button>
-            <button className="btn-solid" style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }} onClick={() => scrollToSection(4)}>
+            <button className="btn-solid header-cta-btn" onClick={() => scrollToSection(4)}>
               INITIATE CONNECTION
             </button>
           </div>
@@ -1472,24 +1471,29 @@ export default function App() {
         <div key="home-wrapper" className="scroll-wrapper" ref={containerRef}>
           
           {/* Section 1: Hero */}
-          <section className="section home-hero-section">
+          <section className="section home-hero-section hero-fullscreen-section">
             <div className="hero-grid">
-              <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                <span style={{ fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '3px', color: 'var(--accent)', fontWeight: 700, display: 'block', marginBottom: '1rem' }}>
+              <div>
+                <span className="eyebrow-tagline-green">
                   {pageData.hero.tagline}
                 </span>
-                <h1 style={{ fontSize: '3.6rem', lineHeight: '1.15', marginBottom: '1.5rem', fontFamily: 'var(--font-title)' }}>
+                <h1 className="hero-heading">
                   Precision AI Systems<span className="brand-dot">.</span><br />
-                  <span style={{ opacity: 0.5 }}>Engineered with Instinct<span className="accent-dot">.</span></span>
+                  <span className="text-secondary">Engineered with Instinct<span className="accent-dot">.</span></span>
                 </h1>
-                <p style={{ color: 'var(--text-gray)', fontSize: '1.1rem', marginBottom: '2.5rem', maxWidth: '600px', lineHeight: '1.6' }}>
+                <div className="hero-tags-row">
+                  {['Cognitive Advisory', 'System Synthesis', 'Incubation Den'].map((tag: string, tIdx: number) => (
+                    <span key={tIdx} className="hero-pill-badge">{tag}</span>
+                  ))}
+                </div>
+                <p className="hero-body-copy">
                   We architect bespoke AI products, orchestrate enterprise-scale cognitive strategy, and run a high-velocity incubation hub to trial next-generation solutions. Systemic machine intelligence, built to navigate market complexity.
                 </p>
-                <div className="hero-cta-group" style={{ display: 'flex', gap: '1.5rem' }}>
-                  <button className="btn-solid" onClick={() => scrollToSection(1)}>
+                <div className="subpage-hero-cta-row hero-cta-group">
+                  <button className="cta-primary" onClick={() => scrollToSection(1)}>
                     {pageData.hero.exploreBtnText}
                   </button>
-                  <button className="btn-outline" onClick={() => scrollToSection(4)}>
+                  <button className="cta-secondary" onClick={() => scrollToSection(4)}>
                     {pageData.hero.partnerBtnText}
                   </button>
                 </div>
@@ -1501,16 +1505,16 @@ export default function App() {
           </section>
 
           {/* Section 2: Pillars */}
-          <section className="section home-section-pillars" style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            <div style={{ width: '100%', maxWidth: '1200px', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-              <h2 style={{ fontSize: '2.8rem', textTransform: 'none', fontFamily: 'var(--font-title)', margin: 0 }}>
-                {pageData.pillars.title.split(' ')[0]} <span style={{ color: 'var(--color-accent-green)' }}>{pageData.pillars.title.split(' ').slice(1).join(' ')}<span className="accent-dot">.</span></span>
+          <section className="section home-section-pillars">
+            <div className="home-section-pillars-inner">
+              <h2 className="home-pillars-title">
+                {pageData.pillars.title.split(' ')[0]} <span className="home-pillar-title-accent">{pageData.pillars.title.split(' ').slice(1).join(' ')}<span className="accent-dot">.</span></span>
               </h2>
-              <div className="pillars-grid" style={{ width: '100%' }}>
+              <div className="pillars-grid home-pillars-grid">
                 {pageData.pillars.items.map((item: any, idx: number) => (
-                  <div key={idx} className="protocol-card" style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between', padding: '1.75rem', position: 'relative' }}>
+                  <div key={idx} className="protocol-card home-protocol-card">
                     <div>
-                      <div style={{ marginBottom: '1rem' }}>
+                      <div className="home-protocol-icon-wrap">
                         <div className="icon-badge">
                           {idx === 0 && <Cpu size={28} className="neon-icon" />}
                           {idx === 1 && <Layers size={28} className="neon-icon" />}
@@ -1518,16 +1522,15 @@ export default function App() {
                           {idx === 3 && <TrendingUp size={28} className="neon-icon" />}
                         </div>
                       </div>
-                      <h3 style={{ fontSize: '1.2rem', marginBottom: '0.75rem', color: 'var(--text-primary)' }}>{item.title}</h3>
-                      <p style={{ color: 'var(--text-gray)', fontSize: '0.88rem', lineHeight: '1.5' }}>{item.description}</p>
+                      <h3 className="home-protocol-card-title">{item.title}</h3>
+                      <p className="home-protocol-card-desc">{item.description}</p>
                     </div>
                     <button 
-                      className="btn-link" 
+                      className="btn-link home-protocol-btn" 
                       onClick={() => {
                         const slugs = ['ai-consulting', 'tech-services', 'incubation-hub', 'ai-products'];
                         navigateTo(slugs[idx]);
                       }} 
-                      style={{ marginTop: '1.25rem', fontSize: '0.95rem' }}
                     >
                       INSPECT PROTOCOL &gt;
                     </button>
@@ -1535,10 +1538,10 @@ export default function App() {
                 ))}
               </div>
 
-              <div className="lycos-chart-box" style={{ padding: '1.5rem', marginTop: '0' }}>
-                <div className="chart-header" style={{ marginBottom: '1rem' }}>
-                  <span style={{ fontSize: '1rem', fontWeight: 600 }}>Operational Efficiency Trend</span>
-                  <span style={{ color: 'var(--accent)', fontSize: '0.9rem' }}>+40% Average Gain</span>
+              <div className="lycos-chart-box home-pillars-chart-box">
+                <div className="chart-header home-chart-header">
+                  <span className="home-chart-title">Operational Efficiency Trend</span>
+                  <span className="home-chart-gain">+40% Average Gain</span>
                 </div>
                 <div className="chart-wrapper">
                   <svg viewBox="0 0 500 80" preserveAspectRatio="none" className="line-chart">
@@ -1569,24 +1572,24 @@ export default function App() {
           {/* Section 3: Use Case / Case Study */}
           <section className="section home-section-usecase">
             <div className="use-case-grid">
-              <div className="glass-panel use-case-card" style={{ padding: '2.5rem', position: 'relative' }}>
-                <span style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '2px', color: 'var(--text-secondary)', fontWeight: 700, display: 'block', marginBottom: '1rem' }}>
+              <div className="glass-panel use-case-card home-usecase-card">
+                <span className="home-usecase-badge">
                   {pageData.useCase.badge}
                 </span>
-                <h2 style={{ fontSize: '2.2rem', marginBottom: '1.25rem', lineHeight: '1.2' }}>
+                <h2 className="home-usecase-title">
                   {pageData.useCase.title}
                 </h2>
-                <p style={{ color: 'var(--text-gray)', lineHeight: '1.6', marginBottom: '2rem', fontSize: '1rem' }}>
+                <p className="home-usecase-desc">
                   {pageData.useCase.description}
                 </p>
 
-                <div className="use-case-metrics-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', borderTop: '1px solid var(--border-color)', paddingTop: '2rem' }}>
+                <div className="use-case-metrics-grid home-usecase-metrics-grid">
                   {pageData.useCase.metrics.map((m: any, idx: number) => (
                     <div key={idx}>
-                      <div style={{ fontSize: '2.2rem', fontWeight: 800, color: idx === 0 ? 'var(--accent)' : 'var(--text-primary)', fontFamily: 'var(--font-title)' }}>
+                      <div className={`home-usecase-metric-val ${idx === 0 ? 'accent-highlight' : ''}`}>
                         {displayedUseCaseMetrics[idx] || m.value}
                       </div>
-                      <div style={{ fontSize: '0.8rem', color: 'var(--text-gray)', marginTop: '0.25rem' }}>
+                      <div className="home-usecase-metric-lbl">
                         {m.label}
                       </div>
                     </div>
@@ -1594,14 +1597,14 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="use-case-insight-panel" style={{ paddingLeft: '2rem', borderLeft: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                <span style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '2px', color: 'var(--text-gray)', fontWeight: 700, display: 'block', marginBottom: '0.75rem' }}>
+              <div className="use-case-insight-panel home-usecase-insight-panel">
+                <span className="home-usecase-insight-badge">
                   FEATURED CASE STUDY
                 </span>
-                <h3 style={{ fontSize: '1.6rem', fontWeight: 600, lineHeight: '1.3', marginBottom: '1.25rem' }}>
+                <h3 className="home-usecase-insight-title">
                   {pageData.useCase.insightTitle}
                 </h3>
-                <p style={{ color: 'var(--text-gray)', lineHeight: '1.6', marginBottom: '2rem', fontSize: '0.95rem' }}>
+                <p className="home-usecase-insight-desc">
                   {pageData.useCase.insightSummary}
                 </p>
                 <button className="btn-link" onClick={() => navigateTo('case-studies')}>
@@ -1614,36 +1617,36 @@ export default function App() {
           {/* Section 4: Performance */}
           <section className="section home-section-performance">
             <div className="performance-grid">
-              <div className="glass-panel" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '2rem' }}>
-                <h3 style={{ fontSize: '1.1rem', marginBottom: '1.5rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
+              <div className="glass-panel home-perf-panel">
+                <h3 className="home-perf-title">
                   {pageData.performance.title}
                 </h3>
                 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '1.5rem' }}>
+                <div className="home-perf-metrics-grid">
                   {pageData.performance.metrics.map((m: any, idx: number) => (
-                    <div key={idx} style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.02)', padding: '1rem', borderRadius: '8px' }}>
-                      <div style={{ fontSize: '0.7rem', color: 'var(--text-gray)', marginBottom: '0.25rem' }}>{m.label}</div>
-                      <div style={{ fontSize: '1.5rem', fontWeight: 700, color: idx === 1 ? 'var(--accent)' : 'var(--text-primary)', fontFamily: 'var(--font-title)' }}>
+                    <div key={idx} className="home-perf-metric-card">
+                      <div className="home-perf-metric-lbl">{m.label}</div>
+                      <div className={`home-perf-metric-val ${idx === 1 ? 'accent-highlight' : ''}`}>
                         {displayedPerformanceMetrics[idx] || m.value}
                       </div>
-                      <div style={{ fontSize: '0.65rem', color: 'var(--accent)', marginTop: '0.25rem' }}>{m.change}</div>
+                      <div className="home-perf-metric-chg">{m.change}</div>
                     </div>
                   ))}
                 </div>
                 
-                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', fontSize: '0.75rem', color: 'var(--text-gray)' }}>
+                <div className="home-perf-footer">
                   <Info size={12} /> Metric updates are synchronized directly from local dataset pools.
                 </div>
               </div>
 
-              <div className="glass-panel" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '2rem' }}>
+              <div className="glass-panel home-perf-panel">
                 <div>
-                  <h3 style={{ fontSize: '1.1rem', marginBottom: '0.25rem' }}>AI Solution Trends</h3>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-gray)', marginBottom: '1rem' }}>Operations Score Improvement / Yield Curve</div>
+                  <h3 className="home-perf-trends-title">AI Solution Trends</h3>
+                  <div className="home-perf-trends-subtitle">Operations Score Improvement / Yield Curve</div>
                 </div>
 
-                <div style={{ width: '100%', height: '110px', position: 'relative' }}>
-                  <svg viewBox="0 0 500 100" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
+                <div className="home-perf-chart-wrap">
+                  <svg viewBox="0 0 500 100" className="home-perf-chart-svg">
                     <defs>
                       <linearGradient id="chart-glow" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.3" />
@@ -1657,12 +1660,12 @@ export default function App() {
                     <path d="M0,80 Q75,60 150,80 T300,35 T450,15" fill="none" stroke="var(--accent)" strokeWidth="2.5" className="chart-glow-path" clipPath="url(#performance-clip)" />
                     <circle cx="450" cy="15" r="4" fill="var(--accent)" />
                   </svg>
-                  <div style={{ position: 'absolute', right: '0', top: '-15px', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', padding: '4px 8px', borderRadius: '4px', fontSize: '0.7rem' }}>
-                    Efficiency Gains <span style={{ color: 'var(--accent)', fontWeight: 700 }}>{displayedEfficiencyGain}</span>
+                  <div className="home-perf-chart-badge">
+                    Efficiency Gains <span className="home-perf-chart-badge-val">{displayedEfficiencyGain}</span>
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-gray)', fontSize: '0.7rem', borderTop: '1px solid var(--border-color)', paddingTop: '0.75rem' }}>
+                <div className="home-perf-chart-axis">
                   <span>Month 1</span><span>Month 2</span><span>Month 3</span><span>Month 4</span><span>Month 5</span><span>Month 6</span>
                 </div>
               </div>
@@ -1837,67 +1840,69 @@ export default function App() {
           }) : null}
 
           {/* Contact Section at bottom of subpage */}
-          <section id="block-contact" className="section" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
-            <div className="subpage-contact-grid contact-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', width: '100%', maxWidth: '1200px', alignItems: 'center' }}>
-              <div className="glass-panel" style={{ padding: '2.5rem', border: '1px solid rgba(138, 75, 243, 0.2)' }}>
-                <h3 style={{ fontSize: '1.25rem', marginBottom: '1.5rem', color: 'var(--text-primary)', borderBottom: '1px solid var(--border-color)', paddingBottom: '1rem' }}>
+          <section id="block-contact" className="section hero-fullscreen-section">
+            <div className="subpage-contact-grid contact-grid">
+              <div className="glass-panel subpage-contact-card">
+                <h3 className="subpage-contact-heading">
                   Initiate Engagement
                 </h3>
                 
                 {contactSubmitted ? (
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexGrow: 1, gap: '1rem', color: 'var(--accent)' }}>
-                    <CheckCircle size={48} />
-                    <h4 style={{ color: 'white' }}>Submission Received</h4>
-                    <p style={{ color: 'var(--text-gray)', fontSize: '0.9rem', textAlign: 'center' }}>Thank you. One of our operational leads will contact you shortly.</p>
+                  <div className="hero-gauge-status">
+                    <CheckCircle size={48} className="neon-icon" />
+                    <h4>Submission Received</h4>
+                    <p>Thank you. One of our operational leads will contact you shortly.</p>
                   </div>
                 ) : (
-                  <form onSubmit={handleContactSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', flexGrow: 1 }}>
+                  <form onSubmit={handleContactSubmit} className="contact-form">
                     <div>
-                      <label style={{ fontSize: '0.75rem', color: 'var(--text-gray)', display: 'block', marginBottom: '0.5rem' }}>Full Name</label>
+                      <label className="contact-label">Full Name</label>
                       <input 
                         type="text" 
                         required 
                         value={contactName} 
                         onChange={(e) => setContactName(e.target.value)} 
-                        style={{ width: '100%', padding: '0.65rem', backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'white', borderRadius: '6px' }} 
+                        className="contact-input"
                       />
                     </div>
 
                     <div>
-                      <label style={{ fontSize: '0.75rem', color: 'var(--text-gray)', display: 'block', marginBottom: '0.5rem' }}>Email Address</label>
+                      <label className="contact-label">Email Address</label>
                       <input 
                         type="email" 
                         required 
                         value={contactEmail} 
                         onChange={(e) => setContactEmail(e.target.value)} 
-                        style={{ width: '100%', padding: '0.65rem', backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'white', borderRadius: '6px' }} 
+                        className="contact-input"
                       />
                     </div>
 
-                    <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-                      <label style={{ fontSize: '0.75rem', color: 'var(--text-gray)', display: 'block', marginBottom: '0.5rem' }}>Brief Description of operational bottlenecks</label>
+                    <div className="contact-form">
+                      <label className="contact-label">Brief Description of operational bottlenecks</label>
                       <textarea 
                         required 
                         value={contactMsg} 
                         onChange={(e) => setContactMsg(e.target.value)} 
-                        style={{ width: '100%', padding: '0.65rem', backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'white', borderRadius: '6px', resize: 'none', flexGrow: 1, minHeight: '80px' }} 
+                        className="contact-textarea"
                       />
                     </div>
 
-                    <button type="submit" className="cta-primary" style={{ width: '100%', justifyContent: 'center' }}>
+                    <button type="submit" className="cta-primary contact-submit-btn">
                       INITIALIZE PROTOCOL
                     </button>
                   </form>
                 )}
               </div>
 
-              <div style={{ paddingLeft: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                <h3 style={{ fontSize: '2.5rem', color: 'white', fontFamily: 'var(--font-title)' }}>Initialize System Engagement</h3>
-                <p style={{ color: 'var(--text-gray)', lineHeight: '1.6', fontSize: '1.1rem' }}>
-                  Consult directly with our system architects. We analyze complex enterprise bottlenecks, establish quantitative viability vectors, and engineer precision deployment roadmaps.
-                </p>
-                {/* Official LinkedIn Social Link */}
-                <LinkedInConnect />
+              <div className="hero-gauge-wrapper">
+                <div className="contact-card">
+                  <h3 className="subpage-contact-sidebar-heading">Initialize System Engagement</h3>
+                  <p className="subpage-contact-sidebar-desc">
+                    Consult directly with our system architects. We analyze complex enterprise bottlenecks, establish quantitative viability vectors, and engineer precision deployment roadmaps.
+                  </p>
+                  {/* Official LinkedIn Social Link */}
+                  <LinkedInConnect />
+                </div>
               </div>
             </div>
 
@@ -1909,16 +1914,16 @@ export default function App() {
 
       {/* Append Global Footer to all non-home subpages */}
       {slug !== 'home' && slug !== 'portal' && slug !== 'wip' && slug !== '' && !isSplash && (
-        <footer style={{ width: '100%', backgroundColor: '#050d1a', borderTop: '1px solid rgba(255,255,255,0.1)', padding: '2rem 1.5rem', color: 'var(--text-gray)', fontSize: '0.85rem' }}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1.5rem' }}>
+        <footer className="subpage-global-footer">
+          <div className="subpage-global-footer-container">
             <div>© 2026 Lycos Core. All rights reserved.</div>
             <RegionSelector variant="footer" />
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', alignItems: 'center' }}>
-              <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('knowledge-base'); }} style={{ color: 'var(--text-gray)', textDecoration: 'none', transition: 'color 0.2s' }}>Master Knowledge Base</a>
-              <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('terms-of-use'); }} style={{ color: 'var(--text-gray)', textDecoration: 'none', transition: 'color 0.2s' }}>Terms of Use</a>
-              <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('privacy-policy'); }} style={{ color: 'var(--text-gray)', textDecoration: 'none', transition: 'color 0.2s' }}>Privacy Policy</a>
-              <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('responsible-ai-policy'); }} style={{ color: 'var(--text-gray)', textDecoration: 'none', transition: 'color 0.2s' }}>Responsible AI Policy</a>
-              <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('cookie-policy'); }} style={{ color: 'var(--text-gray)', textDecoration: 'none', transition: 'color 0.2s' }}>Cookie Policy</a>
+            <div className="subpage-global-footer-links">
+              <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('knowledge-base'); }} className="subpage-global-footer-link">Master Knowledge Base</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('terms-of-use'); }} className="subpage-global-footer-link">Terms of Use</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('privacy-policy'); }} className="subpage-global-footer-link">Privacy Policy</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('responsible-ai-policy'); }} className="subpage-global-footer-link">Responsible AI Policy</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('cookie-policy'); }} className="subpage-global-footer-link">Cookie Policy</a>
             </div>
           </div>
         </footer>
@@ -1935,26 +1940,26 @@ export default function App() {
 
       {/* Info Modal */}
       {modalOpen && (
-        <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(5, 13, 26, 0.85)', backdropFilter: 'blur(8px)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <div className="glass-panel" style={{ width: '90%', maxWidth: '600px', backgroundColor: 'var(--bg-secondary)' }}>
-            <h3 style={{ fontSize: '1.6rem', marginBottom: '1.5rem', color: 'var(--accent)', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>{modalTitle}</h3>
+        <div className="app-info-modal-backdrop">
+          <div className="glass-panel app-info-modal-card">
+            <h3 className="app-info-modal-title">{modalTitle}</h3>
             
-            <div style={{ color: 'var(--text-gray)', fontSize: '1rem', lineHeight: '1.6', marginBottom: '2rem' }}>
+            <div className="app-info-modal-body">
               {modalType === 'ai' && (
                 <div>
-                  <p style={{ marginBottom: '1rem' }}>Our central AI engine coordinates data classification, risk modeling, and natural language routing pipelines across standard REST endpoints.</p>
+                  <p className="app-info-modal-p">Our central AI engine coordinates data classification, risk modeling, and natural language routing pipelines across standard REST endpoints.</p>
                   <p>In the headless setup, this coordinates dynamic queries via JSON API schemas, resolving complex data dependencies instantaneously without server-side rendering latency.</p>
                 </div>
               )}
               {modalType === 'pillar' && (
                 <div>
-                  <p style={{ marginBottom: '1rem' }}>This core operational pillar is fully represented in the Payload CMS backend.</p>
+                  <p className="app-info-modal-p">This core operational pillar is fully represented in the Payload CMS backend.</p>
                   <p>Content managers can dynamically edit descriptions, add custom metrics, or link case studies, reflecting instantly on the horizontal-scroll React interface without codebase deployments.</p>
                 </div>
               )}
               {modalType === 'insight' && (
                 <div>
-                  <p style={{ marginBottom: '1rem' }}>Generative data pipelines demand extreme regulatory and security validation structures.</p>
+                  <p className="app-info-modal-p">Generative data pipelines demand extreme regulatory and security validation structures.</p>
                   <p>This matured insight studies model feedback vectors and how structured collections can secure user data contexts while accelerating validation runtimes.</p>
                 </div>
               )}

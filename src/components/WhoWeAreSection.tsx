@@ -105,18 +105,18 @@ export const WhoWeAreSection: React.FC = () => {
   return (
     <>
       {/* Above-the-Fold Dedicated Hero Section (Strictly 100vh) */}
-      <section id="who-hero" className="section hero-fullscreen-section" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
-        <div style={{ maxWidth: '1100px', width: '100%', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-          <div className="eyebrow-tagline-green" style={{ marginBottom: '1rem' }}>
+      <section id="who-hero" className="section hero-fullscreen-section">
+        <div className="hero-centered-content">
+          <div className="eyebrow-tagline-green">
             // SYSTEMIC EXPERTISE
           </div>
-          <h1 className="hero-heading" style={{ marginBottom: '1.25rem', lineHeight: '1.2' }}>
+          <h1 className="hero-heading">
             <span>Quantifiable Performance Yield</span><span className="brand-dot">.</span>
             <br />
-            <span style={{ color: 'var(--text-gray, #94a3b8)' }}>Proven Implementations</span><span className="brand-dot">.</span>
+            <span className="text-secondary">Proven Implementations</span><span className="brand-dot">.</span>
           </h1>
           
-          <div className="hero-tags-row" style={{ justifyContent: 'center', marginBottom: '1.5rem' }}>
+          <div className="hero-tags-row hero-tags-centered">
             {['Neural Architects', 'Tactical Operators', 'Systems Engineering'].map((tag, tIdx) => (
               <span key={tIdx} className="hero-pill-badge">
                 {tag}
@@ -124,7 +124,7 @@ export const WhoWeAreSection: React.FC = () => {
             ))}
           </div>
 
-          <p className="hero-body-copy" style={{ maxWidth: '840px', margin: '0 auto', textAlign: 'center' }}>
+          <p className="hero-body-copy hero-body-copy-centered">
             Lycos Core is a highly coordinated collective of AI engineers, system architects, and seasoned deployment specialists. We design, harden, and execute machine intelligence within the world's most complex, heavily regulated digital environments.
           </p>
         </div>

@@ -213,10 +213,10 @@ export default function IncubationHubSection() {
         <div className="outcome-stats-grid">
           {stats.map((s, idx) => (
             <div key={idx} className="baseline-card outcome-stat-card">
-              <div className="count-up-trigger stat-metric" data-target={s.value.replace(/[^0-9.]/g, '')} data-percent={s.value.includes('%')} style={{ color: '#8ce63f', fontSize: '2.5rem', fontWeight: 800, fontFamily: 'var(--font-title)' }}>
+              <div className="count-up-trigger stat-metric stat-metric-green" data-target={s.value.replace(/[^0-9.]/g, '')} data-percent={s.value.includes('%')}>
                 {s.value}
               </div>
-              <div className="stat-label" style={{ color: 'var(--text-gray)', fontSize: '0.85rem', marginTop: '0.5rem' }}>{s.label}</div>
+              <div className="stat-label">{s.label}</div>
             </div>
           ))}
         </div>

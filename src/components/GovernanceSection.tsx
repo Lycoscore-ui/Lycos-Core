@@ -139,18 +139,18 @@ export const GovernanceSection: React.FC = () => {
   return (
     <>
       {/* Above-the-Fold Dedicated Hero Section (Strictly 100vh) */}
-      <section id="gov-hero" className="section hero-fullscreen-section" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
-        <div style={{ maxWidth: '1100px', width: '100%', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-          <div className="eyebrow-tagline-green" style={{ marginBottom: '1rem' }}>
+      <section id="gov-hero" className="section hero-fullscreen-section">
+        <div className="hero-centered-content">
+          <div className="eyebrow-tagline-green">
             // ZERO-TRUST COMPLIANCE
           </div>
-          <h1 className="hero-heading" style={{ marginBottom: '1.25rem', lineHeight: '1.2' }}>
+          <h1 className="hero-heading">
             <span>Hardcoded Algorithmic</span><span className="brand-dot">.</span>
             <br />
-            <span style={{ color: 'var(--text-gray, #94a3b8)' }}>Safety and Governance</span><span className="brand-dot">.</span>
+            <span className="text-secondary">Safety and Governance</span><span className="brand-dot">.</span>
           </h1>
           
-          <div className="hero-tags-row" style={{ justifyContent: 'center', marginBottom: '1.5rem' }}>
+          <div className="hero-tags-row hero-tags-centered">
             {['EU AI Act Compliance', 'NIST Risk Management', 'SOC 2 Mirroring'].map((tag, tIdx) => (
               <span key={tIdx} className="hero-pill-badge">
                 {tag}
@@ -158,7 +158,7 @@ export const GovernanceSection: React.FC = () => {
             ))}
           </div>
 
-          <p className="hero-body-copy" style={{ maxWidth: '840px', margin: '0 auto', textAlign: 'center' }}>
+          <p className="hero-body-copy hero-body-copy-centered">
             We design for high-trust, heavily regulated digital territories. Our governance architecture is compiled directly into our delivery pipelines, from telemetry diagnosis to active deployment.
           </p>
         </div>

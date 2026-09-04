@@ -510,14 +510,20 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
     <>
       {/* Above-the-Fold Dedicated Hero Section (Strictly 100vh) */}
       <section id="legal-hero" className="section hero-fullscreen-section">
-        <div className="hero-grid" style={{ alignItems: 'center' }}>
+        <div className="hero-grid">
           <div>
             <div className="eyebrow-tagline-green">{data.eyebrow}</div>
             <h1 className="hero-heading">
               {data.title}<span className="brand-dot">.</span>
             </h1>
+
+            <div className="hero-tags-row">
+              {[data.eyebrow, 'Corporate Telemetry', 'Zero-Trust Auditing'].map((tag, tIdx) => (
+                <span key={tIdx} className="hero-pill-badge">{tag}</span>
+              ))}
+            </div>
             
-            <p className="hero-body-copy" style={{ marginBottom: '2rem' }}>
+            <p className="hero-body-copy">
               Please review the sovereign legal terms, operational boundaries, and compliance frameworks governing the Lycos Core network.
             </p>
             
@@ -543,57 +549,68 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
             </div>
           </div>
 
-          {/* Right Column: Full-width double-height stacked pills */}
-          <div className="legal-hero-pills-container" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '1.25rem', width: '100%', maxWidth: '440px', marginLeft: 'auto' }}>
-            {[data.eyebrow, 'Corporate Telemetry', 'Zero-Trust Auditing'].map((tag, tIdx) => (
-              <div 
-                key={tIdx} 
-                className="hero-pill-badge legal-pill-expanded"
-                style={{ 
-                  width: '100%', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center', 
-                  padding: '1.15rem 1.75rem', 
-                  fontSize: '1.05rem', 
-                  fontWeight: 600,
-                  textTransform: 'none',
-                  textAlign: 'center',
-                  borderRadius: '36px',
-                  boxShadow: '0 4px 20px rgba(138, 75, 243, 0.15)',
-                  letterSpacing: '0.5px'
-                }}
-              >
-                {tag}
-              </div>
-            ))}
+          {/* Right Column: Stacked Badges */}
+          <div className="hero-gauge-wrapper">
+            <div className="legal-hero-pills-container">
+              {[data.eyebrow, 'Corporate Telemetry', 'Zero-Trust Auditing'].map((tag, tIdx) => (
+                <div 
+                  key={tIdx} 
+                  className="hero-pill-badge legal-pill-expanded"
+                >
+                  {tag}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Below-the-Fold Section: Legal Content Card */}
+      {/* Below-the-Fold Section: Legal Content Card with Sticky TOC */}
       <section id="block-legal" className="section">
-        <div className="centered-narrow-container">
+        <div className="legal-layout-container">
+          {/* Sticky Table of Contents Navigation */}
+          <aside className="legal-toc-sidebar">
+            <h4 className="legal-toc-title">// DOCUMENT SECTIONS</h4>
+            <ul className="legal-toc-list">
+              {data.sections.map((sec, idx) => (
+                <li key={idx}>
+                  <a 
+                    href={`#legal-sec-${idx}`} 
+                    className="legal-toc-link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const el = document.getElementById(`legal-sec-${idx}`);
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                  >
+                    {sec.heading}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </aside>
+
+          {/* Main Legal Content Card */}
           <div className="legal-block-card">
             <p className="legal-updated-date">Effective Date: {data.lastUpdated}</p>
             <div>
               {data.sections.map((sec, idx) => (
-                <div key={idx} className="legal-block-section">
+                <div key={idx} id={`legal-sec-${idx}`} className="legal-block-section">
                   <h2 className="legal-section-title">{sec.heading}</h2>
                   
                   {sec.body && (
-                    <div className="legal-section-body" style={{ whiteSpace: 'pre-line', marginBottom: sec.bullets || sec.table || sec.subsections ? '1rem' : '0' }}>
+                    <div className={`legal-section-body ${sec.bullets || sec.table || sec.subsections ? 'legal-section-body-spaced' : ''}`}>
                       {sec.body}
                     </div>
                   )}
 
                   {sec.table && (
-                    <div className="legal-table-wrapper" style={{ overflowX: 'auto', margin: '1.25rem 0' }}>
-                      <table className="legal-table" style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.9rem', textAlign: 'left' }}>
+                    <div className="legal-table-wrapper">
+                      <table className="legal-table">
                         <thead>
                           <tr>
                             {sec.table.headers.map((h, hIdx) => (
-                              <th key={hIdx} style={{ padding: '0.85rem 1rem', border: '1px solid var(--border-color)', background: 'rgba(138, 75, 243, 0.12)', color: 'var(--text-primary)', fontFamily: 'var(--font-mono)' }}>
+                              <th key={hIdx}>
                                 {h}
                               </th>
                             ))}
@@ -603,7 +620,7 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
                           {sec.table.rows.map((row, rIdx) => (
                             <tr key={rIdx}>
                               {row.map((cell, cIdx) => (
-                                <td key={cIdx} style={{ padding: '0.85rem 1rem', border: '1px solid var(--border-color)', color: 'var(--text-gray)', verticalAlign: 'top' }}>
+                                <td key={cIdx}>
                                   {cell}
                                 </td>
                               ))}
@@ -615,10 +632,10 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
                   )}
 
                   {sec.bullets && (
-                    <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem', margin: '0.75rem 0', color: 'var(--text-gray)', lineHeight: '1.75' }}>
+                    <ul className="legal-bullets-list">
                       {sec.bullets.map((b, bIdx) => (
-                        <li key={bIdx} style={{ marginBottom: '0.6rem' }}>
-                          {b.label && <strong style={{ color: 'var(--text-primary)' }}>{b.label}: </strong>}
+                        <li key={bIdx} className="legal-bullet-item">
+                          {b.label && <strong className="legal-bullet-label">{b.label}: </strong>}
                           {b.text}
                         </li>
                       ))}
@@ -626,19 +643,19 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
                   )}
 
                   {sec.subsections && (
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginTop: '1rem' }}>
+                    <div className="legal-subsections-container">
                       {sec.subsections.map((sub, sIdx) => (
-                        <div key={sIdx} style={{ borderLeft: '2px solid rgba(140, 255, 50, 0.4)', paddingLeft: '1.25rem' }}>
-                          <h3 style={{ fontSize: '1.05rem', color: 'var(--text-primary)', marginBottom: '0.4rem', fontFamily: 'var(--font-title)' }}>
+                        <div key={sIdx} className="legal-subsection-item">
+                          <h3 className="legal-subsection-title">
                             {sub.subhead}
                           </h3>
-                          <p style={{ color: 'var(--text-gray)', fontSize: '0.95rem', lineHeight: '1.75', margin: 0 }}>
+                          <p className="legal-subsection-body">
                             {sub.text}
                           </p>
                           {sub.subbullets && (
-                            <ul style={{ listStyleType: 'circle', paddingLeft: '1.25rem', marginTop: '0.5rem', color: 'var(--text-gray)' }}>
+                            <ul className="legal-subbullets-list">
                               {sub.subbullets.map((sb, sbIdx) => (
-                                <li key={sbIdx} style={{ fontSize: '0.9rem', marginBottom: '0.35rem' }}>
+                                <li key={sbIdx} className="legal-subbullet-item">
                                   {sb}
                                 </li>
                               ))}
