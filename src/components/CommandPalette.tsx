@@ -217,6 +217,15 @@ const SEARCH_DATABASE: SearchItem[] = [
     tags: ['ethics', 'responsible ai', 'safety', 'bias', 'audit']
   },
   {
+    id: 'legal-cookies',
+    title: 'Cookie Policy // Telemetry & Consent',
+    category: 'Legal and Governance',
+    description: 'On-site cookie preferences, zero ad-brokerage, non-training telemetry protocols.',
+    slug: 'cookie-policy',
+    iconName: 'FileText',
+    tags: ['cookie', 'cookie policy', 'consent', 'telemetry', 'privacy']
+  },
+  {
     id: 'system-splash',
     title: 'Splash & Coming Soon // Public Initialization Preview',
     category: 'Protocols and Incubation',

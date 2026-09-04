@@ -73,7 +73,7 @@ export default function InsightsSection({ insightsList }: InsightsSectionProps) 
       <section id="insights-hero" className="section hero-fullscreen-section">
         <div className="hero-grid">
           <div>
-            <div className="breadcrumb-text">// CORE &gt; // INTEL &gt; // OWNED INDUSTRY INSIGHTS</div>
+            <div className="eyebrow-tagline-green">// ADVANCED NEURAL INTELLIGENCE</div>
             <h1 className="hero-heading">
               Owned Thought Leadership and Sovereign Industry Insights<span className="brand-dot">.</span>
             </h1>

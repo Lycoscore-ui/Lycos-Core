@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { ChevronDown, CheckCircle2 } from 'lucide-react';
-import LinkedInConnect from '../components/LinkedInConnect';
 
 interface FAQItem {
   question: string;
@@ -14,20 +13,24 @@ interface FAQGroup {
 
 const masterFaqs: FAQGroup[] = [
   {
-    category: 'Cognitive Advisory and Strategy',
+    category: 'Cognitive Advisory & Strategic Roadmaps',
     items: [
       {
         question: 'What is the Lycos Core Cognitive Advisory protocol?',
         answer: 'Our Cognitive Advisory protocol provides high-yield strategic roadmap formulation, zero-trust governance architecture, and infrastructure readiness assessments for enterprise AI adoption.'
       },
       {
-        question: 'How do you measure AI operational readiness?',
-        answer: 'We evaluate data pipeline latency, compliance posture, vector database infrastructure, model explainability layers, and ROI feasibility across custom multi-phase scoring metrics.'
+        question: 'How do you measure AI operational readiness and enterprise ROI?',
+        answer: 'We evaluate data pipeline latency, compliance posture, vector database infrastructure, model explainability layers, and quantitative ROI feasibility across custom multi-phase scoring metrics.'
+      },
+      {
+        question: 'How does Lycos Core structure legacy enterprise migrations?',
+        answer: 'We deploy semantic abstraction layers and zero-trust middleware that interface with existing on-premises ERP, CRM, and mainframe databases without disrupting active business operations.'
       }
     ]
   },
   {
-    category: 'System Synthesis and Engineering',
+    category: 'Systems Synthesis & Infrastructure Engineering',
     items: [
       {
         question: 'What technologies power the System Synthesis stack?',
@@ -36,41 +39,69 @@ const masterFaqs: FAQGroup[] = [
       {
         question: 'How are custom AI models deployed with zero operational downtime?',
         answer: 'Deployments utilize continuous integration guardrails, shadow model validation, and automated rollback triggers to ensure 99.99% uptime during active transitions.'
+      },
+      {
+        question: 'Can Lycos Core models be deployed on sovereign private cloud infrastructure?',
+        answer: 'Yes. All systems support on-premises edge appliances, air-gapped private enclaves, and localized cloud regions (AWS, Azure, GCP) to meet strict regional data sovereignty requirements.'
       }
     ]
   },
   {
-    category: 'Incubation Den (Kinetic, Apex, Citadel)',
+    category: 'Autonomous Product Suites (Sentinel, Vector, Aegis, Synapse, Vanguard)',
+    items: [
+      {
+        question: 'What is Lycos Sentinel and how does it handle front-line enterprise support?',
+        answer: 'Lycos Sentinel is an autonomous customer resolution engine engineered for 92%+ deflection accuracy, resolving complex tier-1 and tier-2 operational inquiries in sub-second latency with strict compliance safeguards.'
+      },
+      {
+        question: 'What does the Lycos Aegis Zero-Trust Matrix manage?',
+        answer: 'Lycos Aegis coordinates multi-agent node networks, balancing data ingestion, context harmonization, cryptographic isolation, and real-time compliance filtering with sub-12ms orchestration latency.'
+      },
+      {
+        question: 'How do Lycos Vector, Synapse, and Vanguard operate across operational workflows?',
+        answer: 'Vector automates complex multi-step robotic workflows; Synapse maintains real-time cross-database contextual synchronization; Vanguard delivers predictive operational foresight and risk modeling.'
+      },
+      {
+        question: 'Are Autonomous Suites customizable for existing custom software stacks?',
+        answer: 'Yes, all suites feature modular REST and GraphQL API connectors, semantic caching layers, and zero-trust middleware compatible with existing cloud and on-premise infrastructure.'
+      }
+    ]
+  },
+  {
+    category: 'Incubation Den (Kinetic, Apex, Citadel Protocols)',
     items: [
       {
         question: 'What is the distinction between Kinetic, Apex, and Citadel protocols?',
-        answer: 'Kinetic accelerates early-stage MVP models into production; Apex scales revenue infrastructure and data monetization; Citadel provides enterprise-grade governance for high-yield spin-outs.'
+        answer: 'Kinetic accelerates early-stage MVP models into production with embedded engineering units; Apex scales revenue infrastructure and procurement channels for $250K+ ARR ventures; Citadel provides corporate spin-out entity formation, IP firewalls, and institutional capitalization.'
       },
       {
-        question: 'How do startups enter the Lycos Core Incubation Den?',
-        answer: 'Founders submit architectural vector blueprints through our evaluation portal for multi-agent technical feasibility analysis and venture alignment.'
+        question: 'How does intellectual property (IP) ownership work in the Incubation Den?',
+        answer: '100% of IP is retained by the founder or enterprise parent. Lycos Core operates as an active technical builder; we do not claim any proprietary carve-outs on code engineered for your platform during the pathway timeline.'
+      },
+      {
+        question: 'How is Kinetic co-investment capital allocated?',
+        answer: 'Co-investment capital (milestone-gated) is unlocked dynamically as key engineering, architectural, and production deployment milestones are validated by our technical syndicate leads.'
+      },
+      {
+        question: 'How does Citadel protect the parent corporation during a venture spin-out?',
+        answer: 'We implement risk-isolated structural firewalls, IP licensing agreements, and clean corporate regulatory separation, ensuring the spin-out operates as an independent entity without exposing parent liabilities.'
       }
     ]
   },
   {
-    category: 'Autonomous Suites (Sentinel, Vector, Aegis, Synapse, Vanguard)',
+    category: 'Governance, Security, POPIA/GDPR & Zero-Trust Compliance',
     items: [
       {
-        question: 'What does the Aegis Orchestration Matrix manage?',
-        answer: 'Aegis coordinates multi-agent node networks, balancing data ingestion, context harmonization, and real-time compliance filtering with sub-12ms orchestration latency.'
+        question: 'How does Lycos Core guarantee zero data leakage and non-training of public models?',
+        answer: 'Client proprietary data, confidential codebases, and personal records processed through our systems are strictly isolated in memory. Client data is never used to train public or third-party foundation models.'
       },
       {
-        question: 'Are Autonomous Suites customizable for existing legacy software?',
-        answer: 'Yes, all suites feature modular API connectors, semantic caching layers, and zero-trust middleware compatible with existing cloud and on-premise infrastructure.'
-      }
-    ]
-  },
-  {
-    category: 'Governance, Security and Ethics',
-    items: [
+        question: 'How are POPIA, GDPR, and EU AI Act regulations enforced?',
+        answer: 'Every input and output payload passes through real-time telemetry filters, PII sanitizers, and immutable auditability logs aligned with global standards such as the EU AI Act risk classification matrix.'
+      },
       {
-        question: 'How does Lycos Core enforce zero-trust AI guardrails?',
-        answer: 'Every input and output payload passes through real-time telemetry filters, PII sanitizers, and auditability logs aligned with global standards such as the EU AI Act.'
+        question: 'What human-in-the-loop controls exist for high-stakes decision workflows?',
+        answer: 'High-risk business operations executed by autonomous agents include mandatory human oversight checkpoints and override mechanisms before final authorization and execution.'
       }
     ]
   }
@@ -98,25 +129,8 @@ const MasterFAQPage: React.FC = () => {
 
   const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
 
-  // Contact Form state
-  const [contactName, setContactName] = useState('');
-  const [contactEmail, setContactEmail] = useState('');
-  const [contactMsg, setContactMsg] = useState('');
-  const [contactSubmitted, setContactSubmitted] = useState(false);
-
   const toggleItem = (key: string) => {
     setOpenItems(prev => ({ ...prev, [key]: !prev[key] }));
-  };
-
-  const handleContactSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setContactSubmitted(true);
-    setTimeout(() => {
-      setContactSubmitted(false);
-      setContactName('');
-      setContactEmail('');
-      setContactMsg('');
-    }, 3000);
   };
 
   return (
@@ -125,7 +139,7 @@ const MasterFAQPage: React.FC = () => {
       <section id="kb-hero" className="section hero-fullscreen-section">
         <div className="hero-grid">
           <div>
-            <div className="breadcrumb-text">// CORE &gt; // SUPPORT &gt; // KNOWLEDGE BASE</div>
+            <div className="eyebrow-tagline-green">// TECHNICAL KNOWLEDGE BASE</div>
             <h1 className="hero-heading">
               Master Knowledge Base and Spec Repository<span className="brand-dot">.</span>
             </h1>
@@ -146,11 +160,11 @@ const MasterFAQPage: React.FC = () => {
               <button 
                 className="cta-primary" 
                 onClick={() => {
-                  const el = document.getElementById('contact');
+                  const el = document.getElementById('block-kb');
                   if (el) el.scrollIntoView({ behavior: 'smooth' });
                 }}
               >
-                REQUEST TELEMETRY AUDIT
+                BROWSE ALL SPECIFICATIONS
               </button>
               <button 
                 className="cta-secondary" 
@@ -159,7 +173,7 @@ const MasterFAQPage: React.FC = () => {
                   if (el) el.scrollIntoView({ behavior: 'smooth' });
                 }}
               >
-                ACCESS SPEC CATALOG
+                ACCESS PROTOCOL RUNBOOKS
               </button>
             </div>
           </div>
@@ -229,75 +243,6 @@ const MasterFAQPage: React.FC = () => {
               </div>
             </div>
           ))}
-        </div>
-      </section>
-
-      {/* Contact Section at bottom of page matching Gold-Standard */}
-      <section id="contact" className="section hero-fullscreen-section">
-        <div className="contact-grid">
-          <div className="glass-panel contact-card">
-            <h3 className="service-heading">
-              Initiate Engagement
-            </h3>
-            
-            {contactSubmitted ? (
-              <div className="hero-gauge-status">
-                <CheckCircle2 size={48} className="neon-icon" />
-                <h4>Submission Received</h4>
-                <p>Thank you. One of our operational leads will contact you shortly.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleContactSubmit} className="contact-form">
-                <div>
-                  <label className="contact-label">Full Name</label>
-                  <input 
-                    type="text" 
-                    required 
-                    value={contactName} 
-                    onChange={(e) => setContactName(e.target.value)} 
-                    className="contact-input"
-                  />
-                </div>
-
-                <div>
-                  <label className="contact-label">Email Address</label>
-                  <input 
-                    type="email" 
-                    required 
-                    value={contactEmail} 
-                    onChange={(e) => setContactEmail(e.target.value)} 
-                    className="contact-input"
-                  />
-                </div>
-
-                <div className="contact-form">
-                  <label className="contact-label">Brief Description of operational bottlenecks</label>
-                  <textarea 
-                    required 
-                    value={contactMsg} 
-                    onChange={(e) => setContactMsg(e.target.value)} 
-                    className="contact-textarea"
-                  />
-                </div>
-
-                <button type="submit" className="cta-primary contact-submit-btn">
-                  Initialize Protocol
-                </button>
-              </form>
-            )}
-          </div>
-
-          <div className="hero-gauge-wrapper">
-            <div className="contact-card">
-              <h3 className="hero-heading">Initialize System Engagement</h3>
-              <p className="hero-body-copy">
-                Consult directly with our system architects. We analyze complex enterprise bottlenecks, establish quantitative viability vectors, and engineer precision deployment roadmaps.
-              </p>
-              
-              {/* Official LinkedIn Social Link */}
-              <LinkedInConnect />
-            </div>
-          </div>
         </div>
       </section>
     </>

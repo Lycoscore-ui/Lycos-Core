@@ -66,6 +66,25 @@ const LEGAL_DOCS: Record<string, LegalContent> = {
         body: 'We subject our model suites to continuous automated stress-testing against synthetic adversarial vectors to detect and mitigate algorithmic drift, hallucinations, and unintended bias.'
       }
     ]
+  },
+  cookies: {
+    eyebrow: '// COOKIE GOVERNANCE',
+    title: 'Cookie Policy',
+    lastUpdated: 'September 2026',
+    sections: [
+      {
+        heading: '1. What Are Cookies',
+        body: 'Cookies are small text files placed on your device to ensure core site security, remember preferences, and analyze anonymized telemetry.'
+      },
+      {
+        heading: '2. Zero AI Training Guarantee',
+        body: 'Cookies and local session tokens are never used to train public or third-party AI models. We do not participate in cross-site data brokerage or ad targeting.'
+      },
+      {
+        heading: '3. Managing Preferences',
+        body: 'You can modify your cookie choices anytime via browser settings or through our on-site governance controls. For inquiries, contact privacy@lycoscore.com.'
+      }
+    ]
   }
 };
 
@@ -334,6 +353,12 @@ export default function SplashPage() {
               className="splash-legal-btn"
             >
               Responsible AI Policy
+            </button>
+            <button
+              onClick={() => setActiveLegalModal('cookies')}
+              className="splash-legal-btn"
+            >
+              Cookie Policy
             </button>
           </div>
         </div>

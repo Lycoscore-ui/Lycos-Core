@@ -36,7 +36,7 @@ export default function CaseStudiesSection({ caseStudiesList = mockCaseStudies }
       <section id="case-studies-hero" className="section hero-fullscreen-section">
         <div className="hero-grid">
           <div>
-            <div className="breadcrumb-text">// CORE &gt; // INTEL &gt; // CASE STUDIES</div>
+            <div className="eyebrow-tagline-green">// ENTERPRISE CASE EXPLORER</div>
             <h1 className="hero-heading">
               Quantifiable Performance Yield and Proven Implementations<span className="brand-dot">.</span>
             </h1>

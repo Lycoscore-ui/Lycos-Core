@@ -47,7 +47,7 @@ export default function ArticlesSection({ articlesList }: ArticlesSectionProps) 
       <section id="articles-hero" className="section hero-fullscreen-section">
         <div className="hero-grid">
           <div>
-            <div className="breadcrumb-text">// CORE &gt; // INTEL &gt; // CURATED ADVISORIES</div>
+            <div className="eyebrow-tagline-green">// CURATED INDUSTRY BRIEFINGS</div>
             <h1 className="hero-heading">
               Curated Technical News and Market Advisories<span className="brand-dot">.</span>
             </h1>

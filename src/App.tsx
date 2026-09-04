@@ -31,7 +31,7 @@ import ProtocolKinetic from './pages/ProtocolKinetic'
 import ProtocolApex from './pages/ProtocolApex'
 import ProtocolCitadel from './pages/ProtocolCitadel'
 import MasterFAQPage from './pages/MasterFAQPage'
-import { TermsOfUsePage, PrivacyPolicyPage, ResponsibleAIPage } from './pages/LegalPages'
+import { TermsOfUsePage, PrivacyPolicyPage, ResponsibleAIPage, CookiePolicyPage } from './pages/LegalPages'
 import CipherWidget from './components/CipherWidget'
 import AttestationModal from './components/AttestationModal'
 import RegionSelector from './components/RegionSelector'
@@ -1739,6 +1739,7 @@ export default function App() {
               <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('terms-of-use'); }} className="home-link-item">Terms of Use</a>
               <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('privacy-policy'); }} className="home-link-item">Privacy Policy</a>
               <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('responsible-ai-policy'); }} className="home-link-item">Responsible AI Policy</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('cookie-policy'); }} className="home-link-item">Cookie Policy</a>
             </div>
           </section>
 
@@ -1814,10 +1815,15 @@ export default function App() {
               <ResponsibleAIPage />
             </div>
           )}
+          {slug === 'cookie-policy' && (
+            <div id="subpage-wrapper" className="vertical-scroll-wrapper" ref={containerRef}>
+              <CookiePolicyPage />
+            </div>
+          )}
           {isSplash && (
             <SplashPage />
           )}
-          {!isSplash && !['portal','wip','ai-products','tech-services','incubation-hub','who-we-are','how-we-operate','governance-security','case-studies','insights','articles','incubation/kinetic','incubation/apex','incubation/citadel','knowledge-base','faqs','terms-of-use','privacy-policy','responsible-ai-policy'].includes(slug) && (
+          {!isSplash && !['portal','wip','ai-products','tech-services','incubation-hub','who-we-are','how-we-operate','governance-security','case-studies','insights','articles','incubation/kinetic','incubation/apex','incubation/citadel','knowledge-base','faqs','terms-of-use','privacy-policy','responsible-ai-policy','cookie-policy'].includes(slug) && (
             /* Vertical Sections Wrapper (Subpages like ai-consulting) */
             <div key="subpage-wrapper" id="subpage-wrapper" className="vertical-scroll-wrapper" ref={containerRef}>
           {pageData.layout ? pageData.layout.map((block: any, idx: number) => {
@@ -1912,6 +1918,7 @@ export default function App() {
               <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('terms-of-use'); }} style={{ color: 'var(--text-gray)', textDecoration: 'none', transition: 'color 0.2s' }}>Terms of Use</a>
               <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('privacy-policy'); }} style={{ color: 'var(--text-gray)', textDecoration: 'none', transition: 'color 0.2s' }}>Privacy Policy</a>
               <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('responsible-ai-policy'); }} style={{ color: 'var(--text-gray)', textDecoration: 'none', transition: 'color 0.2s' }}>Responsible AI Policy</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('cookie-policy'); }} style={{ color: 'var(--text-gray)', textDecoration: 'none', transition: 'color 0.2s' }}>Cookie Policy</a>
             </div>
           </div>
         </footer>
