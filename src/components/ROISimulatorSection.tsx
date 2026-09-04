@@ -94,8 +94,8 @@ export default function ROISimulatorSection() {
       />
 
       {/* Callout Banner */}
-      <div className="glass-panel" style={{ padding: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '2rem', marginBottom: '2rem' }}>
-        <div style={{ maxWidth: '75%' }}>
+      <div className="glass-panel roi-callout-panel" style={{ padding: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '2rem', marginBottom: '2rem' }}>
+        <div className="roi-callout-text" style={{ maxWidth: '75%' }}>
           <span style={{ fontSize: '0.75rem', color: 'var(--accent)', letterSpacing: '1px', textTransform: 'uppercase', fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>
             ROI Simulator
           </span>
@@ -106,7 +106,7 @@ export default function ROISimulatorSection() {
             Use our operational simulator below to map your current conversation volume against target deflection rates and instantly see the capital and capacity reclaimed by Lycos Sentinel.
           </p>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <div className="roi-callout-actions" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <button 
             className="cta-secondary"
             onClick={() => setIsBriefOpen(true)}
@@ -121,7 +121,7 @@ export default function ROISimulatorSection() {
       </div>
 
       {/* Core Simulator Layout */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: '2rem' }}>
+      <div className="roi-simulator-grid" style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: '2rem' }}>
         
         {/* LEFT COLUMN: Input Control Panel */}
         <div className="glass-panel" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>

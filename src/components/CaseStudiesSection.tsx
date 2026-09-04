@@ -82,19 +82,51 @@ export default function CaseStudiesSection({ caseStudiesList = mockCaseStudies }
                 // VERIFIED ENTERPRISE RESULTS
               </span>
               
-              <div className="hero-gauge-svg-container">
-                <svg width="100%" height="100%" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="8" />
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="#8CFF32" strokeWidth="8" strokeDasharray="251.2" strokeDashoffset="0.2" strokeLinecap="round" />
-                </svg>
-                <div className="hero-gauge-number-wrap">
-                  <span className="count-up-trigger stat-metric" data-target="3.2" data-percent="false">3.2×</span>
+              <div className="hero-visual-centerpiece">
+                <div className="roi-comparator-container">
+                  {/* Metric 1: OPEX Reduction */}
+                  <div className="roi-metric-row">
+                    <div className="roi-metric-header">
+                      <span className="roi-metric-title">OPEX REDUCTION</span>
+                      <span className="roi-metric-value">-74%</span>
+                    </div>
+                    <div className="roi-progress-track">
+                      <div className="roi-progress-fill row-1" />
+                    </div>
+                  </div>
+
+                  {/* Metric 2: Throughput Velocity */}
+                  <div className="roi-metric-row">
+                    <div className="roi-metric-header">
+                      <span className="roi-metric-title">THROUGHPUT MULTIPLIER</span>
+                      <span className="roi-metric-value" style={{ color: '#00f0ff' }}>3.2x</span>
+                    </div>
+                    <div className="roi-progress-track">
+                      <div className="roi-progress-fill row-2" />
+                    </div>
+                  </div>
+
+                  {/* Metric 3: Execution Fidelity */}
+                  <div className="roi-metric-row">
+                    <div className="roi-metric-header">
+                      <span className="roi-metric-title">EXECUTION ACCURACY</span>
+                      <span className="roi-metric-value">99.9%</span>
+                    </div>
+                    <div className="roi-progress-track">
+                      <div className="roi-progress-fill row-3" />
+                    </div>
+                  </div>
+
+                  <div className="roi-footer-badge">
+                    <span style={{ color: '#94a3b8' }}>DEPLOYMENTS: 100% SUCCESS</span>
+                    <span style={{ color: '#8CFF32', fontWeight: 700 }}>AVG ROI: 3.2x</span>
+                  </div>
                 </div>
               </div>
 
               {/* Metric Label Strictly Underneath */}
               <span className="hero-gauge-label">
-                Average Revenue Valuation Multiple
+                Verified Enterprise Multiplier
               </span>
 
               <div className="hero-gauge-status">

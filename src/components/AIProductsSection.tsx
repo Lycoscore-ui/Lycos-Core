@@ -92,22 +92,66 @@ export default function AIProductsSection() {
           <div className="hero-gauge-wrapper">
             <div className="baseline-card hero-gauge-card">
               <span className="hero-gauge-tag">
-                // REAL-TIME YIELD COEFFICIENT
+                // AUTONOMOUS SUITE TELEMETRY
               </span>
               
-              <div className="hero-gauge-svg-container">
-                <svg width="100%" height="100%" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="8" />
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="#8CFF32" strokeWidth="8" strokeDasharray="251.2" strokeDashoffset="0.1" strokeLinecap="round" />
-                </svg>
-                <div className="hero-gauge-number-wrap">
-                  <span className="count-up-trigger stat-metric" data-target="95.6" data-percent="true">95.6%</span>
+              <div className="hero-visual-centerpiece">
+                <div className="swarm-mesh-container">
+                  <svg className="swarm-svg" viewBox="0 0 240 140">
+                    <defs>
+                      <filter id="glowGreen" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur stdDeviation="3" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                      </filter>
+                    </defs>
+
+                    {/* Outer Rotating Orbit Ring */}
+                    <circle cx="120" cy="70" r="58" className="swarm-orbit-ring" />
+
+                    {/* Inter-Agent Link Lines */}
+                    <line x1="120" y1="22" x2="175" y2="48" className="swarm-link-line swarm-active-link" />
+                    <line x1="175" y1="48" x2="155" y2="108" className="swarm-link-line" />
+                    <line x1="155" y1="108" x2="85" y2="108" className="swarm-link-line swarm-active-link" />
+                    <line x1="85" y1="108" x2="65" y2="48" className="swarm-link-line" />
+                    <line x1="65" y1="48" x2="120" y2="22" className="swarm-link-line swarm-active-link" />
+
+                    {/* Radial Links to Center Core */}
+                    <line x1="120" y1="70" x2="120" y2="22" className="swarm-link-line" />
+                    <line x1="120" y1="70" x2="175" y2="48" className="swarm-link-line swarm-active-link" />
+                    <line x1="120" y1="70" x2="155" y2="108" className="swarm-link-line" />
+                    <line x1="120" y1="70" x2="85" y2="108" className="swarm-link-line swarm-active-link" />
+                    <line x1="120" y1="70" x2="65" y2="48" className="swarm-link-line" />
+
+                    {/* Center Master Core */}
+                    <circle cx="120" cy="70" r="14" className="swarm-agent-core" />
+                    <circle cx="120" cy="70" r="6" fill="#8CFF32">
+                      <animate attributeName="opacity" values="0.6;1;0.6" dur="1.5s" repeatCount="indefinite" />
+                    </circle>
+
+                    {/* Satellite Nodes (Sentinel, Vector, Aegis, Vanguard, Synapse) */}
+                    <circle cx="120" cy="22" r="6" className="swarm-satellite-node" stroke="#8CFF32" />
+                    <circle cx="175" cy="48" r="6" className="swarm-satellite-node" stroke="#00f0ff" />
+                    <circle cx="155" cy="108" r="6" className="swarm-satellite-node" stroke="#a855f7" />
+                    <circle cx="85" cy="108" r="6" className="swarm-satellite-node" stroke="#8CFF32" />
+                    <circle cx="65" cy="48" r="6" className="swarm-satellite-node" stroke="#00f0ff" />
+
+                    {/* Micro Pulses traversing links */}
+                    <circle cx="147" cy="59" r="2.5" fill="#8CFF32">
+                      <animate attributeName="cx" values="120;175" dur="2s" repeatCount="indefinite" />
+                      <animate attributeName="cy" values="70;48" dur="2s" repeatCount="indefinite" />
+                    </circle>
+                  </svg>
+
+                  <div className="swarm-hud-badge">
+                    <Network size={12} />
+                    <span>5/5 NODES • CONSENSUS 100%</span>
+                  </div>
                 </div>
               </div>
 
               {/* Metric Label Strictly Underneath */}
               <span className="hero-gauge-label">
-                Average Operational Defect Reduction
+                Autonomous Agent Swarm Mesh
               </span>
 
               <div className="hero-gauge-status">

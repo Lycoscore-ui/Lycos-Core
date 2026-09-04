@@ -138,16 +138,59 @@ export default function IncubationHubSection() {
           <div className="hero-gauge-wrapper">
             <div className="baseline-card hero-gauge-card">
               <span className="hero-gauge-tag">
-                // COHORT INCUBATION ACTIVE
+                // VENTURE ACCELERATION ENGINE
               </span>
               
-              <div className="hero-gauge-svg-container">
-                <svg width="100%" height="100%" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="8" />
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="#8CFF32" strokeWidth="8" strokeDasharray="251.2" strokeDashoffset="0.25" strokeLinecap="round" />
-                </svg>
-                <div className="hero-gauge-number-wrap">
-                  <span className="count-up-trigger stat-metric" data-target="83" data-percent="true">83%</span>
+              <div className="hero-visual-centerpiece">
+                <div className="ascent-chart-container">
+                  <svg className="ascent-svg" viewBox="0 0 240 100">
+                    <defs>
+                      <linearGradient id="ascentGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#8a4bf3" />
+                        <stop offset="50%" stopColor="#00f0ff" />
+                        <stop offset="100%" stopColor="#8CFF32" />
+                      </linearGradient>
+                      <linearGradient id="ascentAreaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor="#8CFF32" stopOpacity="0.25" />
+                        <stop offset="100%" stopColor="#8a4bf3" stopOpacity="0.0" />
+                      </linearGradient>
+                    </defs>
+
+                    {/* Chart Grid Lines */}
+                    <line x1="10" y1="20" x2="230" y2="20" stroke="rgba(255,255,255,0.05)" strokeDasharray="2 4" />
+                    <line x1="10" y1="50" x2="230" y2="50" stroke="rgba(255,255,255,0.05)" strokeDasharray="2 4" />
+                    <line x1="10" y1="80" x2="230" y2="80" stroke="rgba(255,255,255,0.05)" strokeDasharray="2 4" />
+
+                    {/* Area under curve */}
+                    <path
+                      d="M 10,85 C 60,85 100,75 140,45 C 170,25 200,12 230,8 L 230,85 L 10,85 Z"
+                      className="ascent-area-fill"
+                    />
+
+                    {/* Glowing Ascent Curve */}
+                    <path
+                      d="M 10,85 C 60,85 100,75 140,45 C 170,25 200,12 230,8"
+                      className="ascent-curve-path"
+                    />
+
+                    {/* Milestone 1: Seed */}
+                    <circle cx="60" cy="83" r="3.5" fill="#8a4bf3" stroke="#fff" strokeWidth="1" />
+                    {/* Milestone 2: PMF */}
+                    <circle cx="140" cy="45" r="4" fill="#00f0ff" stroke="#fff" strokeWidth="1" />
+                    {/* Milestone 3: Series A (Pulsing) */}
+                    <circle cx="230" cy="8" r="5" fill="#8CFF32" className="ascent-node-pulse" filter="drop-shadow(0 0 8px #8CFF32)" />
+                  </svg>
+
+                  {/* Milestones Row */}
+                  <div className="ascent-milestones-row">
+                    <span className="ascent-milestone-pill">SEED ✓</span>
+                    <span className="ascent-milestone-pill">PMF ✓</span>
+                    <span className="ascent-milestone-pill active-pill">SERIES A</span>
+                    <div className="ascent-velocity-badge">
+                      <TrendingUp size={12} />
+                      <span>3.4x</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -179,7 +222,7 @@ export default function IncubationHubSection() {
         </div>
 
         {/* Programme Tracks Selector Section */}
-        <div>
+        <div className="section-content-wrapper">
           <div className="section-header-center">
             <h2 className="section-title">
               Structured <span className="brand-dot">Pathways.</span>
@@ -325,7 +368,7 @@ export default function IncubationHubSection() {
           </p>
         </div>
 
-        <div>
+        <div className="section-content-wrapper">
           <div className="hero-tags-row">
             {portfolio.map((p, idx) => (
               <button

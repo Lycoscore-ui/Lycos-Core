@@ -90,26 +90,56 @@ export default function ArticlesSection({ articlesList }: ArticlesSectionProps) 
           <div className="hero-gauge-wrapper">
             <div className="baseline-card hero-gauge-card">
               <span className="hero-gauge-tag">
-                // REALTIME THREAT INDEX
+                // LIVE ADVISORY INTEL FEED
               </span>
               
-              <div className="hero-gauge-svg-container">
-                <svg width="100%" height="100%" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="8" />
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="#FF3232" strokeWidth="8" strokeDasharray="251.2" strokeDashoffset="180.5" strokeLinecap="round" />
-                </svg>
-                <div className="hero-gauge-number-wrap">
-                  <span className="count-up-trigger stat-metric threat-color" data-target="28" data-percent="true">28%</span>
+              <div className="hero-visual-centerpiece">
+                <div className="threat-radar-container">
+                  <svg className="threat-radar-svg" viewBox="0 0 240 140">
+                    <defs>
+                      <radialGradient id="radarSweepGrad" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stopColor="#FF3232" stopOpacity="0.4" />
+                        <stop offset="100%" stopColor="#FF3232" stopOpacity="0.0" />
+                      </radialGradient>
+                    </defs>
+
+                    {/* Radar Diamond / Grid Coordinates */}
+                    <polygon points="120,15 210,70 120,125 30,70" fill="none" stroke="rgba(255,50,50,0.15)" strokeWidth="1" />
+                    <polygon points="120,35 180,70 120,105 60,70" fill="none" stroke="rgba(255,50,50,0.25)" strokeWidth="1" strokeDasharray="3 3" />
+                    <polygon points="120,55 150,70 120,85 90,70" fill="none" stroke="rgba(255,50,50,0.35)" strokeWidth="1" />
+
+                    {/* Crosshairs */}
+                    <line x1="30" y1="70" x2="210" y2="70" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+                    <line x1="120" y1="15" x2="120" y2="125" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+
+                    {/* Rotating Radar Sweep Line */}
+                    <g className="radar-sweep-line">
+                      <line x1="120" y1="70" x2="120" y2="15" stroke="#FF3232" strokeWidth="2" filter="drop-shadow(0 0 6px #FF3232)" />
+                    </g>
+
+                    {/* Center Core */}
+                    <circle cx="120" cy="70" r="4" fill="#FF3232" />
+
+                    {/* Live Advisory Blips */}
+                    <circle cx="155" cy="45" r="4" fill="#FF3232" className="radar-blip" />
+                    <circle cx="85" cy="85" r="3.5" fill="#00f0ff" className="radar-blip" style={{ animationDelay: '0.8s' }} />
+                    <circle cx="165" cy="80" r="3" fill="#8CFF32" className="radar-blip" style={{ animationDelay: '1.4s' }} />
+                  </svg>
+
+                  <div className="radar-hud-pill">
+                    <AlertTriangle size={12} />
+                    <span>12 ACTIVE SIGNALS • LIVE FEED</span>
+                  </div>
                 </div>
               </div>
 
               {/* Metric Label Strictly Underneath */}
               <span className="hero-gauge-label">
-                Critical Curation Threat Velocity
+                Real-Time Advisory Intel Matrix
               </span>
 
               <div className="hero-gauge-status">
-                <CheckCircle2 size={16} className="neon-icon threat-color" /> Curation Stream Sync Active
+                <CheckCircle2 size={16} className="neon-icon threat-color" /> Live Curation Stream Active
               </div>
             </div>
           </div>

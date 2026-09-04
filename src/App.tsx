@@ -11,7 +11,11 @@ import {
   TrendingUp, 
   CheckCircle, 
   Info,
-  Search 
+  Search,
+  Menu,
+  X,
+  ChevronDown,
+  ChevronRight
 } from 'lucide-react'
 import AIProductsSection from './components/AIProductsSection'
 import TechServicesSection from './components/TechServicesSection'
@@ -264,19 +268,35 @@ export default function App() {
     return path || 'home'
   })
 
-  // Handle header background on scroll (disabled on home page for horizontal layout)
+  // Mobile Hamburger Menu State
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [mobileExpandedDropdown, setMobileExpandedDropdown] = useState<string | null>(null)
+
+  // Handle header background on scroll
   useEffect(() => {
     const handleScroll = () => {
-      if (slug !== 'home' && window.scrollY > 10) {
+      if (window.scrollY > 10) {
         setScrolled(true)
       } else {
         setScrolled(false)
       }
     }
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     handleScroll()
     return () => window.removeEventListener('scroll', handleScroll)
   }, [slug])
+
+  // Lock body scrolling when mobile drawer is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isMobileMenuOpen])
 
   const [pageData, setPageData] = useState<any>(() => {
     return slug === 'home' ? FALLBACK_HOME : (FALLBACK_PAGES[slug] || FALLBACK_PAGES['ai-consulting'])
@@ -611,6 +631,15 @@ export default function App() {
   // Smooth scroll to anchored section index or offset
   const scrollToSection = (index: number) => {
     if (slug === 'home') {
+      if (window.innerWidth <= 900) {
+        const sections = document.querySelectorAll('.section')
+        if (sections[index]) {
+          sections[index].scrollIntoView({ behavior: 'smooth' })
+          setActiveSection(index)
+          return
+        }
+      }
+
       // Force ScrollTrigger refresh to ensure container.scrollWidth is fully computed and accurate
       ScrollTrigger.refresh()
       
@@ -660,60 +689,92 @@ export default function App() {
     const container = containerRef.current
     if (!container) return
 
-    const sections = gsap.utils.toArray('.section')
-    const totalSections = sections.length
-    console.log("HORIZONTAL SECTIONS DETECTED:", totalSections, sections.map((s: any) => `${s.tagName}#${s.id}`))
+    const mm = gsap.matchMedia()
 
-    // Create a single timeline for all horizontal animations
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        id: 'home-scroll-trigger',
-        trigger: container,
-        pin: true,
-        scrub: true,
-        start: 'top top',
-        end: () => '+=' + (container.scrollWidth - window.innerWidth),
-        invalidateOnRefresh: true,
-        snap: {
-          snapTo: (value: number) => {
-            if (isProgrammaticScroll) return value; // bypass snapping during menu clicks
-            const step = 1 / (totalSections - 1);
-            return Math.round(value / step) * step;
+    // Desktop: Horizontal Scroll Pin & Parallax
+    mm.add("(min-width: 901px)", () => {
+      const sections = gsap.utils.toArray('.section')
+      const totalSections = sections.length
+
+      // Create a single timeline for all horizontal animations
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          id: 'home-scroll-trigger',
+          trigger: container,
+          pin: true,
+          scrub: true,
+          start: 'top top',
+          end: () => '+=' + (container.scrollWidth - window.innerWidth),
+          invalidateOnRefresh: true,
+          snap: {
+            snapTo: (value: number) => {
+              if (isProgrammaticScroll) return value; // bypass snapping during menu clicks
+              const step = 1 / (totalSections - 1);
+              return Math.round(value / step) * step;
+            },
+            duration: { min: 0.15, max: 0.35 },
+            delay: 0.12,
+            ease: 'power1.inOut'
           },
-          duration: { min: 0.15, max: 0.35 },
-          delay: 0.12,
-          ease: 'power1.inOut'
-        },
-        onUpdate: (self) => {
-          // Track active section based on progress
-          const progress = self.progress
-          const sectionIndex = Math.round(progress * (totalSections - 1))
-          setActiveSection(sectionIndex)
+          onUpdate: (self) => {
+            // Track active section based on progress
+            const progress = self.progress
+            const sectionIndex = Math.round(progress * (totalSections - 1))
+            setActiveSection(sectionIndex)
+          }
         }
+      })
+
+      // 1. Slide the content wrapper horizontally
+      tl.to(container, {
+        x: () => -(container.scrollWidth - window.innerWidth),
+        ease: 'none'
+      }, 0)
+
+      // 2. Parallax layer 1: background (slower)
+      tl.to('.parallax-bg', {
+        xPercent: -40,
+        ease: 'none'
+      }, 0)
+
+      // 3. Parallax layer 2: grid pattern (medium)
+      tl.to('.parallax-grid', {
+        xPercent: -60,
+        ease: 'none'
+      }, 0)
+
+      return () => {
+        tl.scrollTrigger?.kill(true)
+        tl.kill()
       }
     })
 
-    // 1. Slide the content wrapper horizontally
-    tl.to(container, {
-      x: () => -(container.scrollWidth - window.innerWidth),
-      ease: 'none'
-    }, 0)
+    // Mobile: Vertical Section Tracking (No horizontal pin, static background)
+    mm.add("(max-width: 900px)", () => {
+      const sections = gsap.utils.toArray('.section') as HTMLElement[]
+      const triggers: any[] = []
 
-    // 2. Parallax layer 1: background (slower)
-    tl.to('.parallax-bg', {
-      xPercent: -40,
-      ease: 'none'
-    }, 0)
+      sections.forEach((sec, idx) => {
+        const trigger = ScrollTrigger.create({
+          trigger: sec,
+          start: 'top center',
+          end: 'bottom center',
+          onToggle: (self) => {
+            if (self.isActive) {
+              setActiveSection(idx)
+            }
+          }
+        })
+        triggers.push(trigger)
+      })
 
-    // 3. Parallax layer 2: grid pattern (medium)
-    tl.to('.parallax-grid', {
-      xPercent: -60,
-      ease: 'none'
-    }, 0)
+      return () => {
+        triggers.forEach(t => t.kill())
+      }
+    })
 
     return () => {
-      tl.scrollTrigger?.kill(true)
-      tl.kill()
+      mm.revert()
     }
   }, [pageData, slug])
 
@@ -796,15 +857,15 @@ export default function App() {
     }
 
     return (
-      <section key={idx} id="block-hero" className="section" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
-        <div style={{ width: '100%', maxWidth: '1200px', display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '3rem', alignItems: 'center' }}>
+      <section key={idx} id="block-hero" className="section subpage-hero-section" style={{ display: 'flex', alignItems: 'center' }}>
+        <div className="subpage-hero-grid hero-two-column-grid" style={{ width: '100%', maxWidth: '1200px', display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '3rem', alignItems: 'center' }}>
           <div>
             {/* Standardized Green Eyebrow Tagline */}
-            <div style={{ color: '#8ce63f', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: 700, marginBottom: '1rem', fontFamily: 'monospace' }}>
+            <div className="eyebrow-tagline-green" style={{ color: '#8ce63f', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: 700, marginBottom: '1rem', fontFamily: 'monospace' }}>
               {block.tagline || '// ENTERPRISE INTELLIGENCE ARCHITECTURE'}
             </div>
             
-            <h1 style={{ fontSize: '3.6rem', lineHeight: '1.15', marginBottom: '1.5rem', fontFamily: 'var(--font-title)', color: '#FFFFFF' }}>
+            <h1 className="hero-heading subpage-hero-title" style={{ fontSize: '3.6rem', lineHeight: '1.15', marginBottom: '1.5rem', fontFamily: 'var(--font-title)', color: '#FFFFFF' }}>
               {block.title ? (
                 <>{block.title.replace(/\.$/, '')}<span className="accent-period">.</span></>
               ) : (
@@ -812,17 +873,17 @@ export default function App() {
               )}
             </h1>
             
-            <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem' }}>
+            <div className="hero-tags-row subpage-tags-row" style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
               {taglines.map((tag: string, tIdx: number) => (
-                <span key={tIdx} style={{ background: 'rgba(138, 75, 243, 0.1)', color: 'var(--accent)', border: '1px solid rgba(138, 75, 243, 0.2)', padding: '0.35rem 1rem', borderRadius: '20px', fontSize: '0.9rem', fontWeight: 600 }}>{tag}</span>
+                <span key={tIdx} className="hero-pill-badge" style={{ background: 'rgba(138, 75, 243, 0.1)', color: 'var(--accent)', border: '1px solid rgba(138, 75, 243, 0.2)', padding: '0.35rem 1rem', borderRadius: '20px', fontSize: '0.9rem', fontWeight: 600 }}>{tag}</span>
               ))}
             </div>
 
-            <p style={{ color: 'var(--text-gray)', fontSize: '1.1rem', marginBottom: '2.5rem', maxWidth: '600px', lineHeight: '1.6' }}>
+            <p className="hero-body-copy" style={{ color: 'var(--text-gray)', fontSize: '1.1rem', marginBottom: '2.5rem', maxWidth: '600px', lineHeight: '1.6' }}>
               {bodyCopy}
             </p>
 
-            <div style={{ display: 'flex', gap: '1.5rem' }}>
+            <div className="subpage-hero-cta-row hero-cta-group" style={{ display: 'flex', gap: '1.5rem' }}>
               <button className="cta-primary" onClick={() => scrollToSection(4)}>
                 {(block.exploreBtnText || 'INITIALIZE CONSULTATION').toUpperCase()}
               </button>
@@ -835,26 +896,56 @@ export default function App() {
             </div>
           </div>
 
-          {/* Visual Gauge widget */}
+          {/* Visual Bespoke Card: Tiered Architecture Stack */}
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <div className="baseline-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', maxWidth: '340px' }}>
-              <span style={{ fontSize: '0.8rem', color: 'var(--text-gray)', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '1.5rem' }}>// AUTOPILOT AI ACTIVE</span>
+            <div className="baseline-card hero-gauge-card">
+              <span className="hero-gauge-tag">// COGNITIVE STRATEGY MATRIX</span>
               
-              <div style={{ position: 'relative', width: '160px', height: '160px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <svg width="100%" height="100%" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="8" />
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="#8CFF32" strokeWidth="8" strokeDasharray="251.2" strokeDashoffset="2.5" strokeLinecap="round" />
-                </svg>
-                <div style={{ position: 'absolute', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                  <span className="count-up-trigger" data-target="99.4" data-percent="true" style={{ fontSize: '2.2rem', fontWeight: 800, color: 'white', fontFamily: 'var(--font-title)' }}>99.4%</span>
+              <div className="hero-visual-centerpiece">
+                <div className="matrix-stack-container">
+                  <div className="matrix-scan-beam" />
+                  
+                  {/* Layer 1: Strategy & Governance */}
+                  <div className="matrix-tier-row active-tier">
+                    <div className="matrix-tier-label-wrap">
+                      <span className="matrix-tier-tag tier-1">L1</span>
+                      <span className="matrix-tier-title">Strategy & Governance</span>
+                    </div>
+                    <div className="matrix-tier-indicator">
+                      <div className="matrix-pulse-dot" />
+                      <span>READY</span>
+                    </div>
+                  </div>
+
+                  {/* Layer 2: Neural Model Architecture */}
+                  <div className="matrix-tier-row">
+                    <div className="matrix-tier-label-wrap">
+                      <span className="matrix-tier-tag tier-2">L2</span>
+                      <span className="matrix-tier-title">Data & Pipeline Stack</span>
+                    </div>
+                    <div className="matrix-tier-indicator" style={{ color: '#c084fc' }}>
+                      <span>-42ms</span>
+                    </div>
+                  </div>
+
+                  {/* Layer 3: Enterprise Scale */}
+                  <div className="matrix-tier-row">
+                    <div className="matrix-tier-label-wrap">
+                      <span className="matrix-tier-tag tier-3">L3</span>
+                      <span className="matrix-tier-title">Enterprise Ops & Edge</span>
+                    </div>
+                    <div className="matrix-tier-indicator" style={{ color: '#00f0ff' }}>
+                      <span>100% SCALE</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* Operational Confidence label placed directly UNDERNEATH the circle */}
-              <span style={{ fontSize: '0.85rem', color: 'var(--text-gray)', marginTop: '0.75rem', marginBottom: '1.25rem', fontWeight: 600 }}>Operational Confidence</span>
+              {/* Operational Alignment label */}
+              <span className="hero-gauge-label">Enterprise Cognitive Alignment</span>
 
-              <div style={{ display: 'flex', gap: '0.75rem', color: 'var(--text-gray)', fontSize: '0.8rem', alignItems: 'center' }}>
-                <CheckCircle size={16} style={{ color: '#8CFF32' }} /> Compliance Vectors Validated
+              <div className="hero-gauge-status">
+                <CheckCircle size={16} className="neon-icon" /> Strategic Roadmaps Validated
               </div>
             </div>
           </div>
@@ -1033,7 +1124,7 @@ export default function App() {
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '4rem', width: '100%', maxWidth: '1200px', alignItems: 'start' }}>
+        <div className="subpage-usecase-grid" style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '4rem', width: '100%', maxWidth: '1200px', alignItems: 'start' }}>
           <div className="glass-panel" style={{ padding: '3rem', border: '1px solid rgba(255,255,255,0.05)' }}>
             <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: 600, display: 'block', marginBottom: '1rem' }}>{block.badge}</span>
             <h3 style={{ fontSize: '1.8rem', marginBottom: '1.5rem', color: 'white' }}>{block.title}</h3>
@@ -1094,6 +1185,7 @@ export default function App() {
     setModalTitle(title)
     setModalOpen(true)
   }
+  void openInfoModal;
 
   // Contact Submit
   const handleContactSubmit = (e: React.FormEvent) => {
@@ -1191,86 +1283,188 @@ export default function App() {
       {/* Floating Header */}
       {!isSplash && (
         <header className={`floating-header ${scrolled ? 'scrolled' : ''}`}>
-        <a href="#" className="header-logo" onClick={(e) => { e.preventDefault(); navigateTo('home'); }}>
-          <img src="./media/LYCOS-CORE-lOGOTYPE-300x100.png" alt="Lycos Core Logo" style={{ height: '3rem', display: 'block' }} />
-        </a>
-        <nav className="header-nav">
-          <ul>
-            {menuConfig.map((item, idx) => (
-              <li key={idx} className={item.items ? 'dropdown-container' : ''}>
-                {item.type === 'scroll' ? (
-                  <a 
-                    href="#" 
-                    className={isItemActive(item) ? 'active' : ''} 
-                    onClick={(e) => { e.preventDefault(); if (item.target !== undefined) scrollToSection(item.target); }}
-                  >
-                    {item.label}
-                  </a>
-                ) : (
-                  <>
+          <a href="#" className="header-logo" onClick={(e) => { e.preventDefault(); navigateTo('home'); setIsMobileMenuOpen(false); }}>
+            <img src="./media/LYCOS-CORE-lOGOTYPE-300x100.png" alt="Lycos Core Logo" className="header-logo-img" />
+          </a>
+          <nav className="header-nav">
+            <ul>
+              {menuConfig.map((item, idx) => (
+                <li key={idx} className={item.items ? 'dropdown-container' : ''}>
+                  {item.type === 'scroll' ? (
                     <a 
                       href="#" 
-                      className={isItemActive(item) ? 'active' : ''}
+                      className={isItemActive(item) ? 'active' : ''} 
+                      onClick={(e) => { e.preventDefault(); if (item.target !== undefined) scrollToSection(item.target); }}
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    <>
+                      <a 
+                        href="#" 
+                        className={isItemActive(item) ? 'active' : ''}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          if (item.label === '// PROTOCOLS') {
+                            scrollToSection(1);
+                          } else if (item.label === '// INTEL') {
+                            scrollToSection(2);
+                          }
+                        }}
+                      >
+                        {item.label} <span className="dropdown-arrow">▼</span>
+                      </a>
+                      <ul className="dropdown-menu">
+                        {item.items?.map((subItem: any, sIdx: number) => (
+                          <li key={sIdx}>
+                            {subItem.type === 'scroll' ? (
+                              <a 
+                                href="#"
+                                onClick={(e) => { 
+                                  e.preventDefault(); 
+                                  if (subItem.target !== undefined) {
+                                    scrollToSection(subItem.target); 
+                                  }
+                                }}
+                              >
+                                {subItem.label}
+                              </a>
+                            ) : (
+                              <a 
+                                href="#" 
+                                onClick={(e) => { 
+                                  e.preventDefault(); 
+                                  navigateTo(subItem.slug); 
+                                }}
+                              >
+                                {subItem.label}
+                              </a>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <div className="header-actions">
+            <button 
+              className="cmd-palette-trigger-btn"
+              onClick={() => setIsCmdPaletteOpen(true)}
+              title="Quick Search"
+            >
+              <Search size={13} className="neon-icon" />
+              <span>SEARCH</span>
+            </button>
+            <button className="btn-solid" style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }} onClick={() => scrollToSection(4)}>
+              INITIATE CONNECTION
+            </button>
+          </div>
+
+          {/* Mobile Hamburger Toggle Button */}
+          <button 
+            className="mobile-hamburger-btn"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </header>
+      )}
+
+      {/* Mobile Navigation Drawer Overlay */}
+      {!isSplash && (
+        <div className={`mobile-nav-drawer ${isMobileMenuOpen ? 'open' : ''}`}>
+          <div className="mobile-nav-backdrop" onClick={() => setIsMobileMenuOpen(false)} />
+          <div className="mobile-nav-content">
+            <div className="mobile-nav-header">
+              <span className="mobile-nav-tagline">// NAVIGATION MATRIX</span>
+              <button 
+                className="mobile-nav-close-btn"
+                onClick={() => setIsMobileMenuOpen(false)}
+                aria-label="Close menu"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="mobile-nav-links">
+              {menuConfig.map((item, idx) => (
+                <div key={idx} className="mobile-nav-group">
+                  {item.type === 'scroll' ? (
+                    <a
+                      href="#"
+                      className={`mobile-nav-link ${isItemActive(item) ? 'active' : ''}`}
                       onClick={(e) => {
                         e.preventDefault();
-                        if (item.label === '// PROTOCOLS') {
-                          scrollToSection(1);
-                        } else if (item.label === '// INTEL') {
-                          scrollToSection(2);
-                        }
+                        setIsMobileMenuOpen(false);
+                        if (item.target !== undefined) scrollToSection(item.target);
                       }}
                     >
-                      {item.label} <span className="dropdown-arrow">▼</span>
+                      <span className="mobile-link-text">{item.label}</span>
+                      <ChevronRight size={16} className="mobile-link-arrow" />
                     </a>
-                    <ul className="dropdown-menu">
-                      {item.items?.map((subItem: any, sIdx: number) => (
-                        <li key={sIdx}>
-                          {subItem.type === 'scroll' ? (
-                            <a 
-                              href="#"
-                              onClick={(e) => { 
-                                e.preventDefault(); 
-                                if (subItem.target !== undefined) {
-                                  scrollToSection(subItem.target); 
-                                }
-                              }}
-                            >
-                              {subItem.label}
-                            </a>
-                          ) : (
-                            <a 
-                              href="#" 
-                              onClick={(e) => { 
-                                e.preventDefault(); 
-                                navigateTo(subItem.slug); 
-                              }}
-                            >
-                              {subItem.label}
-                            </a>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                )}
-              </li>
-            ))}
-          </ul>
-        </nav>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <button 
-            className="cmd-palette-trigger-btn"
-            onClick={() => setIsCmdPaletteOpen(true)}
-            title="Quick Search"
-          >
-            <Search size={13} className="neon-icon" />
-            <span>SEARCH</span>
-          </button>
-          <button className="btn-solid" style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }} onClick={() => scrollToSection(4)}>
-            INITIATE CONNECTION
-          </button>
+                  ) : (
+                    <div className="mobile-accordion-wrapper">
+                      <div
+                        className={`mobile-nav-accordion-header ${mobileExpandedDropdown === item.label ? 'expanded' : ''} ${isItemActive(item) ? 'active' : ''}`}
+                        onClick={() => setMobileExpandedDropdown(mobileExpandedDropdown === item.label ? null : item.label)}
+                      >
+                        <span className="mobile-link-text">{item.label}</span>
+                        <ChevronDown size={16} className={`accordion-chevron ${mobileExpandedDropdown === item.label ? 'rotated' : ''}`} />
+                      </div>
+                      <div className={`mobile-nav-sublinks ${mobileExpandedDropdown === item.label ? 'open' : ''}`}>
+                        {item.items?.map((subItem: any, sIdx: number) => (
+                          <a
+                            key={sIdx}
+                            href="#"
+                            className={`mobile-sublink ${slug === subItem.slug ? 'active' : ''}`}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setIsMobileMenuOpen(false);
+                              if (subItem.type === 'scroll' && subItem.target !== undefined) {
+                                scrollToSection(subItem.target);
+                              } else {
+                                navigateTo(subItem.slug);
+                              }
+                            }}
+                          >
+                            <span className="sublink-bullet">›</span>
+                            <span>{subItem.label}</span>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <div className="mobile-nav-footer">
+              <button 
+                className="mobile-search-btn"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  setIsCmdPaletteOpen(true);
+                }}
+              >
+                <Search size={14} className="neon-icon" />
+                <span>SEARCH PROTOCOLS & INTEL</span>
+              </button>
+              <button 
+                className="btn-solid mobile-cta-btn"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  scrollToSection(4);
+                }}
+              >
+                INITIATE CONNECTION
+              </button>
+            </div>
+          </div>
         </div>
-      </header>
       )}
 
       {(slug === 'home' || slug === 'portal' || slug === 'wip' || !slug) ? (
@@ -1278,7 +1472,7 @@ export default function App() {
         <div key="home-wrapper" className="scroll-wrapper" ref={containerRef}>
           
           {/* Section 1: Hero */}
-          <section className="section">
+          <section className="section home-hero-section">
             <div className="hero-grid">
               <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                 <span style={{ fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '3px', color: 'var(--accent)', fontWeight: 700, display: 'block', marginBottom: '1rem' }}>
@@ -1291,7 +1485,7 @@ export default function App() {
                 <p style={{ color: 'var(--text-gray)', fontSize: '1.1rem', marginBottom: '2.5rem', maxWidth: '600px', lineHeight: '1.6' }}>
                   We architect bespoke AI products, orchestrate enterprise-scale cognitive strategy, and run a high-velocity incubation hub to trial next-generation solutions. Systemic machine intelligence, built to navigate market complexity.
                 </p>
-                <div style={{ display: 'flex', gap: '1.5rem' }}>
+                <div className="hero-cta-group" style={{ display: 'flex', gap: '1.5rem' }}>
                   <button className="btn-solid" onClick={() => scrollToSection(1)}>
                     {pageData.hero.exploreBtnText}
                   </button>
@@ -1302,12 +1496,12 @@ export default function App() {
               </div>
 
               {/* Layout Spacer for Section 1 Right Column (Global Canvas is mounted globally) */}
-              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', minHeight: '440px', pointerEvents: 'none' }} />
+              <div className="hero-right-spacer" />
             </div>
           </section>
 
           {/* Section 2: Pillars */}
-          <section className="section" style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          <section className="section home-section-pillars" style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
             <div style={{ width: '100%', maxWidth: '1200px', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               <h2 style={{ fontSize: '2.8rem', textTransform: 'none', fontFamily: 'var(--font-title)', margin: 0 }}>
                 {pageData.pillars.title.split(' ')[0]} <span style={{ color: 'var(--color-accent-green)' }}>{pageData.pillars.title.split(' ').slice(1).join(' ')}<span className="accent-dot">.</span></span>
@@ -1372,10 +1566,10 @@ export default function App() {
             </div>
           </section>
 
-          {/* Section 3: Use Case */}
-          <section className="section">
+          {/* Section 3: Use Case / Case Study */}
+          <section className="section home-section-usecase">
             <div className="use-case-grid">
-              <div className="glass-panel" style={{ padding: '2.5rem', position: 'relative' }}>
+              <div className="glass-panel use-case-card" style={{ padding: '2.5rem', position: 'relative' }}>
                 <span style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '2px', color: 'var(--text-secondary)', fontWeight: 700, display: 'block', marginBottom: '1rem' }}>
                   {pageData.useCase.badge}
                 </span>
@@ -1386,7 +1580,7 @@ export default function App() {
                   {pageData.useCase.description}
                 </p>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', borderTop: '1px solid var(--border-color)', paddingTop: '2rem' }}>
+                <div className="use-case-metrics-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', borderTop: '1px solid var(--border-color)', paddingTop: '2rem' }}>
                   {pageData.useCase.metrics.map((m: any, idx: number) => (
                     <div key={idx}>
                       <div style={{ fontSize: '2.2rem', fontWeight: 800, color: idx === 0 ? 'var(--accent)' : 'var(--text-primary)', fontFamily: 'var(--font-title)' }}>
@@ -1400,9 +1594,9 @@ export default function App() {
                 </div>
               </div>
 
-              <div style={{ paddingLeft: '2rem', borderLeft: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <div className="use-case-insight-panel" style={{ paddingLeft: '2rem', borderLeft: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                 <span style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '2px', color: 'var(--text-gray)', fontWeight: 700, display: 'block', marginBottom: '0.75rem' }}>
-                  FEATURED INSIGHT
+                  FEATURED CASE STUDY
                 </span>
                 <h3 style={{ fontSize: '1.6rem', fontWeight: 600, lineHeight: '1.3', marginBottom: '1.25rem' }}>
                   {pageData.useCase.insightTitle}
@@ -1410,15 +1604,15 @@ export default function App() {
                 <p style={{ color: 'var(--text-gray)', lineHeight: '1.6', marginBottom: '2rem', fontSize: '0.95rem' }}>
                   {pageData.useCase.insightSummary}
                 </p>
-                <button className="btn-link" onClick={() => openInfoModal('insight', pageData.useCase.insightTitle)}>
-                  {(pageData.useCase.insightLink || 'READ DOSSIER').toUpperCase()} <ArrowRight size={14} />
+                <button className="btn-link" onClick={() => navigateTo('case-studies')}>
+                  {(pageData.useCase.insightLink || 'READ THE FULL CASE STUDY').toUpperCase()} <ArrowRight size={14} />
                 </button>
               </div>
             </div>
           </section>
 
           {/* Section 4: Performance */}
-          <section className="section">
+          <section className="section home-section-performance">
             <div className="performance-grid">
               <div className="glass-panel" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '2rem' }}>
                 <h3 style={{ fontSize: '1.1rem', marginBottom: '1.5rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
@@ -1638,7 +1832,7 @@ export default function App() {
 
           {/* Contact Section at bottom of subpage */}
           <section id="block-contact" className="section" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', width: '100%', maxWidth: '1200px', alignItems: 'center' }}>
+            <div className="subpage-contact-grid contact-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', width: '100%', maxWidth: '1200px', alignItems: 'center' }}>
               <div className="glass-panel" style={{ padding: '2.5rem', border: '1px solid rgba(138, 75, 243, 0.2)' }}>
                 <h3 style={{ fontSize: '1.25rem', marginBottom: '1.5rem', color: 'var(--text-primary)', borderBottom: '1px solid var(--border-color)', paddingBottom: '1rem' }}>
                   Initiate Engagement

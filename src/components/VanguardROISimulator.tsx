@@ -112,8 +112,8 @@ export default function VanguardROISimulator() {
       `}</style>
 
       {/* Callout Banner */}
-      <div className="glass-panel" style={{ padding: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '2rem', marginBottom: '2rem' }}>
-        <div style={{ maxWidth: '80%' }}>
+      <div className="glass-panel roi-callout-panel" style={{ padding: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '2rem', marginBottom: '2rem' }}>
+        <div className="roi-callout-text" style={{ maxWidth: '80%' }}>
           <span style={{ fontSize: '0.75rem', color: 'var(--accent)', letterSpacing: '1px', textTransform: 'uppercase', fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>
             ROI Simulator
           </span>
@@ -124,13 +124,13 @@ export default function VanguardROISimulator() {
             Use our operational simulator below to map your current forecasting parameters against target optimization rates and instantly see the capital and capacity reclaimed by Lycos Vanguard.
           </p>
         </div>
-        <div style={{ color: 'var(--accent)', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-color)', padding: '0.75rem', borderRadius: '8px', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+        <div className="roi-callout-actions" style={{ color: 'var(--accent)', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-color)', padding: '0.75rem', borderRadius: '8px', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
           <Compass size={28} className="neon-icon" />
         </div>
       </div>
 
       {/* Core Simulator Container */}
-      <div className="glass-panel" style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+      <div className="glass-panel vanguard-simulator-panel" style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
         
         {/* Top: Predictive Impact Table */}
         <div style={{ background: 'rgba(255, 255, 255, 0.01)', border: '1px solid rgba(255, 255, 255, 0.03)', borderRadius: '12px', padding: '1.5rem 2rem', overflowX: 'auto' }}>
@@ -240,7 +240,7 @@ export default function VanguardROISimulator() {
         </div>
 
         {/* Middle: Actuarial Summary Badges */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
+        <div className="roi-badges-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
           {/* Badge 1: Sw */}
           <div style={{ background: 'rgba(255, 255, 255, 0.01)', border: '1px solid rgba(255, 255, 255, 0.03)', borderRadius: '12px', padding: '1.25rem 1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'relative', overflow: 'hidden' }}>
             <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: 'var(--accent)' }} />
@@ -303,7 +303,7 @@ export default function VanguardROISimulator() {
         <div style={{ borderTop: '1px solid var(--border-color)', margin: '0.5rem 0' }} />
 
         {/* Bottom: Interactive Sliders (Split into 2 columns) */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2.5rem' }}>
+        <div className="roi-sliders-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2.5rem' }}>
           
           {/* Column 1: Working Capital and Forecast Accuracy */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>

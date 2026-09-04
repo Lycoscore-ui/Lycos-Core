@@ -116,22 +116,66 @@ export default function InsightsSection({ insightsList }: InsightsSectionProps) 
           <div className="hero-gauge-wrapper">
             <div className="baseline-card hero-gauge-card">
               <span className="hero-gauge-tag">
-                // INTEL RESOURCE PLATFORM
+                // QUANTUM INTEL FREQUENCY
               </span>
               
-              <div className="hero-gauge-svg-container">
-                <svg width="100%" height="100%" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="8" />
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="#8CFF32" strokeWidth="8" strokeDasharray="251.2" strokeDashoffset="0.25" strokeLinecap="round" />
-                </svg>
-                <div className="hero-gauge-number-wrap">
-                  <span className="count-up-trigger stat-metric" data-target="95.6" data-percent="true">95.6%</span>
+              <div className="hero-visual-centerpiece">
+                <div className="spectral-eq-container">
+                  <div className="spectral-hologram-beam" />
+                  
+                  <div className="spectral-bars-wrapper">
+                    <div className="spectral-bar-col">
+                      <div className="spectral-bar-track" style={{ height: '100%' }}>
+                        <div className="spectral-bar-fill bar-1" />
+                      </div>
+                    </div>
+                    <div className="spectral-bar-col">
+                      <div className="spectral-bar-track" style={{ height: '100%' }}>
+                        <div className="spectral-bar-fill bar-2" />
+                      </div>
+                    </div>
+                    <div className="spectral-bar-col">
+                      <div className="spectral-bar-track" style={{ height: '100%' }}>
+                        <div className="spectral-bar-fill bar-3" />
+                      </div>
+                    </div>
+                    <div className="spectral-bar-col">
+                      <div className="spectral-bar-track" style={{ height: '100%' }}>
+                        <div className="spectral-bar-fill bar-4" />
+                      </div>
+                    </div>
+                    <div className="spectral-bar-col">
+                      <div className="spectral-bar-track" style={{ height: '100%' }}>
+                        <div className="spectral-bar-fill bar-5" />
+                      </div>
+                    </div>
+                    <div className="spectral-bar-col">
+                      <div className="spectral-bar-track" style={{ height: '100%' }}>
+                        <div className="spectral-bar-fill bar-6" />
+                      </div>
+                    </div>
+                    <div className="spectral-bar-col">
+                      <div className="spectral-bar-track" style={{ height: '100%' }}>
+                        <div className="spectral-bar-fill bar-7" />
+                      </div>
+                    </div>
+                    <div className="spectral-bar-col">
+                      <div className="spectral-bar-track" style={{ height: '100%' }}>
+                        <div className="spectral-bar-fill bar-8" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="spectral-footer-row">
+                    <span className="spectral-tag-left">INDEXED: 1,420+ PAPERS</span>
+                    <span className="spectral-tag-right">CONF: 99.8%</span>
+                  </div>
                 </div>
               </div>
 
               {/* Metric Label Strictly Underneath */}
               <span className="hero-gauge-label">
-                Governance Compliance Index
+                Predictive Research Synthesis
               </span>
 
               <div className="hero-gauge-status">

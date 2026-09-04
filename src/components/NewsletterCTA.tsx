@@ -44,7 +44,7 @@ export default function NewsletterCTA() {
         pointerEvents: 'none',
       }} />
 
-      <div style={{
+      <div className="newsletter-cta-grid" style={{
         display: 'grid',
         gridTemplateColumns: '1.2fr 0.8fr',
         gap: '3rem',

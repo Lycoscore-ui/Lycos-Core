@@ -126,19 +126,64 @@ export default function TechServicesSection() {
                 // SYSTEM SYNTHESIS ACTIVE
               </span>
               
-              <div className="hero-gauge-svg-container">
-                <svg width="100%" height="100%" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="8" />
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="#8CFF32" strokeWidth="8" strokeDasharray="251.2" strokeDashoffset="0.25" strokeLinecap="round" />
-                </svg>
-                <div className="hero-gauge-number-wrap">
-                  <span className="count-up-trigger stat-metric" data-target="99.9" data-percent="true">99.9%</span>
+              <div className="hero-visual-centerpiece">
+                <div className="oscilloscope-container">
+                  <svg className="oscilloscope-svg" viewBox="0 0 240 90">
+                    <defs>
+                      <linearGradient id="waveGradGreen" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#8a4bf3" />
+                        <stop offset="50%" stopColor="#8CFF32" />
+                        <stop offset="100%" stopColor="#00f0ff" />
+                      </linearGradient>
+                      <linearGradient id="waveGradCyan" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#00f0ff" />
+                        <stop offset="50%" stopColor="#a855f7" />
+                        <stop offset="100%" stopColor="#8CFF32" />
+                      </linearGradient>
+                    </defs>
+
+                    {/* Oscilloscope Grid Lines */}
+                    <line x1="0" y1="22" x2="240" y2="22" className="oscilloscope-grid-line" />
+                    <line x1="0" y1="45" x2="240" y2="45" className="oscilloscope-grid-line" />
+                    <line x1="0" y1="68" x2="240" y2="68" className="oscilloscope-grid-line" />
+                    <line x1="60" y1="0" x2="60" y2="90" className="oscilloscope-grid-line" />
+                    <line x1="120" y1="0" x2="120" y2="90" className="oscilloscope-grid-line" />
+                    <line x1="180" y1="0" x2="180" y2="90" className="oscilloscope-grid-line" />
+
+                    {/* Secondary Wave */}
+                    <path
+                      d="M0,45 Q30,65 60,45 T120,45 T180,45 T240,45"
+                      className="oscilloscope-wave-secondary"
+                    />
+
+                    {/* Primary Sine Wave */}
+                    <path
+                      d="M0,45 Q30,15 60,45 T120,45 T180,45 T240,45"
+                      className="oscilloscope-wave-primary"
+                    />
+
+                    {/* Pulse Node */}
+                    <circle cx="120" cy="45" r="4" fill="#8CFF32" filter="drop-shadow(0 0 6px #8CFF32)">
+                      <animate attributeName="r" values="3;6;3" dur="1.8s" repeatCount="indefinite" />
+                    </circle>
+                  </svg>
+
+                  <div className="oscilloscope-bus-row">
+                    <div className="oscilloscope-stat-item">
+                      <span>LATENCY:</span>
+                      <span className="oscilloscope-stat-val">1.2ms</span>
+                    </div>
+                    <div className="oscilloscope-stat-item">
+                      <span>THROUGHPUT:</span>
+                      <span className="oscilloscope-stat-val">4.8 GB/s</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
               {/* Metric Label Strictly Underneath */}
               <span className="hero-gauge-label">
-                Uptime Reliability Index
+                Real-Time Pipeline Synthesis
               </span>
 
               <div className="hero-gauge-status">
@@ -164,7 +209,7 @@ export default function TechServicesSection() {
         </div>
 
         {/* Service Selector */}
-        <div>
+        <div className="section-content-wrapper">
           <div className="section-header-center">
             <h2 className="section-title">
               Engineered <span className="brand-dot">Solutions.</span>
