@@ -1,13 +1,5 @@
 import { useState } from 'react';
-import { 
-   Shield, 
-   Cpu, 
-   ChevronDown, 
-   CheckCircle2,
-   Lock,
-   Network,
-   Compass
-} from 'lucide-react';
+import { CheckCircle2, ChevronDown, Network } from 'lucide-react';
 import ROISimulatorSection from './ROISimulatorSection';
 import VectorROISimulator from './VectorROISimulator';
 import AegisROISimulator from './AegisROISimulator';
@@ -171,8 +163,8 @@ export default function AIProductsSection() {
             onClick={() => { setActiveProduct(0); setActiveFaq(null); }}
             className={`product-tab-btn ${activeProduct === 0 ? 'active' : ''}`}
           >
-            <div className="tab-icon-wrap">
-              <Shield size={20} />
+            <div className="tab-image-wrap">
+              <img src="./media/Sentinal.jpeg" alt="Lycos Sentinel" className="tab-card-img" />
             </div>
             <span className="tab-tag">CUSTOMER OPERATIONS</span>
             <span className="tab-title">Lycos Sentinel</span>
@@ -183,8 +175,8 @@ export default function AIProductsSection() {
             onClick={() => { setActiveProduct(1); setActiveFaq(null); }}
             className={`product-tab-btn ${activeProduct === 1 ? 'active' : ''}`}
           >
-            <div className="tab-icon-wrap">
-              <Cpu size={20} />
+            <div className="tab-image-wrap">
+              <img src="./media/Vector.jpeg" alt="Lycos Vector" className="tab-card-img" />
             </div>
             <span className="tab-tag">BACK-OFFICE OPERATIONS</span>
             <span className="tab-title">Lycos Vector</span>
@@ -195,8 +187,8 @@ export default function AIProductsSection() {
             onClick={() => { setActiveProduct(2); setActiveFaq(null); }}
             className={`product-tab-btn ${activeProduct === 2 ? 'active' : ''}`}
           >
-            <div className="tab-icon-wrap">
-              <Lock size={20} />
+            <div className="tab-image-wrap">
+              <img src="./media/Aegis.jpeg" alt="Lycos Aegis" className="tab-card-img" />
             </div>
             <span className="tab-tag">SECURITY INFRASTRUCTURE</span>
             <span className="tab-title">Lycos Aegis</span>
@@ -207,8 +199,8 @@ export default function AIProductsSection() {
             onClick={() => { setActiveProduct(3); setActiveFaq(null); }}
             className={`product-tab-btn ${activeProduct === 3 ? 'active' : ''}`}
           >
-            <div className="tab-icon-wrap">
-              <Network size={20} />
+            <div className="tab-image-wrap">
+              <img src="./media/Synapse.jpeg" alt="Lycos Synapse" className="tab-card-img" />
             </div>
             <span className="tab-tag">DATA INTEGRATION</span>
             <span className="tab-title">Lycos Synapse</span>
@@ -219,8 +211,8 @@ export default function AIProductsSection() {
             onClick={() => { setActiveProduct(4); setActiveFaq(null); }}
             className={`product-tab-btn ${activeProduct === 4 ? 'active' : ''}`}
           >
-            <div className="tab-icon-wrap">
-              <Compass size={20} />
+            <div className="tab-image-wrap">
+              <img src="./media/Vangaurd.jpeg" alt="Lycos Vanguard" className="tab-card-img" />
             </div>
             <span className="tab-tag">PREDICTIVE INTELLIGENCE</span>
             <span className="tab-title">Lycos Vanguard</span>
