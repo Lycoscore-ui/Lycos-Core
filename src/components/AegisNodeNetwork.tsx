@@ -57,7 +57,7 @@ const AegisNodeNetwork: React.FC = () => {
 
   return (
     <div className="containment-map-wrapper">
-      <div className="glass-panel containment-map-card">
+      <div className="containment-map-card">
         {/* Telemetry Header Bar */}
         <div className="containment-telemetry-bar">
           <div className="containment-telemetry-item">
