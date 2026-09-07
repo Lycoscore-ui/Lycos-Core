@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { X, Printer, Shield, CheckCircle2 } from 'lucide-react';
 import { useRegion } from '../context/RegionContext';
 
@@ -19,13 +20,25 @@ interface ExecutiveBriefModalProps {
 export const ExecutiveBriefModal: React.FC<ExecutiveBriefModalProps> = ({ isOpen, onClose, data }) => {
   const { country, continent } = useRegion();
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add('modal-open');
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isOpen]);
+
   if (!isOpen || !data) return null;
 
   const handlePrint = () => {
     window.print();
   };
 
-  return (
+  const modalContent = (
     <div className="exec-brief-backdrop" onClick={onClose}>
       <div className="exec-brief-dialog baseline-card" onClick={(e) => e.stopPropagation()}>
         {/* Header Actions */}
@@ -44,12 +57,15 @@ export const ExecutiveBriefModal: React.FC<ExecutiveBriefModalProps> = ({ isOpen
           </div>
         </div>
 
-        {/* Printable Document Content */}
+        {/* Printable Document Content (Strict A4 Layout) */}
         <div className="exec-brief-document">
           {/* Document Header */}
           <div className="exec-doc-header">
             <div>
-              <div className="eyebrow-tagline-green">// LYCOS CORE ENTERPRISE INTELLIGENCE</div>
+              <div className="exec-doc-badge-row">
+                <Shield size={14} className="neon-icon" />
+                <span className="eyebrow-tagline-green">// LYCOS CORE ENTERPRISE INTELLIGENCE</span>
+              </div>
               <h2 className="exec-doc-title">{data.productName} ROI Projection<span className="brand-dot">.</span></h2>
               <p className="exec-doc-subtitle">{data.tagline}</p>
             </div>
@@ -65,6 +81,10 @@ export const ExecutiveBriefModal: React.FC<ExecutiveBriefModalProps> = ({ isOpen
               <div className="exec-meta-item">
                 <span className="exec-meta-label">DATE:</span>
                 <span className="exec-meta-val">{new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}</span>
+              </div>
+              <div className="exec-meta-item">
+                <span className="exec-meta-label">GOVERNANCE:</span>
+                <span className="exec-meta-val highlight">ZERO-TRUST AUDITED</span>
               </div>
             </div>
           </div>
@@ -112,22 +132,25 @@ export const ExecutiveBriefModal: React.FC<ExecutiveBriefModalProps> = ({ isOpen
           <div className="exec-doc-seal-box">
             <div className="exec-seal-header">
               <CheckCircle2 size={16} className="neon-icon" />
-              <span>Zero-Trust Assurance and Compliance Protocol</span>
+              <span>Zero-Trust Assurance and Sovereign Governance Protocol</span>
             </div>
             <p className="exec-seal-desc">
-              Projections modeled under sovereign zero-trust isolation. Architectures align directly with EU AI Act, NIST AI RMF, and SOC 2 Type II governance frameworks. Figures are illustrative based on telemetry inputs.
+              Projections modeled under sovereign zero-trust isolation. Architectures align directly with EU AI Act, NIST AI RMF, and SOC 2 Type II governance frameworks. Figures are illustrative based on enterprise telemetry inputs.
             </p>
           </div>
 
           {/* Footer */}
           <div className="exec-doc-footer">
             <span>© 2026 Lycos Core LLC. All rights reserved.</span>
+            <span>CONFIDENTIAL // EXECUTIVE INTELLIGENCE BRIEF</span>
             <span>https://lycos-core.local</span>
           </div>
         </div>
       </div>
     </div>
   );
+
+  return typeof document !== 'undefined' ? createPortal(modalContent, document.body) : null;
 };
 
 export default ExecutiveBriefModal;
