@@ -6098,8 +6098,13 @@ h6 {
   box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(140, 255, 50, 0.03);
   position: relative;
   overflow: hidden;
-  min-height: 615px;
+  height: 640px;
+  min-height: 640px;
+  max-height: 640px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .containment-telemetry-bar {
@@ -6108,14 +6113,19 @@ h6 {
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
-  padding: 0.85rem 1.5rem;
+  padding: 0.75rem 1.5rem;
   background: rgba(10, 25, 47, 0.9);
   border: 1px solid rgba(140, 255, 50, 0.25);
   border-radius: 12px;
   font-family: monospace;
   font-size: 0.82rem;
-  margin-bottom: 2rem;
+  margin-bottom: 0;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+  height: 48px;
+  min-height: 48px;
+  max-height: 48px;
+  box-sizing: border-box;
 }
 
 .containment-telemetry-item {
@@ -6170,12 +6180,15 @@ h6 {
 .containment-canvas {
   position: relative;
   width: 100%;
-  height: 360px;
+  height: 340px;
+  min-height: 340px;
+  max-height: 340px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   user-select: none;
+  flex-shrink: 0;
 }
 
 .containment-svg {
@@ -6334,17 +6347,21 @@ h6 {
 }
 
 .containment-detail-drawer {
-  margin-top: 1.5rem;
-  padding: 1.35rem 1.75rem;
+  margin-top: 0;
+  padding: 1.25rem 1.75rem;
   background: rgba(5, 13, 26, 0.85);
   border: 1px solid rgba(140, 255, 50, 0.2);
   border-radius: 14px;
   box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4);
-  min-height: 145px;
+  height: 155px;
+  min-height: 155px;
+  max-height: 155px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   box-sizing: border-box;
+  flex-shrink: 0;
+  overflow: hidden;
 }
 
 .containment-drawer-header {
@@ -6353,7 +6370,10 @@ h6 {
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-bottom: 0.5rem;
+  height: 42px;
+  min-height: 42px;
+  max-height: 42px;
+  flex-shrink: 0;
 }
 
 .containment-drawer-category {
@@ -6405,9 +6425,15 @@ h6 {
 .containment-drawer-desc {
   color: #cbd5e1;
   font-size: 0.88rem;
-  line-height: 1.55;
-  margin: 0.35rem 0;
-  min-height: 44px;
+  line-height: 1.5;
+  margin: 0;
+  height: 42px;
+  min-height: 42px;
+  max-height: 42px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  overflow: hidden;
 }
 
 .containment-drawer-protocol {
@@ -6417,7 +6443,11 @@ h6 {
   font-family: monospace;
   font-size: 0.75rem;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
-  padding-top: 0.75rem;
+  padding-top: 0.5rem;
+  height: 24px;
+  min-height: 24px;
+  max-height: 24px;
+  flex-shrink: 0;
 }
 
 .containment-protocol-label {
@@ -6433,22 +6463,49 @@ h6 {
 @media (max-width: 768px) {
   .containment-map-card {
     padding: 1.25rem !important;
+    height: auto !important;
     min-height: auto !important;
+    max-height: none !important;
   }
   .containment-telemetry-bar {
     flex-direction: column !important;
     align-items: flex-start !important;
     gap: 0.5rem !important;
     padding: 1rem !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
   }
   .containment-canvas {
     height: 320px !important;
+    min-height: 320px !important;
+    max-height: 320px !important;
   }
   .containment-node-anchor.node-ingestion {
     left: 12% !important;
   }
   .containment-node-anchor.node-context {
     left: 88% !important;
+  }
+  .containment-detail-drawer {
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+  }
+  .containment-drawer-header {
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+  }
+  .containment-drawer-desc {
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+  }
+  .containment-drawer-protocol {
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
   }
 }
 

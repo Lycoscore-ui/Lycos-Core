@@ -29,7 +29,7 @@ const AegisNodeNetwork: React.FC = () => {
       name: 'ENTERPRISE DATA & ERP',
       category: 'PROTECTED SYSTEM OF RECORD',
       status: 'SECURE INGESTION ACTIVE',
-      protocol: 'TLS 1.3 + TOKENIZED REPLACEMENT',
+      protocol: 'TLS 1.3 + TOKENIZED ENCRYPTION',
       metric: '99.99% Redaction Rate',
       description: 'Core databases, CRM, and financial data vaults sanitized at the source before any model-level vector ingestion occurs.'
     },
@@ -40,7 +40,7 @@ const AegisNodeNetwork: React.FC = () => {
       status: 'SOVEREIGN ISOLATION',
       protocol: 'ROLE-BASED ACL ENFORCEMENT',
       metric: 'Zero Context Leakage',
-      description: 'Harmonized vector stores and semantic memory clusters segmented by cryptographic tenant permissions.'
+      description: 'Harmonized vector stores and semantic memory clusters strictly segmented by cryptographic tenant permissions.'
     },
     external: {
       id: 'external',
@@ -49,7 +49,7 @@ const AegisNodeNetwork: React.FC = () => {
       status: 'QUARANTINE ENFORCED',
       protocol: 'DETERMINISTIC OUTPUT SCRUBBING',
       metric: '0.00% Vulnerability Exposure',
-      description: 'OpenAI, Anthropic, and open-source models process sanitized tokens without retaining raw corporate training intelligence.'
+      description: 'Public foundational models process sanitized tokens in quarantine without retaining corporate training intelligence.'
     }
   };
 
