@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Calculator, ShieldCheck, ShieldAlert, DollarSign, TrendingUp } from 'lucide-react';
+import { Calculator, ShieldCheck, ShieldAlert, DollarSign, TrendingUp, FileDown } from 'lucide-react';
 import { fetchCalculatorConfig } from '../utils/calculatorConfig';
 import { useRegion } from '../context/RegionContext';
+import ExecutiveBriefModal, { type SimulatorBriefData } from './ExecutiveBriefModal';
 
 export default function AegisROISimulator() {
   const { formatCurrency, country } = useRegion();
+  const [isBriefOpen, setIsBriefOpen] = useState(false);
 
   // 1. State Inputs with operational defaults and bounds
   const [recordsHeld, setRecordsHeld] = useState<number>(15000);         // N_rec
@@ -70,6 +72,32 @@ export default function AegisROISimulator() {
   const benefitWidthPct = Math.min(100, Math.max(1, (totalBenefit / maxVal) * 100));
   const thresholdPct = investmentWidthPct;
 
+  const briefData: SimulatorBriefData = {
+    productName: 'Lycos Aegis',
+    tagline: 'Zero-Trust AI Guardrails and Threat Neutralization Shield',
+    metrics: [
+      { label: 'Total Annual Benefit', value: formatCurrency(totalBenefit), isHighlight: true },
+      { label: 'Projected Net ROI', value: `${Math.round(netRoi).toLocaleString()}%` },
+      { label: 'Mitigated Risk Exposure', value: formatCurrency(mitigatedExposure) },
+    ],
+    inputs: [
+      { label: 'Sensitive Records In Scope', value: `${recordsHeld.toLocaleString()} records` },
+      { label: 'Cost Per Breached Record', value: formatCurrency(costPerRecord) },
+      { label: 'Annual Compliance / Audit Overhead', value: formatCurrency(auditOverhead) },
+      { label: 'Annual Threat / Breach Probability', value: `${incidentProbability}%` },
+      { label: 'Aegis Threat Reduction Efficacy', value: `${reductionEfficacy}%` },
+      { label: 'Monthly Aegis Platform Cost', value: formatCurrency(monthlyCost) },
+    ],
+    calculatedOutputs: [
+      { label: 'Annual Loss Exposure (ALE Baseline)', value: formatCurrency((recordsHeld * costPerRecord) * (incidentProbability / 100)) },
+      { label: 'Mitigated Risk Exposure Value', value: formatCurrency(mitigatedExposure) },
+      { label: 'Compliance Audit Time Savings (50%)', value: formatCurrency(auditSavings) },
+      { label: 'Annual Platform Investment', value: formatCurrency(annualInvestment) },
+      { label: 'Total Net Value Generated', value: formatCurrency(totalBenefit - annualInvestment), highlight: true },
+      { label: 'Actuarial Net ROI', value: `${Math.round(netRoi).toLocaleString()}%`, highlight: true },
+    ],
+  };
+
   return (
     <div style={{ marginTop: '4rem', marginBottom: '4rem' }}>
       {/* CSS Styles injection for custom range sliders and focus rings */}
@@ -113,9 +141,16 @@ export default function AegisROISimulator() {
         }
       `}</style>
 
+      {/* Executive Brief Modal */}
+      <ExecutiveBriefModal
+        isOpen={isBriefOpen}
+        onClose={() => setIsBriefOpen(false)}
+        data={briefData}
+      />
+
       {/* Callout Banner */}
       <div className="glass-panel roi-callout-panel" style={{ padding: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '2rem', marginBottom: '2rem' }}>
-        <div className="roi-callout-text" style={{ maxWidth: '80%' }}>
+        <div className="roi-callout-text" style={{ maxWidth: '75%' }}>
           <span style={{ fontSize: '0.75rem', color: 'var(--accent)', letterSpacing: '1px', textTransform: 'uppercase', fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>
             ROI Simulator
           </span>
@@ -126,8 +161,17 @@ export default function AegisROISimulator() {
             Model your compliance expenses and data breach risks in real-time to quantify the total actuarial risk-mitigated return of the Lycos Aegis environment.
           </p>
         </div>
-        <div className="roi-callout-actions" style={{ color: 'var(--accent)', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-color)', padding: '0.75rem', borderRadius: '8px', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-          <Calculator size={28} />
+        <div className="roi-callout-actions" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <button 
+            className="cta-secondary"
+            onClick={() => setIsBriefOpen(true)}
+            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 1.1rem', fontSize: '0.8rem', whiteSpace: 'nowrap' }}
+          >
+            <FileDown size={15} /> EXPORT ROI MODEL (.PDF)
+          </button>
+          <div style={{ color: 'var(--accent)', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-color)', padding: '0.75rem', borderRadius: '8px', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+            <Calculator size={28} />
+          </div>
         </div>
       </div>
 

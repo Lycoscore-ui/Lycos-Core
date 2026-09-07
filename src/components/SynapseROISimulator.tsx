@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Calculator, DollarSign, TrendingUp, RefreshCw, AlertTriangle } from 'lucide-react';
+import { Calculator, DollarSign, TrendingUp, RefreshCw, AlertTriangle, FileDown } from 'lucide-react';
 import { fetchCalculatorConfig } from '../utils/calculatorConfig';
 import { useRegion } from '../context/RegionContext';
+import ExecutiveBriefModal, { type SimulatorBriefData } from './ExecutiveBriefModal';
 
 export default function SynapseROISimulator() {
   const { formatCurrency, country } = useRegion();
+  const [isBriefOpen, setIsBriefOpen] = useState(false);
 
   // 1. State Inputs with operational defaults and bounds
   const [monthlySyncedRecords, setMonthlySyncedRecords] = useState<number>(3500); // R_m (1,000 to 250,000)
@@ -69,6 +71,33 @@ export default function SynapseROISimulator() {
   const benefitWidthPct = Math.min(100, Math.max(1, (totalBenefit / maxVal) * 100));
   const thresholdPct = investmentWidthPct;
 
+  const briefData: SimulatorBriefData = {
+    productName: 'Lycos Synapse',
+    tagline: 'Real-Time Context Synchronization and Autonomous Reconciliation Engine',
+    metrics: [
+      { label: 'Total Annual Net Value', value: formatCurrency(totalBenefit - annualInvestment), isHighlight: true },
+      { label: 'Net Economic ROI', value: `${Math.round(netRoi).toLocaleString()}%` },
+      { label: 'Reclaimed Admin Value', value: formatCurrency(annualSa) },
+    ],
+    inputs: [
+      { label: 'Monthly Synced Records', value: `${monthlySyncedRecords.toLocaleString()} records` },
+      { label: 'Manual Sync Time Baseline', value: `${timePerSync} min / record` },
+      { label: 'Labor Cost Baseline', value: `${formatCurrency(employeeHourCost)} / hr` },
+      { label: 'Monthly Delayed Transactions', value: `${monthlyDelayedTx.toLocaleString()} tx` },
+      { label: 'Revenue Leakage Per Incident', value: formatCurrency(revenueLeakage) },
+      { label: 'Sync Accuracy Efficacy', value: `${syncAccuracy}%` },
+      { label: 'Monthly Synapse Investment', value: formatCurrency(monthlySynapseCost) },
+    ],
+    calculatedOutputs: [
+      { label: 'Reclaimed Administrative Value', value: formatCurrency(annualSa) },
+      { label: 'Recovered Revenue Leakage', value: formatCurrency(annualSr) },
+      { label: 'Total Annual Economic Benefit', value: formatCurrency(totalBenefit) },
+      { label: 'Annual Platform Investment', value: formatCurrency(annualInvestment) },
+      { label: 'Net Annual Economic Yield', value: formatCurrency(totalBenefit - annualInvestment), highlight: true },
+      { label: 'Net Annual Projected ROI', value: `${Math.round(netRoi).toLocaleString()}%`, highlight: true },
+    ],
+  };
+
   return (
     <div style={{ marginTop: '4rem', marginBottom: '4rem' }}>
       {/* CSS Styles injection for custom range sliders and focus rings */}
@@ -112,9 +141,16 @@ export default function SynapseROISimulator() {
         }
       `}</style>
 
+      {/* Executive Brief Modal */}
+      <ExecutiveBriefModal
+        isOpen={isBriefOpen}
+        onClose={() => setIsBriefOpen(false)}
+        data={briefData}
+      />
+
       {/* Callout Banner */}
       <div className="glass-panel roi-callout-panel" style={{ padding: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '2rem', marginBottom: '2rem' }}>
-        <div className="roi-callout-text" style={{ maxWidth: '80%' }}>
+        <div className="roi-callout-text" style={{ maxWidth: '75%' }}>
           <span style={{ fontSize: '0.75rem', color: 'var(--accent)', letterSpacing: '1px', textTransform: 'uppercase', fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>
             ROI Simulator
           </span>
@@ -125,8 +161,17 @@ export default function SynapseROISimulator() {
             Model your system synchronization parameters and delayed transaction leakage in real-time to quantify the total reclaimed value of Lycos Synapse.
           </p>
         </div>
-        <div className="roi-callout-actions" style={{ color: 'var(--accent)', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-color)', padding: '0.75rem', borderRadius: '8px', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-          <Calculator size={28} />
+        <div className="roi-callout-actions" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <button 
+            className="cta-secondary"
+            onClick={() => setIsBriefOpen(true)}
+            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 1.1rem', fontSize: '0.8rem', whiteSpace: 'nowrap' }}
+          >
+            <FileDown size={15} /> EXPORT ROI MODEL (.PDF)
+          </button>
+          <div style={{ color: 'var(--accent)', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-color)', padding: '0.75rem', borderRadius: '8px', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+            <Calculator size={28} />
+          </div>
         </div>
       </div>
 

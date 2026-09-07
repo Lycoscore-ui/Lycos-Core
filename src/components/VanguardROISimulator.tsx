@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { TrendingUp, Coins, Compass, Activity, ShieldAlert } from 'lucide-react';
+import { TrendingUp, Coins, Compass, Activity, ShieldAlert, FileDown } from 'lucide-react';
 import { fetchCalculatorConfig } from '../utils/calculatorConfig';
 import { useRegion } from '../context/RegionContext';
+import ExecutiveBriefModal, { type SimulatorBriefData } from './ExecutiveBriefModal';
 
 export default function VanguardROISimulator() {
   const { formatCurrency, country } = useRegion();
+  const [isBriefOpen, setIsBriefOpen] = useState(false);
 
   // 1. State Inputs with operational defaults and bounds
   const [workingCapital, setWorkingCapital] = useState<number>(3500000);     // W_c
@@ -68,6 +70,33 @@ export default function VanguardROISimulator() {
     }
   }, [workingCapital, carryingCostRate, forecastErrorRate, idleCost, outOfStockCost, accuracyBoost, platformCost]);
 
+  const briefData: SimulatorBriefData = {
+    productName: 'Lycos Vanguard',
+    tagline: 'Autonomous Supply Chain Predictive Orchestration and Inventory Optimization',
+    metrics: [
+      { label: 'Net Annual Economic Impact', value: formatCurrency(netEconomicImpact), isHighlight: true },
+      { label: 'Projected Net ROI', value: `${Math.round(netRoi).toLocaleString()}%` },
+      { label: 'Working Capital Carrying Savings', value: formatCurrency(workingCapitalReclaimed) },
+    ],
+    inputs: [
+      { label: 'Working Capital In Inventory', value: formatCurrency(workingCapital) },
+      { label: 'Annual Carrying Cost Rate', value: `${carryingCostRate}%` },
+      { label: 'Baseline Forecast Error Rate', value: `${forecastErrorRate}%` },
+      { label: 'Monthly Idle Capacity Cost', value: formatCurrency(idleCost) },
+      { label: 'Monthly Stockout Disruption Cost', value: formatCurrency(outOfStockCost) },
+      { label: 'Vanguard Accuracy Boost', value: `${accuracyBoost}%` },
+      { label: 'Monthly Vanguard Investment', value: formatCurrency(platformCost) },
+    ],
+    calculatedOutputs: [
+      { label: 'Working Capital Carrying Savings', value: formatCurrency(workingCapitalReclaimed) },
+      { label: 'Disruption & Capacity Recovery', value: formatCurrency(demandCapacityRecovery) },
+      { label: 'Total Gross Economic Benefit', value: formatCurrency(totalGrossBenefit) },
+      { label: 'Annual Platform Investment', value: formatCurrency(annualVanguardCost) },
+      { label: 'Net Annual Economic Impact', value: formatCurrency(netEconomicImpact), highlight: true },
+      { label: 'Projected Net ROI', value: `${Math.round(netRoi).toLocaleString()}%`, highlight: true },
+    ],
+  };
+
   return (
     <div style={{ marginTop: '4rem', marginBottom: '4rem' }}>
       {/* CSS Styles injection for custom range sliders and focus rings */}
@@ -111,9 +140,16 @@ export default function VanguardROISimulator() {
         }
       `}</style>
 
+      {/* Executive Brief Modal */}
+      <ExecutiveBriefModal
+        isOpen={isBriefOpen}
+        onClose={() => setIsBriefOpen(false)}
+        data={briefData}
+      />
+
       {/* Callout Banner */}
       <div className="glass-panel roi-callout-panel" style={{ padding: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '2rem', marginBottom: '2rem' }}>
-        <div className="roi-callout-text" style={{ maxWidth: '80%' }}>
+        <div className="roi-callout-text" style={{ maxWidth: '75%' }}>
           <span style={{ fontSize: '0.75rem', color: 'var(--accent)', letterSpacing: '1px', textTransform: 'uppercase', fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>
             ROI Simulator
           </span>
@@ -124,8 +160,17 @@ export default function VanguardROISimulator() {
             Use our operational simulator below to map your current forecasting parameters against target optimization rates and instantly see the capital and capacity reclaimed by Lycos Vanguard.
           </p>
         </div>
-        <div className="roi-callout-actions" style={{ color: 'var(--accent)', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-color)', padding: '0.75rem', borderRadius: '8px', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-          <Compass size={28} className="neon-icon" />
+        <div className="roi-callout-actions" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <button 
+            className="cta-secondary"
+            onClick={() => setIsBriefOpen(true)}
+            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 1.1rem', fontSize: '0.8rem', whiteSpace: 'nowrap' }}
+          >
+            <FileDown size={15} /> EXPORT ROI MODEL (.PDF)
+          </button>
+          <div style={{ color: 'var(--accent)', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-color)', padding: '0.75rem', borderRadius: '8px', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+            <Compass size={28} className="neon-icon" />
+          </div>
         </div>
       </div>
 

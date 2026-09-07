@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Calculator, TrendingUp, Clock, AlertTriangle } from 'lucide-react';
+import { Calculator, TrendingUp, Clock, AlertTriangle, FileDown } from 'lucide-react';
 import { fetchCalculatorConfig } from '../utils/calculatorConfig';
 import { useRegion } from '../context/RegionContext';
+import ExecutiveBriefModal, { type SimulatorBriefData } from './ExecutiveBriefModal';
 
 export default function VectorROISimulator() {
   const { formatCurrency, country } = useRegion();
+  const [isBriefOpen, setIsBriefOpen] = useState(false);
 
   // 1. Inputs with operational baselines
   const [monthlyTransactions, setMonthlyTransactions] = useState<number>(5000); // T_m
@@ -56,12 +58,45 @@ export default function VectorROISimulator() {
     }
   }, [monthlyTransactions, handlingTime, laborCost, errorRate, errorCorrectionCost, automationRate, vectorCost]);
 
+  const briefData: SimulatorBriefData = {
+    productName: 'Lycos Vector',
+    tagline: 'Autonomous Document & Invoice Processing Automation Pipeline',
+    metrics: [
+      { label: 'Annual Net ROI', value: `${totalAnnualNetRoi.toLocaleString()}%`, isHighlight: true },
+      { label: 'Annual Labor Savings', value: formatCurrency(annualLaborSavings) },
+      { label: 'Annual Error Savings', value: formatCurrency(annualErrorSavings) },
+    ],
+    inputs: [
+      { label: 'Monthly Document Volume', value: `${monthlyTransactions.toLocaleString()} files` },
+      { label: 'Manual Handling Time', value: `${handlingTime} min / file` },
+      { label: 'Labor Cost Baseline', value: `${formatCurrency(laborCost)} / hr` },
+      { label: 'Manual Error Rate', value: `${errorRate}%` },
+      { label: 'Cost Per Error Correction', value: formatCurrency(errorCorrectionCost) },
+      { label: 'Target Automation Rate', value: `${automationRate}%` },
+      { label: 'Monthly Vector Platform Cost', value: formatCurrency(vectorCost) },
+    ],
+    calculatedOutputs: [
+      { label: 'Annual Labor Cost Savings', value: formatCurrency(annualLaborSavings) },
+      { label: 'Annual Error Correction Savings', value: formatCurrency(annualErrorSavings) },
+      { label: 'Total Annual Gross Savings', value: formatCurrency(annualLaborSavings + annualErrorSavings) },
+      { label: 'Annual Platform Investment', value: formatCurrency(vectorCost * 12) },
+      { label: 'Total Annual Net ROI', value: `${totalAnnualNetRoi.toLocaleString()}%`, highlight: true },
+    ],
+  };
+
   return (
     <div style={{ marginTop: '4rem', marginBottom: '4rem' }}>
       
+      {/* Executive Brief Modal */}
+      <ExecutiveBriefModal
+        isOpen={isBriefOpen}
+        onClose={() => setIsBriefOpen(false)}
+        data={briefData}
+      />
+
       {/* Callout Banner */}
       <div className="glass-panel roi-callout-panel" style={{ padding: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '2rem', marginBottom: '2rem' }}>
-        <div className="roi-callout-text" style={{ maxWidth: '80%' }}>
+        <div className="roi-callout-text" style={{ maxWidth: '75%' }}>
           <span style={{ fontSize: '0.75rem', color: 'var(--accent)', letterSpacing: '1px', textTransform: 'uppercase', fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>
             ROI Simulator
           </span>
@@ -72,8 +107,17 @@ export default function VectorROISimulator() {
             Use our operational simulator below to map your current process parameters against target automation rates and instantly see the capital and capacity reclaimed by Lycos Vector.
           </p>
         </div>
-        <div className="roi-callout-actions" style={{ color: 'var(--accent)', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-color)', padding: '0.75rem', borderRadius: '8px', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-          <Calculator size={28} />
+        <div className="roi-callout-actions" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <button 
+            className="cta-secondary"
+            onClick={() => setIsBriefOpen(true)}
+            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 1.1rem', fontSize: '0.8rem', whiteSpace: 'nowrap' }}
+          >
+            <FileDown size={15} /> EXPORT ROI MODEL (.PDF)
+          </button>
+          <div style={{ color: 'var(--accent)', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-color)', padding: '0.75rem', borderRadius: '8px', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+            <Calculator size={28} />
+          </div>
         </div>
       </div>
 

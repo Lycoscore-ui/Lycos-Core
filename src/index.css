@@ -5867,6 +5867,370 @@ h6 {
 }
 
 /* ==========================================================================
+   VISUAL CONTAINMENT MAP (AEGIS ZERO-TRUST TELEMETRY & NETWORK HUD)
+   ========================================================================== */
+.containment-map-wrapper {
+  margin: 3rem 0;
+  width: 100%;
+}
+
+.containment-map-card {
+  padding: 2.25rem;
+  border-radius: 20px;
+  background: radial-gradient(circle at 50% 50%, rgba(10, 25, 47, 0.85) 0%, rgba(5, 13, 26, 0.95) 100%);
+  border: 1px solid rgba(140, 255, 50, 0.25);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(140, 255, 50, 0.03);
+  position: relative;
+  overflow: hidden;
+}
+
+.containment-telemetry-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0.85rem 1.5rem;
+  background: rgba(10, 25, 47, 0.9);
+  border: 1px solid rgba(140, 255, 50, 0.25);
+  border-radius: 12px;
+  font-family: monospace;
+  font-size: 0.82rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.containment-telemetry-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #94a3b8;
+}
+
+.containment-telemetry-icon {
+  color: var(--accent);
+}
+
+.containment-telemetry-value {
+  color: #fff;
+  font-weight: 700;
+}
+
+.containment-telemetry-value.highlight {
+  color: var(--accent);
+  text-shadow: 0 0 8px rgba(140, 255, 50, 0.5);
+}
+
+.containment-live-radar {
+  position: relative;
+  width: 9px;
+  height: 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.containment-radar-ping {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.75;
+  animation: ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.containment-radar-dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+.containment-canvas {
+  position: relative;
+  width: 100%;
+  height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+}
+
+.containment-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+@keyframes pulseDash {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -24;
+  }
+}
+
+.containment-pulse-line {
+  animation: pulseDash 1.2s linear infinite;
+}
+
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.containment-spin-slow {
+  transform-origin: 350px 175px;
+  animation: spinSlow 40s linear infinite;
+}
+
+.containment-node-anchor {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 10;
+}
+
+.containment-node-anchor.node-center {
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.containment-node-anchor.node-ingestion {
+  top: 26%;
+  left: 20%;
+  transform: translate(-50%, -50%);
+}
+
+.containment-node-anchor.node-context {
+  top: 26%;
+  left: 80%;
+  transform: translate(-50%, -50%);
+}
+
+.containment-node-anchor.node-external {
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.containment-node-anchor:hover,
+.containment-node-anchor.is-active {
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.containment-node-circle {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.containment-node-circle.master-core {
+  width: 86px;
+  height: 86px;
+  background: radial-gradient(circle, #0e223f 0%, #050d1a 100%);
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 30px rgba(140, 255, 50, 0.4), inset 0 0 15px rgba(140, 255, 50, 0.2);
+}
+
+.containment-node-anchor.node-center.is-active .containment-node-circle.master-core,
+.containment-node-anchor.node-center:hover .containment-node-circle.master-core {
+  box-shadow: 0 0 45px rgba(140, 255, 50, 0.7), inset 0 0 25px rgba(140, 255, 50, 0.4);
+  border-color: #a4ff4d;
+}
+
+.containment-node-circle.satellite {
+  width: 58px;
+  height: 58px;
+  background: radial-gradient(circle, #0f2442 0%, #081426 100%);
+  border: 1.5px solid rgba(138, 157, 248, 0.5);
+  box-shadow: 0 0 20px rgba(138, 157, 248, 0.2);
+}
+
+.containment-node-anchor:hover .containment-node-circle.satellite,
+.containment-node-anchor.is-active .containment-node-circle.satellite {
+  border-color: var(--accent);
+  box-shadow: 0 0 25px rgba(140, 255, 50, 0.4);
+}
+
+.containment-node-icon.neon-green {
+  color: var(--accent);
+  filter: drop-shadow(0 0 6px var(--accent));
+}
+
+.containment-node-icon.blue {
+  color: #8a9df8;
+  filter: drop-shadow(0 0 6px rgba(138, 157, 248, 0.6));
+}
+
+.containment-node-badge {
+  margin-top: 0.65rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.containment-node-name {
+  font-family: monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.containment-node-sub {
+  font-size: 0.7rem;
+  color: #8a9df8;
+  white-space: nowrap;
+  margin-top: 2px;
+  font-family: monospace;
+}
+
+.containment-master-tag {
+  font-family: monospace;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  margin-bottom: 2px;
+}
+
+.containment-detail-drawer {
+  margin-top: 1.75rem;
+  padding: 1.4rem 1.75rem;
+  background: rgba(5, 13, 26, 0.85);
+  border: 1px solid rgba(140, 255, 50, 0.2);
+  border-radius: 14px;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+.containment-drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.containment-drawer-category {
+  display: block;
+  font-family: monospace;
+  font-size: 0.72rem;
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.containment-drawer-title {
+  font-size: 1.2rem;
+  font-family: var(--font-title);
+  color: #fff;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.containment-drawer-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.containment-status-pill {
+  font-family: monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  background: rgba(140, 255, 50, 0.12);
+  color: var(--accent);
+  border: 1px solid rgba(140, 255, 50, 0.3);
+}
+
+.containment-metric-pill {
+  font-family: monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  background: rgba(138, 157, 248, 0.12);
+  color: #8a9df8;
+  border: 1px solid rgba(138, 157, 248, 0.3);
+}
+
+.containment-drawer-desc {
+  color: #cbd5e1;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  margin: 0 0 1rem 0;
+}
+
+.containment-drawer-protocol {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: monospace;
+  font-size: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 0.85rem;
+}
+
+.containment-protocol-label {
+  color: #64748b;
+  font-weight: 600;
+}
+
+.containment-protocol-val {
+  color: #8a9df8;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .containment-map-card {
+    padding: 1.25rem !important;
+  }
+  .containment-telemetry-bar {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.5rem !important;
+    padding: 1rem !important;
+  }
+  .containment-canvas {
+    height: 320px !important;
+  }
+  .containment-node-anchor.node-ingestion {
+    left: 12% !important;
+  }
+  .containment-node-anchor.node-context {
+    left: 88% !important;
+  }
+}
+
+/* ==========================================================================
    STANDARDIZED LINKEDIN SOCIAL CONNECT
    ========================================================================== */
 .linkedin-connect-wrap {

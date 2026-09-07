@@ -1,72 +1,226 @@
-import React from 'react';
-import { Cpu, ShieldCheck, Database, Network } from 'lucide-react';
+import React, { useState } from 'react';
+import { Cpu, ShieldCheck, Database, Globe, Lock, Radio } from 'lucide-react';
+
+interface NodeInfo {
+  id: string;
+  name: string;
+  category: string;
+  status: string;
+  protocol: string;
+  metric: string;
+  description: string;
+}
 
 const AegisNodeNetwork: React.FC = () => {
+  const [activeNode, setActiveNode] = useState<string>('aegis');
+
+  const nodes: Record<string, NodeInfo> = {
+    aegis: {
+      id: 'aegis',
+      name: 'LYCOS AEGIS GATEWAY',
+      category: 'MASTER ZERO-TRUST CONTROLLER',
+      status: 'AIR-GAPPED & ENFORCING',
+      protocol: 'POLICY INTERCEPTION V4.2',
+      metric: '< 8.4ms Latency',
+      description: 'Central autonomous security bastion enforcing multi-layer prompt scrubbing, PII redaction, and deterministic policy isolation.'
+    },
+    ingestion: {
+      id: 'ingestion',
+      name: 'ENTERPRISE DATA & ERP',
+      category: 'PROTECTED SYSTEM OF RECORD',
+      status: 'SECURE INGESTION ACTIVE',
+      protocol: 'TLS 1.3 + TOKENIZED REPLACEMENT',
+      metric: '99.99% Redaction Rate',
+      description: 'Core databases, CRM, and financial data vaults sanitized at the source before any model-level vector ingestion occurs.'
+    },
+    context: {
+      id: 'context',
+      name: 'CONTEXT & VECTOR MEMORY',
+      category: 'ENTERPRISE RAG CORE',
+      status: 'SOVEREIGN ISOLATION',
+      protocol: 'ROLE-BASED ACL ENFORCEMENT',
+      metric: 'Zero Context Leakage',
+      description: 'Harmonized vector stores and semantic memory clusters segmented by cryptographic tenant permissions.'
+    },
+    external: {
+      id: 'external',
+      name: 'PUBLIC LLMs & AGENTS',
+      category: 'UNTRUSTED EXTERNAL COMPUTE',
+      status: 'QUARANTINE ENFORCED',
+      protocol: 'DETERMINISTIC OUTPUT SCRUBBING',
+      metric: '0.00% Vulnerability Exposure',
+      description: 'OpenAI, Anthropic, and open-source models process sanitized tokens without retaining raw corporate training intelligence.'
+    }
+  };
+
+  const currentInfo = nodes[activeNode] || nodes.aegis;
+
   return (
-    <div className="relative w-full max-w-2xl mx-auto p-6 bg-[#050d1a]/80 border border-white/10 rounded-2xl backdrop-blur-xl shadow-2xl overflow-hidden my-8">
-      {/* Telemetry Overlay Banner */}
-      <div className="flex flex-wrap items-center justify-between gap-4 p-3 px-5 mb-6 bg-[#0a192f]/90 border border-[#8CFF32]/20 rounded-xl text-xs font-mono">
-        <div className="flex items-center gap-2">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-          </span>
-          <span className="text-gray-300">Active Autonomous Workflows:</span>
-          <span className="text-[#8CFF32] font-bold">14</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="text-gray-300">Orchestration Latency:</span>
-          <span className="text-emerald-400 font-bold">12ms</span>
-        </div>
-      </div>
-
-      {/* Dynamic Multi-Agent SVG Node Graphic */}
-      <div className="relative w-full h-[320px] flex items-center justify-center">
-        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 600 320" fill="none">
-          {/* Connection Lines with Pulsing Dash Array */}
-          <line x1="300" y1="160" x2="140" y2="70" stroke="#8CFF32" strokeWidth="2" strokeDasharray="6 6" className="animate-pulse" opacity="0.6" />
-          <line x1="300" y1="160" x2="460" y2="70" stroke="#8CFF32" strokeWidth="2" strokeDasharray="6 6" className="animate-pulse" opacity="0.6" />
-          <line x1="300" y1="160" x2="300" y2="260" stroke="#8CFF32" strokeWidth="2" strokeDasharray="6 6" className="animate-pulse" opacity="0.6" />
-
-          {/* Background Ambient Glows */}
-          <circle cx="300" cy="160" r="60" fill="#8CFF32" fillOpacity="0.08" />
-          <circle cx="140" cy="70" r="35" fill="#8a9df8" fillOpacity="0.06" />
-          <circle cx="460" cy="70" r="35" fill="#8a9df8" fillOpacity="0.06" />
-          <circle cx="300" cy="260" r="35" fill="#8a9df8" fillOpacity="0.06" />
-        </svg>
-
-        {/* Center Node: LYCOS AEGIS */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center z-10">
-          <div className="w-24 h-24 rounded-full bg-[#0a192f] border-2 border-[#8CFF32] shadow-[0_0_30px_rgba(140,255,50,0.4)] flex items-center justify-center mb-2 animate-bounce-slow">
-            <ShieldCheck className="w-10 h-10 text-[#8CFF32]" />
+    <div className="containment-map-wrapper">
+      <div className="glass-panel containment-map-card">
+        {/* Telemetry Header Bar */}
+        <div className="containment-telemetry-bar">
+          <div className="containment-telemetry-item">
+            <span className="containment-live-radar">
+              <span className="containment-radar-ping"></span>
+              <span className="containment-radar-dot"></span>
+            </span>
+            <span className="containment-telemetry-label">Active Policy Nodes:</span>
+            <span className="containment-telemetry-value highlight">14 ACTIVE</span>
           </div>
-          <span className="bg-[#0a192f] border border-[#8CFF32]/40 px-3 py-1 rounded-full text-xs font-bold text-white tracking-widest uppercase font-mono shadow-md">
-            LYCOS AEGIS
-          </span>
+
+          <div className="containment-telemetry-item">
+            <Radio size={14} className="containment-telemetry-icon" />
+            <span className="containment-telemetry-label">Gateway Latency:</span>
+            <span className="containment-telemetry-value">8.4ms</span>
+          </div>
+
+          <div className="containment-telemetry-item">
+            <Lock size={14} className="containment-telemetry-icon" />
+            <span className="containment-telemetry-label">Compliance Baseline:</span>
+            <span className="containment-telemetry-value highlight">SOC 2 / EU AI ACT</span>
+          </div>
         </div>
 
-        {/* Sub-Node 1: Data Ingestion */}
-        <div className="absolute top-[30px] left-[70px] flex flex-col items-center z-10">
-          <div className="w-14 h-14 rounded-full bg-[#0a192f] border border-emerald-400/50 shadow-[0_0_15px_rgba(138,157,248,0.3)] flex items-center justify-center mb-1">
-            <Database className="w-6 h-6 text-emerald-400" />
+        {/* Dynamic Multi-Agent SVG Canvas */}
+        <div className="containment-canvas">
+          {/* Animated Circuit Canvas SVG */}
+          <svg className="containment-svg" viewBox="0 0 700 360" fill="none">
+            <defs>
+              <linearGradient id="aegisGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#8CFF32" stopOpacity="0.8" />
+                <stop offset="100%" stopColor="#8a9df8" stopOpacity="0.4" />
+              </linearGradient>
+              <linearGradient id="lineGradIngest" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#8a9df8" stopOpacity="0.9" />
+                <stop offset="100%" stopColor="#8CFF32" stopOpacity="0.9" />
+              </linearGradient>
+              <linearGradient id="lineGradContext" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#8CFF32" stopOpacity="0.9" />
+                <stop offset="100%" stopColor="#8a9df8" stopOpacity="0.9" />
+              </linearGradient>
+              <linearGradient id="lineGradExternal" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#8CFF32" stopOpacity="0.9" />
+                <stop offset="100%" stopColor="#8a9df8" stopOpacity="0.9" />
+              </linearGradient>
+            </defs>
+
+            {/* Ambient Background Aura Rings */}
+            <circle cx="350" cy="175" r="140" stroke="rgba(140, 255, 50, 0.12)" strokeWidth="1" strokeDasharray="4 8" className="containment-spin-slow" />
+            <circle cx="350" cy="175" r="95" stroke="rgba(138, 157, 248, 0.15)" strokeWidth="1" />
+            <circle cx="350" cy="175" r="55" fill="rgba(140, 255, 50, 0.05)" />
+
+            {/* Connection Lines from Aegis Center (350, 175) to Satellite Nodes */}
+            {/* 1. Left Node: Ingestion (140, 95) */}
+            <line 
+              x1="350" y1="175" x2="140" y2="95" 
+              stroke="url(#lineGradIngest)" 
+              strokeWidth="2.5" 
+              strokeDasharray="6 6" 
+              className="containment-pulse-line" 
+            />
+            {/* 2. Right Node: Context (560, 95) */}
+            <line 
+              x1="350" y1="175" x2="560" y2="95" 
+              stroke="url(#lineGradContext)" 
+              strokeWidth="2.5" 
+              strokeDasharray="6 6" 
+              className="containment-pulse-line" 
+            />
+            {/* 3. Bottom Node: External Models (350, 290) */}
+            <line 
+              x1="350" y1="175" x2="350" y2="290" 
+              stroke="url(#lineGradExternal)" 
+              strokeWidth="2.5" 
+              strokeDasharray="6 6" 
+              className="containment-pulse-line" 
+            />
+
+            {/* Node Ambient Spots */}
+            <circle cx="140" cy="95" r="32" fill="rgba(138, 157, 248, 0.08)" />
+            <circle cx="560" cy="95" r="32" fill="rgba(140, 255, 50, 0.08)" />
+            <circle cx="350" cy="290" r="32" fill="rgba(138, 157, 248, 0.08)" />
+          </svg>
+
+          {/* Node 1: Left - Ingestion */}
+          <div 
+            className={`containment-node-anchor node-ingestion ${activeNode === 'ingestion' ? 'is-active' : ''}`}
+            onClick={() => setActiveNode('ingestion')}
+            onMouseEnter={() => setActiveNode('ingestion')}
+          >
+            <div className="containment-node-circle satellite">
+              <Database size={24} className="containment-node-icon blue" />
+            </div>
+            <div className="containment-node-badge">
+              <span className="containment-node-name">Data Ingestion</span>
+              <span className="containment-node-sub">PII Sanitization</span>
+            </div>
           </div>
-          <span className="text-[11px] font-semibold text-gray-300 font-mono">Data Ingestion</span>
+
+          {/* Node 2: Center - Lycos Aegis Master Gateway */}
+          <div 
+            className={`containment-node-anchor node-center ${activeNode === 'aegis' ? 'is-active' : ''}`}
+            onClick={() => setActiveNode('aegis')}
+            onMouseEnter={() => setActiveNode('aegis')}
+          >
+            <div className="containment-node-circle master-core">
+              <div className="containment-core-pulse"></div>
+              <ShieldCheck size={38} className="containment-node-icon neon-green" />
+            </div>
+            <div className="containment-node-badge master-badge">
+              <span className="containment-master-tag">GATEWAY</span>
+              <span className="containment-node-name">LYCOS AEGIS</span>
+            </div>
+          </div>
+
+          {/* Node 3: Right - Context Harmonization */}
+          <div 
+            className={`containment-node-anchor node-context ${activeNode === 'context' ? 'is-active' : ''}`}
+            onClick={() => setActiveNode('context')}
+            onMouseEnter={() => setActiveNode('context')}
+          >
+            <div className="containment-node-circle satellite">
+              <Cpu size={24} className="containment-node-icon neon-green" />
+            </div>
+            <div className="containment-node-badge">
+              <span className="containment-node-name">Context Core</span>
+              <span className="containment-node-sub">Vector Memory</span>
+            </div>
+          </div>
+
+          {/* Node 4: Bottom - External LLMs / Public Cloud */}
+          <div 
+            className={`containment-node-anchor node-external ${activeNode === 'external' ? 'is-active' : ''}`}
+            onClick={() => setActiveNode('external')}
+            onMouseEnter={() => setActiveNode('external')}
+          >
+            <div className="containment-node-circle satellite">
+              <Globe size={24} className="containment-node-icon blue" />
+            </div>
+            <div className="containment-node-badge">
+              <span className="containment-node-name">Public LLMs</span>
+              <span className="containment-node-sub">Zero-Trust Isolation</span>
+            </div>
+          </div>
         </div>
 
-        {/* Sub-Node 2: Context Harmonization */}
-        <div className="absolute top-[30px] right-[70px] flex flex-col items-center z-10">
-          <div className="w-14 h-14 rounded-full bg-[#0a192f] border border-emerald-400/50 shadow-[0_0_15px_rgba(138,157,248,0.3)] flex items-center justify-center mb-1">
-            <Cpu className="w-6 h-6 text-emerald-400" />
+        {/* Interactive Dynamic Telemetry Drawer */}
+        <div className="containment-detail-drawer">
+          <div className="containment-drawer-header">
+            <div>
+              <span className="containment-drawer-category">{currentInfo.category}</span>
+              <h4 className="containment-drawer-title">{currentInfo.name}</h4>
+            </div>
+            <div className="containment-drawer-badges">
+              <span className="containment-status-pill">{currentInfo.status}</span>
+              <span className="containment-metric-pill">{currentInfo.metric}</span>
+            </div>
           </div>
-          <span className="text-[11px] font-semibold text-gray-300 font-mono">Context Harmonization</span>
-        </div>
-
-        {/* Sub-Node 3: Compliance Filter */}
-        <div className="absolute bottom-[20px] left-1/2 transform -translate-x-1/2 flex flex-col items-center z-10">
-          <div className="w-14 h-14 rounded-full bg-[#0a192f] border border-emerald-400/50 shadow-[0_0_15px_rgba(138,157,248,0.3)] flex items-center justify-center mb-1">
-            <Network className="w-6 h-6 text-emerald-400" />
+          <p className="containment-drawer-desc">{currentInfo.description}</p>
+          <div className="containment-drawer-protocol">
+            <span className="containment-protocol-label">SECURITY PROTOCOL:</span>
+            <span className="containment-protocol-val">{currentInfo.protocol}</span>
           </div>
-          <span className="text-[11px] font-semibold text-gray-300 font-mono">Compliance Filter</span>
         </div>
       </div>
     </div>
