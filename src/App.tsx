@@ -40,6 +40,7 @@ import NavigationHUD from './components/NavigationHUD'
 import LinkedInConnect from './components/LinkedInConnect'
 import SplashPage from './pages/SplashPage'
 import AdminPage from './pages/AdminPage'
+import { submitContactForm } from './services/contactService'
 
 // Register GSAP Plugins
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
@@ -326,6 +327,8 @@ export default function App() {
   const [contactEmail, setContactEmail] = useState('')
   const [contactMsg, setContactMsg] = useState('')
   const [contactSubmitted, setContactSubmitted] = useState(false)
+  const [contactLoading, setContactLoading] = useState(false)
+  const [contactError, setContactError] = useState<string | null>(null)
 
   // Cipher AI Chatbot Hero Morphing and Controlled Open State
   const [isCipherOpen, setIsCipherOpen] = useState(false)
@@ -1187,15 +1190,31 @@ export default function App() {
   void openInfoModal;
 
   // Contact Submit
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setContactSubmitted(true)
-    setTimeout(() => {
-      setContactSubmitted(false)
-      setContactName('')
-      setContactEmail('')
-      setContactMsg('')
-    }, 4000)
+    if (!contactName.trim() || !contactEmail.trim() || !contactMsg.trim()) return
+    setContactLoading(true)
+    setContactError(null)
+
+    const res = await submitContactForm({
+      name: contactName.trim(),
+      email: contactEmail.trim(),
+      message: contactMsg.trim(),
+      serviceContext: pageData?.hero?.title || pageData?.title || 'Home - Global Operational Footprint'
+    })
+
+    setContactLoading(false)
+    if (res.success) {
+      setContactSubmitted(true)
+      setTimeout(() => {
+        setContactSubmitted(false)
+        setContactName('')
+        setContactEmail('')
+        setContactMsg('')
+      }, 6000)
+    } else {
+      setContactError(res.error || 'Failed to submit engagement request.')
+    }
   }
 
   const menuConfig = [
@@ -1728,8 +1747,14 @@ export default function App() {
                       />
                     </div>
 
-                    <button type="submit" className="btn-solid home-contact-submit">
-                      INITIALIZE PROTOCOL
+                    {contactError && (
+                      <div style={{ color: '#ef4444', fontSize: '0.85rem', marginBottom: '0.75rem', fontFamily: 'monospace' }}>
+                        {contactError}
+                      </div>
+                    )}
+
+                    <button type="submit" className="btn-solid home-contact-submit" disabled={contactLoading}>
+                      {contactLoading ? 'TRANSMITTING...' : 'INITIALIZE PROTOCOL'}
                     </button>
                   </form>
                 )}
@@ -1887,8 +1912,14 @@ export default function App() {
                       />
                     </div>
 
-                    <button type="submit" className="cta-primary contact-submit-btn">
-                      INITIALIZE PROTOCOL
+                    {contactError && (
+                      <div style={{ color: '#ef4444', fontSize: '0.85rem', marginBottom: '0.75rem', fontFamily: 'monospace' }}>
+                        {contactError}
+                      </div>
+                    )}
+
+                    <button type="submit" className="cta-primary contact-submit-btn" disabled={contactLoading}>
+                      {contactLoading ? 'TRANSMITTING...' : 'INITIALIZE PROTOCOL'}
                     </button>
                   </form>
                 )}

@@ -1,3 +1,4 @@
+import { submitContactForm } from '../services/contactService';
 import { useState } from 'react';
 import { CheckCircle2, Shield, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import LinkedInConnect from '../components/LinkedInConnect';
@@ -8,10 +9,13 @@ export default function ProtocolCitadel() {
   const [formData, setFormData] = useState({
     orgName: '',
     execLead: '',
+    email: '',
     ipOverview: '',
     commercialObjective: '',
     corpDevTimeline: '',
   });
+  const [formLoading, setFormLoading] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
 
   const stats = [
     { value: '12', label: 'Month engagement horizon' },
@@ -88,14 +92,37 @@ export default function ProtocolCitadel() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.orgName && formData.execLead) {
+    if (!formData.execLead || !formData.email || !formData.orgName) return;
+
+    setFormLoading(true);
+    setFormError(null);
+
+    const fullMessage = [
+      `Organization: ${formData.orgName}`,
+      formData.ipOverview ? `IP / Technology Overview: ${formData.ipOverview}` : '',
+      formData.commercialObjective ? `Commercial Objective: ${formData.commercialObjective}` : '',
+      formData.corpDevTimeline ? `Corporate Development Timeline: ${formData.corpDevTimeline}` : ''
+    ].filter(Boolean).join('\n\n');
+
+    const res = await submitContactForm({
+      name: formData.execLead,
+      email: formData.email,
+      company: formData.orgName,
+      message: fullMessage,
+      serviceContext: 'Protocol: Citadel (Enterprise Venture Spin-Out)'
+    });
+
+    setFormLoading(false);
+    if (res.success) {
       setFormSubmitted(true);
       setTimeout(() => {
         setFormSubmitted(false);
-        setFormData({ orgName: '', execLead: '', ipOverview: '', commercialObjective: '', corpDevTimeline: '' });
-      }, 4000);
+        setFormData({ orgName: '', execLead: '', email: '', ipOverview: '', commercialObjective: '', corpDevTimeline: '' });
+      }, 6000);
+    } else {
+      setFormError(res.error || 'Failed to submit application.');
     }
   };
 
@@ -284,7 +311,14 @@ export default function ProtocolCitadel() {
                   <label className="contact-label">Corporate Development Timeline</label>
                   <input type="text" name="corpDevTimeline" value={formData.corpDevTimeline} onChange={handleInputChange} className="contact-input" placeholder="e.g. Launch spin-out in 12 months" />
                 </div>
-                <button type="submit" className="cta-primary contact-submit-btn">INITIALIZE INCUBATION PROTOCOL</button>
+                {formError && (
+                  <div style={{ color: '#ef4444', fontSize: '0.85rem', marginBottom: '0.75rem', fontFamily: 'monospace' }}>
+                    {formError}
+                  </div>
+                )}
+                <button type="submit" className="cta-primary contact-submit-btn" disabled={formLoading}>
+                  {formLoading ? 'TRANSMITTING...' : 'INITIALIZE INCUBATION PROTOCOL'}
+                </button>
               </form>
             )}
           </div>

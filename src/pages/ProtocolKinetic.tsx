@@ -1,3 +1,4 @@
+import { submitContactForm } from '../services/contactService';
 import { useState } from 'react';
 import { CheckCircle2, Cpu, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { useRegion } from '../context/RegionContext';
@@ -9,11 +10,14 @@ export default function ProtocolKinetic() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     founderName: '',
+    email: '',
     companyName: '',
     modelArchitecture: '',
     currentTraction: '',
     codeRepo: '',
   });
+  const [formLoading, setFormLoading] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
 
   const stats = [
     { value: '6', label: 'Month engagement horizon' },
@@ -85,14 +89,37 @@ export default function ProtocolKinetic() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.founderName && formData.companyName) {
+    if (!formData.founderName || !formData.email || !formData.companyName) return;
+
+    setFormLoading(true);
+    setFormError(null);
+
+    const fullMessage = [
+      `Company / Startup: ${formData.companyName}`,
+      formData.codeRepo ? `Repo / Demo: ${formData.codeRepo}` : '',
+      formData.modelArchitecture ? `Model Architecture: ${formData.modelArchitecture}` : '',
+      formData.currentTraction ? `Traction / Milestones: ${formData.currentTraction}` : ''
+    ].filter(Boolean).join('\n\n');
+
+    const res = await submitContactForm({
+      name: formData.founderName,
+      email: formData.email,
+      company: formData.companyName,
+      message: fullMessage,
+      serviceContext: 'Protocol: Kinetic (Seed & Pre-Seed Incubation)'
+    });
+
+    setFormLoading(false);
+    if (res.success) {
       setFormSubmitted(true);
       setTimeout(() => {
         setFormSubmitted(false);
-        setFormData({ founderName: '', companyName: '', modelArchitecture: '', currentTraction: '', codeRepo: '' });
-      }, 4000);
+        setFormData({ founderName: '', email: '', companyName: '', modelArchitecture: '', currentTraction: '', codeRepo: '' });
+      }, 6000);
+    } else {
+      setFormError(res.error || 'Failed to submit application.');
     }
   };
 
@@ -266,6 +293,10 @@ export default function ProtocolKinetic() {
                   <input type="text" name="founderName" required value={formData.founderName} onChange={handleInputChange} className="contact-input" placeholder="e.g. Dr. Helen Vance" />
                 </div>
                 <div>
+                  <label className="contact-label">Founder Email Address</label>
+                  <input type="email" name="email" required value={formData.email} onChange={handleInputChange} className="contact-input" placeholder="e.g. helen@sentryflow.io" />
+                </div>
+                <div>
                   <label className="contact-label">Company Name</label>
                   <input type="text" name="companyName" required value={formData.companyName} onChange={handleInputChange} className="contact-input" placeholder="e.g. SentryFlow" />
                 </div>
@@ -281,7 +312,14 @@ export default function ProtocolKinetic() {
                   <label className="contact-label">Current Traction / Milestones</label>
                   <textarea name="currentTraction" value={formData.currentTraction} onChange={handleInputChange} className="contact-textarea" placeholder="Summarize validation results, client pilots, or active metrics." />
                 </div>
-                <button type="submit" className="cta-primary contact-submit-btn">INITIALIZE INCUBATION PROTOCOL</button>
+                {formError && (
+                  <div style={{ color: '#ef4444', fontSize: '0.85rem', marginBottom: '0.75rem', fontFamily: 'monospace' }}>
+                    {formError}
+                  </div>
+                )}
+                <button type="submit" className="cta-primary contact-submit-btn" disabled={formLoading}>
+                  {formLoading ? 'TRANSMITTING...' : 'INITIALIZE INCUBATION PROTOCOL'}
+                </button>
               </form>
             )}
           </div>

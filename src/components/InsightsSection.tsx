@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
+import { submitContactForm } from '../services/contactService';
 import type { Insight } from '../types/cms';
 import { getPublishedInsights } from '../services/adminStorage';
 import NewsletterCTA from './NewsletterCTA';
@@ -33,6 +34,8 @@ export default function InsightsSection({ insightsList }: InsightsSectionProps) 
   const [contactEmail, setContactEmail] = useState('');
   const [contactMsg, setContactMsg] = useState('');
   const [contactSubmitted, setContactSubmitted] = useState(false);
+  const [contactLoading, setContactLoading] = useState(false);
+  const [contactError, setContactError] = useState<string | null>(null);
 
   const categories = useMemo(() => {
     return ['All', 'AI Governance', 'Agentic Frameworks', 'Neural Architectures', 'Strategic Advisory'];
@@ -56,15 +59,32 @@ export default function InsightsSection({ insightsList }: InsightsSectionProps) 
     return filteredInsights.slice(1);
   }, [filteredInsights]);
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setContactSubmitted(true);
-    setTimeout(() => {
-      setContactSubmitted(false);
-      setContactName('');
-      setContactEmail('');
-      setContactMsg('');
-    }, 3000);
+    if (!contactName.trim() || !contactEmail.trim() || !contactMsg.trim()) return;
+
+    setContactLoading(true);
+    setContactError(null);
+
+    const res = await submitContactForm({
+      name: contactName.trim(),
+      email: contactEmail.trim(),
+      message: contactMsg.trim(),
+      serviceContext: 'Market & Technical Insights'
+    });
+
+    setContactLoading(false);
+    if (res.success) {
+      setContactSubmitted(true);
+      setTimeout(() => {
+        setContactSubmitted(false);
+        setContactName('');
+        setContactEmail('');
+        setContactMsg('');
+      }, 6000);
+    } else {
+      setContactError(res.error || 'Failed to submit engagement request.');
+    }
   };
 
   return (
@@ -472,8 +492,13 @@ export default function InsightsSection({ insightsList }: InsightsSectionProps) 
                   />
                 </div>
 
-                <button type="submit" className="cta-primary contact-submit-btn">
-                  Initialize Protocol
+                {contactError && (
+                  <div style={{ color: '#ef4444', fontSize: '0.85rem', marginBottom: '0.75rem', fontFamily: 'monospace' }}>
+                    {contactError}
+                  </div>
+                )}
+                <button type="submit" className="cta-primary contact-submit-btn" disabled={contactLoading}>
+                  {contactLoading ? 'TRANSMITTING...' : 'INITIALIZE PROTOCOL'}
                 </button>
               </form>
             )}

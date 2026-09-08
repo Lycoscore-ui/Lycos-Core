@@ -1,3 +1,4 @@
+import { submitContactForm } from '../services/contactService';
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -10,18 +11,29 @@ export default function NewsletterCTA() {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    if (!email.trim()) return;
 
     setLoading(true);
-    // Simulate API request to backend/CMS
-    setTimeout(() => {
-      setLoading(false);
+    setError(null);
+
+    const res = await submitContactForm({
+      name: 'Newsletter Subscriber',
+      email: email.trim(),
+      message: 'Subscription request for original research, advisories, and bi-weekly strategic intelligence dispatches.',
+      serviceContext: 'Strategic Intelligence Dispatch (Newsletter)'
+    });
+
+    setLoading(false);
+    if (res.success) {
       setSubscribed(true);
       setEmail('');
-    }, 1500);
+    } else {
+      setError(res.error || 'Failed to subscribe. Please try again.');
+    }
   };
 
   return (
@@ -140,6 +152,11 @@ export default function NewsletterCTA() {
                 />
               </div>
 
+              {error && (
+                <div style={{ color: '#ef4444', fontSize: '0.8rem', fontFamily: 'monospace' }}>
+                  {error}
+                </div>
+              )}
               <button
                 type="submit"
                 className="btn-solid"

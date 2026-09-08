@@ -1,3 +1,4 @@
+import { submitContactForm } from '../services/contactService';
 import { useState } from 'react';
 import { CheckCircle2, Workflow, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { useRegion } from '../context/RegionContext';
@@ -9,11 +10,14 @@ export default function ProtocolApex() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     executiveName: '',
+    email: '',
     ventureName: '',
     currentArr: '',
     gtmBottleneck: '',
     targetSeriesADate: '',
   });
+  const [formLoading, setFormLoading] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
 
   const stats = [
     { value: '9', label: 'Month engagement horizon' },
@@ -85,14 +89,37 @@ export default function ProtocolApex() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.executiveName && formData.ventureName) {
+    if (!formData.executiveName || !formData.email || !formData.ventureName) return;
+
+    setFormLoading(true);
+    setFormError(null);
+
+    const fullMessage = [
+      `Venture: ${formData.ventureName}`,
+      `Current ARR: ${formData.currentArr}`,
+      formData.gtmBottleneck ? `GTM Bottleneck / ACV: ${formData.gtmBottleneck}` : '',
+      formData.targetSeriesADate ? `Target Series A Date: ${formData.targetSeriesADate}` : ''
+    ].filter(Boolean).join('\n\n');
+
+    const res = await submitContactForm({
+      name: formData.executiveName,
+      email: formData.email,
+      company: formData.ventureName,
+      message: fullMessage,
+      serviceContext: 'Protocol: Apex (Scale & Series A Acceleration)'
+    });
+
+    setFormLoading(false);
+    if (res.success) {
       setFormSubmitted(true);
       setTimeout(() => {
         setFormSubmitted(false);
-        setFormData({ executiveName: '', ventureName: '', currentArr: '', gtmBottleneck: '', targetSeriesADate: '' });
-      }, 4000);
+        setFormData({ executiveName: '', email: '', ventureName: '', currentArr: '', gtmBottleneck: '', targetSeriesADate: '' });
+      }, 6000);
+    } else {
+      setFormError(res.error || 'Failed to submit application.');
     }
   };
 
@@ -266,6 +293,10 @@ export default function ProtocolApex() {
                   <input type="text" name="executiveName" required value={formData.executiveName} onChange={handleInputChange} className="contact-input" placeholder="e.g. Marcus Vance" />
                 </div>
                 <div>
+                  <label className="contact-label">Executive Email Address</label>
+                  <input type="email" name="email" required value={formData.email} onChange={handleInputChange} className="contact-input" placeholder="e.g. marcus@omnicore.ai" />
+                </div>
+                <div>
                   <label className="contact-label">Venture Name</label>
                   <input type="text" name="ventureName" required value={formData.ventureName} onChange={handleInputChange} className="contact-input" placeholder="e.g. OmniCore" />
                 </div>
@@ -281,7 +312,14 @@ export default function ProtocolApex() {
                   <label className="contact-label">Target Series A Date</label>
                   <input type="text" name="targetSeriesADate" value={formData.targetSeriesADate} onChange={handleInputChange} className="contact-input" placeholder="e.g. Q4 2026" />
                 </div>
-                <button type="submit" className="cta-primary contact-submit-btn">INITIALIZE INCUBATION PROTOCOL</button>
+                {formError && (
+                  <div style={{ color: '#ef4444', fontSize: '0.85rem', marginBottom: '0.75rem', fontFamily: 'monospace' }}>
+                    {formError}
+                  </div>
+                )}
+                <button type="submit" className="cta-primary contact-submit-btn" disabled={formLoading}>
+                  {formLoading ? 'TRANSMITTING...' : 'INITIALIZE INCUBATION PROTOCOL'}
+                </button>
               </form>
             )}
           </div>
