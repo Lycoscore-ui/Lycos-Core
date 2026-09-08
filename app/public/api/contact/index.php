@@ -1,8 +1,8 @@
 <?php
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
-header('Content-Type: application/json');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+header('Content-Type: application/json; charset=UTF-8');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204);
@@ -48,17 +48,11 @@ if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
 if (empty($message)) {
     http_response_code(400);
-    echo json_encode(['success' => false, 'error' => 'Message or description is required.']);
+    echo json_encode(['success' => false, 'error' => 'Message description is required.']);
     exit;
 }
 
-$envPaths = [
-    __DIR__ . '/../.env',
-    __DIR__ . '/../../v2-development/cms/.env',
-    __DIR__ . '/.env',
-    __DIR__ . '/../../.env'
-];
-
+// Config defaults
 $config = [
     'SMTP_HOST' => 'mail.lycoscore.com',
     'SMTP_PORT' => 465,
@@ -68,40 +62,163 @@ $config = [
     'CONTACT_RECIPIENT' => 'cipher@lycoscore.com'
 ];
 
+// Check .env files
+$envPaths = [
+    __DIR__ . '/../.env',
+    __DIR__ . '/.env',
+    __DIR__ . '/../../.env'
+];
+
 foreach ($envPaths as $envPath) {
     if (file_exists($envPath)) {
-        $lines = file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        foreach ($lines as $line) {
-            $line = trim($line);
-            if (strpos($line, '#') === 0) continue;
-            $parts = explode('=', $line, 2);
-            if (count($parts) === 2) {
-                $key = trim($parts[0]);
-                $val = trim($parts[1], "'\" \t\n\r\0\x0B");
-                if (array_key_exists($key, $config)) {
-                    $config[$key] = $val;
+        $lines = @file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        if ($lines) {
+            foreach ($lines as $line) {
+                $line = trim($line);
+                if (strpos($line, '#') === 0) continue;
+                $parts = explode('=', $line, 2);
+                if (count($parts) === 2) {
+                    $key = trim($parts[0]);
+                    $val = trim($parts[1], "'\" \t\n\r\0\x0B");
+                    if (array_key_exists($key, $config)) {
+                        $config[$key] = $val;
+                    }
                 }
             }
         }
     }
 }
 
-$phpMailerPath = __DIR__ . '/../wp-includes/PHPMailer/PHPMailer.php';
-$smtpPath = __DIR__ . '/../wp-includes/PHPMailer/SMTP.php';
-$exceptionPath = __DIR__ . '/../wp-includes/PHPMailer/Exception.php';
+function send_smtp_payload($host, $port, $username, $password, $fromEmail, $fromName, $toEmail, $toName, $replyToEmail, $replyToName, $subject, $htmlBody, $altBody) {
+    // 1. Try PHPMailer if present
+    $phpMailerDirs = [
+        __DIR__ . '/phpmailer',
+        __DIR__ . '/../phpmailer',
+        __DIR__ . '/../wp-includes/PHPMailer',
+        __DIR__ . '/../../app/public/wp-includes/PHPMailer'
+    ];
 
-if (!file_exists($phpMailerPath) || !file_exists($smtpPath)) {
-    http_response_code(500);
-    echo json_encode(['success' => false, 'error' => 'Mail delivery subsystem unavailable.']);
-    exit;
+    foreach ($phpMailerDirs as $dir) {
+        $pPath = $dir . '/PHPMailer.php';
+        $sPath = $dir . '/SMTP.php';
+        $ePath = $dir . '/Exception.php';
+
+        if (file_exists($pPath) && file_exists($sPath)) {
+            if (file_exists($ePath)) require_once $ePath;
+            require_once $pPath;
+            require_once $sPath;
+
+            try {
+                $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
+                $mail->isSMTP();
+                $mail->Host       = $host;
+                $mail->SMTPAuth   = true;
+                $mail->Username   = $username;
+                $mail->Password   = $password;
+                $mail->SMTPSecure = ($port == 465) ? \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMTPS : \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port       = (int)$port;
+                $mail->CharSet    = 'UTF-8';
+                $mail->SMTPOptions = [
+                    'ssl' => [
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                        'allow_self_signed' => true
+                    ]
+                ];
+
+                $mail->setFrom($fromEmail, $fromName);
+                $mail->addAddress($toEmail, $toName);
+                if (!empty($replyToEmail)) {
+                    $mail->addReplyTo($replyToEmail, $replyToName);
+                }
+
+                $mail->isHTML(true);
+                $mail->Subject = $subject;
+                $mail->Body    = $htmlBody;
+                $mail->AltBody = $altBody;
+
+                return $mail->send();
+            } catch (\Exception $e) {
+                error_log('PHPMailer attempt failed: ' . $e->getMessage() . ', trying socket fallback.');
+                break;
+            }
+        }
+    }
+
+    // 2. Native Direct SSL Socket SMTP Fallback
+    $protocol = ((int)$port === 465) ? 'ssl://' : 'tcp://';
+    $context = stream_context_create([
+        'ssl' => [
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+            'allow_self_signed' => true
+        ]
+    ]);
+
+    $socket = @stream_socket_client($protocol . $host . ':' . $port, $errno, $errstr, 15, STREAM_CLIENT_CONNECT, $context);
+    if (!$socket) {
+        throw new \Exception("Could not connect to SMTP server: $errstr ($errno)");
+    }
+
+    $readResp = function($s) {
+        $out = '';
+        while ($line = fgets($s, 515)) {
+            $out .= $line;
+            if (substr($line, 3, 1) === ' ') break;
+        }
+        return $out;
+    };
+
+    $execCmd = function($s, $cmd, $expect) use ($readResp) {
+        if (!empty($cmd)) {
+            fputs($s, $cmd . "\r\n");
+        }
+        $r = $readResp($s);
+        $c = substr($r, 0, 3);
+        if ($expect && $c !== (string)$expect) {
+            throw new \Exception("SMTP error for '$cmd': $r");
+        }
+        return $r;
+    };
+
+    $execCmd($socket, '', '220');
+    $execCmd($socket, 'EHLO lycoscore.com', '250');
+    $execCmd($socket, 'AUTH LOGIN', '334');
+    $execCmd($socket, base64_encode($username), '334');
+    $execCmd($socket, base64_encode($password), '235');
+    $execCmd($socket, 'MAIL FROM: <' . $fromEmail . '>', '250');
+    $execCmd($socket, 'RCPT TO: <' . $toEmail . '>', '250');
+    $execCmd($socket, 'DATA', '354');
+
+    $boundary = md5(uniqid(time()));
+    $headers = [
+        'MIME-Version: 1.0',
+        'From: ' . $fromName . ' <' . $fromEmail . '>',
+        'To: ' . $toName . ' <' . $toEmail . '>',
+        'Subject: =?UTF-8?B?' . base64_encode($subject) . '?=',
+        'Date: ' . date('r'),
+        'Content-Type: multipart/alternative; boundary="' . $boundary . '"'
+    ];
+    if (!empty($replyToEmail)) {
+        $headers[] = 'Reply-To: ' . $replyToName . ' <' . $replyToEmail . '>';
+    }
+
+    $raw = implode("\r\n", $headers) . "\r\n\r\n";
+    $raw .= "--" . $boundary . "\r\n";
+    $raw .= "Content-Type: text/plain; charset=UTF-8\r\n";
+    $raw .= "Content-Transfer-Encoding: base64\r\n\r\n";
+    $raw .= chunk_split(base64_encode($altBody)) . "\r\n";
+    $raw .= "--" . $boundary . "\r\n";
+    $raw .= "Content-Type: text/html; charset=UTF-8\r\n";
+    $raw .= "Content-Transfer-Encoding: base64\r\n\r\n";
+    $raw .= chunk_split(base64_encode($htmlBody)) . "\r\n";
+    $raw .= "--" . $boundary . "--\r\n.";
+
+    $execCmd($socket, $raw, '250');
+    $execCmd($socket, 'QUIT', '221');
+    fclose($socket);
+    return true;
 }
-
-require_once $exceptionPath;
-require_once $phpMailerPath;
-require_once $smtpPath;
-
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 
 $safeName = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
 $safeEmail = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
@@ -112,35 +229,10 @@ $safeMessage = nl2br(htmlspecialchars($message, ENT_QUOTES, 'UTF-8'));
 $timestamp = gmdate('Y-m-d H:i:s') . ' UTC';
 
 try {
-    // 1. Send Admin Notification to cipher@lycoscore.com
-    $adminMail = new PHPMailer(true);
-    $adminMail->isSMTP();
-    $adminMail->Host       = $config['SMTP_HOST'];
-    $adminMail->SMTPAuth   = true;
-    $adminMail->Username   = $config['SMTP_USER'];
-    $adminMail->Password   = $config['SMTP_PASS'];
-    $adminMail->SMTPSecure = ($config['SMTP_SECURE'] === 'tls' || $config['SMTP_PORT'] == 587) ? PHPMailer::ENCRYPTION_STARTTLS : PHPMailer::ENCRYPTION_SMTPS;
-    $adminMail->Port       = (int)$config['SMTP_PORT'];
-    $adminMail->CharSet    = 'UTF-8';
-    $adminMail->SMTPOptions = [
-        'ssl' => [
-            'verify_peer' => false,
-            'verify_peer_name' => false,
-            'allow_self_signed' => true
-        ]
-    ];
-
-    $adminMail->setFrom($config['SMTP_USER'], 'Lycos Core Intelligence');
-    $adminMail->addAddress($config['CONTACT_RECIPIENT'], 'Lycos Core Operations');
-    $adminMail->addReplyTo($email, $name);
-
-    $adminMail->isHTML(true);
-    $adminMail->Subject = "[Lycos Core Lead] New Inquiry: " . $name . " [" . $context . "]";
-
     $companyHtml = !empty($safeCompany) ? "<div style='margin-bottom:12px;'><div style='font-size:11px;color:#94a3b8;font-family:monospace;letter-spacing:0.05em;'>ORGANIZATION</div><div style='color:#ffffff;font-size:15px;margin-top:2px;'>" . $safeCompany . "</div></div>" : "";
     $phoneHtml = !empty($safePhone) ? "<div style='margin-bottom:12px;'><div style='font-size:11px;color:#94a3b8;font-family:monospace;letter-spacing:0.05em;'>PHONE</div><div style='color:#ffffff;font-size:15px;margin-top:2px;'>" . $safePhone . "</div></div>" : "";
 
-    $adminMail->Body = "
+    $adminHtml = "
     <!DOCTYPE html>
     <html>
     <head>
@@ -194,37 +286,27 @@ try {
     </html>
     ";
 
-    $adminMail->AltBody = "LYCOS CORE INQUIRY\nName: " . $name . "\nEmail: " . $email . "\nContext: " . $context . "\nOrganization: " . $company . "\nPhone: " . $phone . "\nTimestamp: " . $timestamp . "\n\nMessage:\n" . $message;
+    $adminAlt = "LYCOS CORE INQUIRY\nName: " . $name . "\nEmail: " . $email . "\nContext: " . $context . "\nOrganization: " . $company . "\nPhone: " . $phone . "\nTimestamp: " . $timestamp . "\n\nMessage:\n" . $message;
 
-    $adminMail->send();
+    send_smtp_payload(
+        $config['SMTP_HOST'],
+        $config['SMTP_PORT'],
+        $config['SMTP_USER'],
+        $config['SMTP_PASS'],
+        $config['SMTP_USER'],
+        'Lycos Core Intelligence',
+        $config['CONTACT_RECIPIENT'],
+        'Lycos Core Operations',
+        $email,
+        $name,
+        "[Lycos Core Lead] New Inquiry: " . $name . " [" . $context . "]",
+        $adminHtml,
+        $adminAlt
+    );
 
-    // 2. Send Branded Confirmation to User
+    // Send Client Autoresponder
     try {
-        $clientMail = new PHPMailer(true);
-        $clientMail->isSMTP();
-        $clientMail->Host       = $config['SMTP_HOST'];
-        $clientMail->SMTPAuth   = true;
-        $clientMail->Username   = $config['SMTP_USER'];
-        $clientMail->Password   = $config['SMTP_PASS'];
-        $clientMail->SMTPSecure = ($config['SMTP_SECURE'] === 'tls' || $config['SMTP_PORT'] == 587) ? PHPMailer::ENCRYPTION_STARTTLS : PHPMailer::ENCRYPTION_SMTPS;
-        $clientMail->Port       = (int)$config['SMTP_PORT'];
-        $clientMail->CharSet    = 'UTF-8';
-        $clientMail->SMTPOptions = [
-            'ssl' => [
-                'verify_peer' => false,
-                'verify_peer_name' => false,
-                'allow_self_signed' => true
-            ]
-        ];
-
-        $clientMail->setFrom($config['SMTP_USER'], 'Lycos Core');
-        $clientMail->addAddress($email, $name);
-        $clientMail->addReplyTo($config['CONTACT_RECIPIENT'], 'Lycos Core Operations');
-
-        $clientMail->isHTML(true);
-        $clientMail->Subject = "Lycos Core // Engagement Request Received";
-
-        $clientMail->Body = "
+        $clientHtml = "
         <!DOCTYPE html>
         <html>
         <head>
@@ -269,9 +351,23 @@ try {
         </html>
         ";
 
-        $clientMail->AltBody = "Dear " . $name . ",\n\nThank you for reaching out to Lycos Core. Your engagement request regarding '" . $context . "' has been received.\n\nOne of our operational leads will contact you within 24 business hours.\n\nRegards,\nLycos Core Team\nhttps://lycoscore.com";
+        $clientAlt = "Dear " . $name . ",\n\nThank you for reaching out to Lycos Core. Your engagement request regarding '" . $context . "' has been received.\n\nOne of our operational leads will contact you within 24 business hours.\n\nRegards,\nLycos Core Team\nhttps://lycoscore.com";
 
-        $clientMail->send();
+        send_smtp_payload(
+            $config['SMTP_HOST'],
+            $config['SMTP_PORT'],
+            $config['SMTP_USER'],
+            $config['SMTP_PASS'],
+            $config['SMTP_USER'],
+            'Lycos Core',
+            $email,
+            $name,
+            $config['CONTACT_RECIPIENT'],
+            'Lycos Core Operations',
+            "Lycos Core // Engagement Request Received",
+            $clientHtml,
+            $clientAlt
+        );
     } catch (\Exception $e) {
         error_log('Autoresponder error: ' . $e->getMessage());
     }
@@ -282,11 +378,11 @@ try {
     ]);
     exit;
 
-} catch (Exception $e) {
+} catch (\Exception $e) {
     http_response_code(500);
     echo json_encode([
         'success' => false,
-        'error' => 'Mail delivery failed: ' . $adminMail->ErrorInfo
+        'error' => 'Mail delivery failed: ' . $e->getMessage()
     ]);
     exit;
 }

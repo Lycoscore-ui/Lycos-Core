@@ -1,9 +1,10 @@
-﻿# ==============================================================================
+# ==============================================================================
 # Apache 2.4 Production Configuration (cPanel / MariaDB 10.11 / Afrihost)
 # Optimized for Lycos Core Headless React SPA + PHP Microservices
 # ==============================================================================
 
 # 1. Server Security & Directory Browsing Prevention
+DirectoryIndex index.html index.php default.html
 Options -Indexes +FollowSymLinks
 AddDefaultCharset UTF-8
 
@@ -96,9 +97,16 @@ AddDefaultCharset UTF-8
     RewriteRule ^ - [L]
 
     # B. API & Microservice Routing
+    RewriteRule ^api/contact/?$ api/contact.php [L,QSA]
+    RewriteRule ^api/contact\.php$ api/contact.php [L,QSA]
+    RewriteRule ^contact\.php$ contact.php [L,QSA]
     RewriteRule ^api/cipher/?$ cipher.php [L,QSA]
-    RewriteRule ^cipher\.php$ - [L]
+    RewriteRule ^api/cipher\.php$ cipher.php [L,QSA]
+    RewriteRule ^cipher\.php$ cipher.php [L,QSA]
 
-    # C. Single Page Application (SPA) - Route all virtual routes to index.html
+    # C. Single Page Application (SPA) - Route all virtual routes to index.html (excluding api requests)
+    RewriteCond %{REQUEST_URI} !^/api/
+    RewriteCond %{REQUEST_URI} !^/contact\.php
+    RewriteCond %{REQUEST_URI} !^/cipher\.php
     RewriteRule ^ index.html [L,QSA]
 </IfModule>

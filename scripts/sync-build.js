@@ -29,4 +29,24 @@ if (fs.existsSync(publicMediaDir)) {
   console.log('✓ Media assets synchronized to ./dist/media');
 }
 
+// 4. Sync public/api and microservices to dist/ and app/public/
+const publicApiDir = path.resolve('public/api');
+const distApiDir = path.resolve('dist/api');
+const appPublicApiDir = path.resolve('app/public/api');
+if (fs.existsSync(publicApiDir)) {
+  fs.cpSync(publicApiDir, distApiDir, { recursive: true, force: true });
+  fs.cpSync(publicApiDir, appPublicApiDir, { recursive: true, force: true });
+  console.log('✓ API microservices synchronized to dist/api and app/public/api');
+}
+
+// 5. Sync root PHP scripts and .htaccess
+['contact.php', 'cipher.php', '.htaccess'].forEach(f => {
+  const src = path.resolve('public', f);
+  if (fs.existsSync(src)) {
+    fs.copyFileSync(src, path.resolve('dist', f));
+    fs.copyFileSync(src, path.resolve('app/public', f));
+    console.log(`✓ ${f} synchronized to dist/ and app/public/`);
+  }
+});
+
 console.log('Build synchronization completed successfully.');
