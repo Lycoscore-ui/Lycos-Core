@@ -296,12 +296,12 @@ export default function IncubationHubSection() {
         </div>
         <div className="outcome-stats-grid">
           {stats.map((st, sIdx) => (
-            <div key={sIdx} className="glass-panel outcome-stat-card">
-              <div className="outcome-stat-top">
+            <div key={sIdx} className="glass-panel outcome-stat-card card-centered-flow">
+              <div className="card-icon-wrap" style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.25rem' }}>
                 <div className="icon-badge">{st.icon}</div>
-                <div className="outcome-stat-val accent-highlight">{st.value}</div>
               </div>
-              <p className="outcome-stat-desc">{st.label}</p>
+              <div className="outcome-stat-val accent-highlight" style={{ textAlign: 'center', marginBottom: '0.6rem', fontSize: '2.2rem', fontWeight: 800 }}>{st.value}</div>
+              <p className="outcome-stat-desc" style={{ textAlign: 'center', margin: 0, fontSize: '0.9rem', lineHeight: '1.55', color: '#94a3b8' }}>{st.label}</p>
             </div>
           ))}
         </div>
@@ -377,20 +377,24 @@ export default function IncubationHubSection() {
         <div className="incubation-protocol-grid">
           {protocols.map((p, idx) => (
             <div key={idx} className="glass-panel incubation-protocol-card">
-              <div className="protocol-card-head">
-                <div className="icon-badge">{p.icon}</div>
-                <span className="protocol-badge-tag">{p.tag}</span>
+              <div>
+                <div className="service-icon-wrap" style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '1.25rem' }}>
+                  <div className="icon-badge">{p.icon}</div>
+                </div>
+                <span className="protocol-badge-tag" style={{ display: 'block', marginBottom: '0.6rem' }}>{p.tag}</span>
+                <h3 className="protocol-card-title">{p.title}</h3>
+                <p className="protocol-card-desc">{p.desc}</p>
               </div>
-              <h3 className="protocol-card-title">{p.title}</h3>
-              <p className="protocol-card-desc">{p.desc}</p>
-              <div className="protocol-card-meta">{p.meta}</div>
-              <button 
-                className="cta-secondary protocol-action-btn"
-                onClick={() => navigateTo(p.route)}
-              >
-                <span>INITIALIZE PROTOCOL</span>
-                <ArrowRight size={16} className="neon-icon" />
-              </button>
+              <div>
+                <div className="protocol-card-meta" style={{ marginTop: '1rem' }}>{p.meta}</div>
+                <button 
+                  className="cta-secondary protocol-action-btn"
+                  onClick={() => navigateTo(p.route)}
+                >
+                  <span>INITIALIZE PROTOCOL</span>
+                  <ArrowRight size={16} className="neon-icon" />
+                </button>
+              </div>
             </div>
           ))}
         </div>

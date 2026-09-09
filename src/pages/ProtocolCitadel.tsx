@@ -1,6 +1,6 @@
 import { submitContactForm } from '../services/contactService';
 import { useState } from 'react';
-import { ShieldAlert, Scale, Users, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { ShieldAlert, Scale, Users, CheckCircle, CheckCircle2, ChevronDown } from 'lucide-react';
 import LinkedInConnect from '../components/LinkedInConnect';
 
 export default function ProtocolCitadel() {
@@ -12,81 +12,81 @@ export default function ProtocolCitadel() {
     email: '',
     ipOverview: '',
     commercialObjective: '',
-    corpDevTimeline: '',
+    spinOutTimeline: '',
   });
   const [formLoading, setFormLoading] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
 
   const stats = [
-    { value: '12', label: 'Month engagement horizon' },
-    { value: 'Custom', label: 'Bespoke equity alignment' },
-    { value: '100%', label: 'IP firewall protection' },
-    { value: '1', label: 'Independent board and entity' },
+    { value: '12mo', label: 'Studio Horizon' },
+    { value: 'Bespoke', label: 'Carve-Out Terms' },
+    { value: '100%', label: 'IP Ring-Fenced' },
+    { value: 'Tier-1', label: 'Spin-Out Syndicates' },
   ];
 
   const pillars = [
     {
-      icon: <ShieldAlert size={20} className="neon-icon" />,
-      tag: '01 // IP CARVE-OUT and REGULATORY FIREWALLS',
-      title: 'Risk Isolation',
-      body: 'Risk isolation blueprints, regulatory partition mapping, legal entity separation, and comprehensive codebase intellectual property audits.',
+      icon: <ShieldAlert size={28} className="neon-icon" />,
+      tag: '01 // LEGAL & IP FIREWALL',
+      title: 'Clean IP Carve-Out',
+      body: 'Complete legal ring-fencing, proprietary licensing architectures, clean capital structures, and patent defense isolation from the parent enterprise.',
     },
     {
-      icon: <Scale size={20} className="neon-icon" />,
-      tag: '02 // VENTURE GOVERNANCE and CAP TABLE ENGINEERING',
-      title: 'Clean Governance',
-      body: 'Structured spin-out cap table modeling, corporate parent equity allocations, key management option pools, and independent entity board configurations.',
+      icon: <Scale size={28} className="neon-icon" />,
+      tag: '02 // CORPORATE STRUCTURING',
+      title: 'Spin-Out Corporate Development',
+      body: 'Dual-class equity structuring, non-dilutive internal licensing, governance boundaries, and alignment with corporate parent strategic objectives.',
     },
     {
-      icon: <Users size={20} className="neon-icon" />,
-      tag: '03 // EXECUTIVE TALENT DEPLOYMENT',
-      title: 'Leadership Sourcing',
-      body: 'Venture-grade CEO and CTO search, candidate pipelines, alignment workshops, and founding management option pool routing structures.',
+      icon: <Users size={28} className="neon-icon" />,
+      tag: '03 // EXECUTIVE PLACEMENT',
+      title: 'Founding Leadership Recruitment',
+      body: 'Vetted entrepreneurial CEO and CTO placement with specialized track records in high-growth AI spin-outs and venture scaling.',
     },
   ];
 
   const phases = [
     {
-      tag: 'PHASE 01 // MONTHS 1-3',
-      title: 'IP Assessment and Feasibility',
-      body: 'Audit internal codebase, verify patent/IP landscapes, map regulatory boundaries, and model standalone market potential.',
+      phase: 'PHASE 1 (Months 1–3)',
+      title: 'IP Audit and Ring-Fencing',
+      body: 'Map internal AI codebase, establish IP boundaries, draft licensing agreements, and construct clean corporate vehicle.',
     },
     {
-      tag: 'PHASE 02 // MONTHS 4-6',
-      title: 'Structuring and Leadership',
-      body: 'Define spin-out equity splits, establish clean corporate legal structures, and secure dedicated venture CEO/CTO leadership.',
+      phase: 'PHASE 2 (Months 4–6)',
+      title: 'Productization and Architecture',
+      body: 'Refactor internal tooling into multi-tenant, market-ready enterprise software platform with sovereign security gates.',
     },
     {
-      tag: 'PHASE 03 // MONTHS 7-9',
-      title: 'Technical and Brand Separation',
-      body: 'Fork the codebase into isolated developer architectures, implement security boundary firewalls, and launch standalone branding.',
+      phase: 'PHASE 3 (Months 7–9)',
+      title: 'Executive Placement and Beta Pilots',
+      body: 'Place proven venture leadership team and deploy spin-out software into first 3 external non-competing enterprise buyers.',
     },
     {
-      tag: 'PHASE 04 // MONTHS 10-12',
-      title: 'External Capital and Market Launch',
-      body: 'Close institutional syndicate funding, execute customer migration protocols, and transition to independent corporate governance.',
+      phase: 'PHASE 4 (Months 10–12)',
+      title: 'Institutional Capitalization',
+      body: 'Route standalone entity to Tier-1 venture syndicates for institutional Series A capitalization with parent upside retention.',
     },
   ];
 
   const deliverables = [
-    'Entity Formation & Corporate Governance',
-    'Bespoke Brand Architecture',
-    'Executive Talent Acquisition',
-    'Capital Structuring & Equity Design',
+    'Clean Legal & IP Ring-Fenced Entity',
+    'Standalone Multi-Tenant Software Platform',
+    'Vetted Founding Executive Team (CEO/CTO)',
+    'Institutional Series A Capital Syndicate',
   ];
 
   const faqs = [
     {
-      q: 'How does Lycos Core protect corporate IP during spin-out?',
-      a: 'We implement institutional-grade legal and technical firewalls. The parent organization retains clean licensing or non-dilutive equity stakes while fully isolating core enterprise IP from external exposure.',
+      q: 'How does Lycos protect corporate parent proprietary data?',
+      a: 'We establish cryptographic and legal firewalls between the enterprise parent and the spin-out entity. The spin-out receives licensed access to specific algorithmic frameworks without exposing parent operational databases or customer records.',
     },
     {
-      q: 'How is founding executive compensation structured?',
-      a: 'We design venture-grade management incentive option pools (typically 15–20%) to attract tier-one founding operators without burdening parent enterprise payroll.',
+      q: 'What is the parent company equity retention model?',
+      a: 'The corporate parent typically retains a significant, non-dilutive minority equity position and proprietary internal licensing terms while external venture capital funds the growth of the new entity.',
     },
     {
-      q: 'Can the parent company retain a controlling interest?',
-      a: 'Governance structures are customized. While outside institutional syndicates often require balanced governance, the parent corporation can retain board seats, preferred commercial terms, and strategic rights.',
+      q: 'Who manages the spin-out venture post-carve-out?',
+      a: 'Protocol: Citadel recruits vetted, experienced entrepreneurial executive leadership (CEO/CTO) to operate the new company autonomously, freeing corporate management from daily venture operations.',
     },
   ];
 
@@ -103,11 +103,11 @@ export default function ProtocolCitadel() {
     setFormError(null);
 
     const fullMessage = [
-      `Enterprise Organization: ${formData.orgName}`,
+      `Parent Enterprise / Org: ${formData.orgName}`,
       `Executive Lead: ${formData.execLead}`,
-      formData.corpDevTimeline ? `Corp Dev Timeline: ${formData.corpDevTimeline}` : '',
+      formData.ipOverview ? `IP / Technology Overview: ${formData.ipOverview}` : '',
       formData.commercialObjective ? `Commercial Objective: ${formData.commercialObjective}` : '',
-      formData.ipOverview ? `IP / Technology Overview: ${formData.ipOverview}` : ''
+      formData.spinOutTimeline ? `Desired Timeline: ${formData.spinOutTimeline}` : ''
     ].filter(Boolean).join('\n\n');
 
     const res = await submitContactForm({
@@ -115,7 +115,7 @@ export default function ProtocolCitadel() {
       email: formData.email,
       company: formData.orgName,
       message: fullMessage,
-      serviceContext: 'Protocol: Citadel (Corporate Venture Studio & Spin-Outs)'
+      serviceContext: 'Protocol: Citadel (Corporate Studio & IP Carve-Out)'
     });
 
     setFormLoading(false);
@@ -123,7 +123,7 @@ export default function ProtocolCitadel() {
       setFormSubmitted(true);
       setTimeout(() => {
         setFormSubmitted(false);
-        setFormData({ orgName: '', execLead: '', email: '', ipOverview: '', commercialObjective: '', corpDevTimeline: '' });
+        setFormData({ orgName: '', execLead: '', email: '', ipOverview: '', commercialObjective: '', spinOutTimeline: '' });
       }, 6000);
     } else {
       setFormError(res.error || 'Failed to submit application.');
@@ -141,14 +141,14 @@ export default function ProtocolCitadel() {
         <div className="hero-grid">
           <div>
             <div className="eyebrow-tagline-green">
-              // INCUBATION PROTOCOL // CORPORATE VENTURE STUDIO
+              // INCUBATION PROTOCOL // CORPORATE STUDIO
             </div>
             <h1 className="hero-heading">
               Protocol: Citadel<span className="brand-dot">.</span>
             </h1>
 
             <div className="hero-tags-row">
-              {['Corporate Spin-Outs', 'IP Carve-Outs', '12-Month Horizon'].map((tag, i) => (
+              {['Corporate Studio', 'IP Carve-Out', '12-Month Horizon'].map((tag, i) => (
                 <span key={i} className="hero-pill-badge">{tag}</span>
               ))}
             </div>
@@ -207,121 +207,153 @@ export default function ProtocolCitadel() {
         </div>
       </section>
 
-      {/* Below-fold — Stats + Content */}
-      <section className="protocol-content-section">
-        {/* Stats Strip */}
-        <div className="who-stats-grid">
+      {/* Stats Strip */}
+      <section className="section" style={{ padding: '3rem 0 2rem' }}>
+        <div className="outcome-stats-grid subpage-block-container">
           {stats.map((s, i) => (
-            <div key={i} className="glass-panel who-stat-card">
-              <div className="who-stat-value">{s.value}</div>
-              <div className="who-stat-label">{s.label}</div>
+            <div key={i} className="baseline-card outcome-stat-card">
+              <div className="stat-metric">{s.value}</div>
+              <div className="stat-label">{s.label}</div>
             </div>
           ))}
         </div>
+      </section>
 
-        {/* Thesis */}
-        <div className="glass-panel who-territory-card">
+      {/* Thesis */}
+      <section className="section" style={{ padding: '2rem 0 4rem' }}>
+        <div className="glass-panel outcomes-split-grid subpage-block-container">
           <div>
-            <div className="eyebrow-tagline">// OPERATIONAL THESIS</div>
-            <h3 className="service-heading who-territory-heading">
+            <span className="eyebrow-tagline">// OPERATIONAL THESIS</span>
+            <h3 className="service-heading" style={{ marginTop: '0.5rem' }}>
               Trapped Enterprise IP Is Unmonetized Alpha. Unlocking Sovereign Market Value Through Structured Spin-Outs<span className="brand-dot">.</span>
             </h3>
-            <p className="hero-body-copy who-body-copy-flush">
+          </div>
+          <div>
+            <p className="service-desc" style={{ fontSize: '1rem', lineHeight: '1.7' }}>
               Large enterprises frequently build groundbreaking internal AI technologies that stall due to corporate bureaucracy, shifting internal priorities, or risk aversion. Protocol: Citadel provides the structural firewall, corporate development expertise, and dedicated leadership required to carve out trapped intellectual property and transform it into an autonomous, high-growth venture asset.
             </p>
           </div>
         </div>
+      </section>
 
-        {/* Pillars */}
-        <div className="who-unit-section-block">
-          <div className="eyebrow-tagline">// INSTITUTIONAL CARVE-OUT ARCHITECTURE</div>
-          <h3 className="service-heading">Three Structural Pillars. One Clean Separation<span className="brand-dot">.</span></h3>
-          <div className="protocol-disciplines-grid-3">
-            {pillars.map((p, i) => (
-              <div key={i} className="glass-panel who-discipline-card">
-                <div className="icon-badge">{p.icon}</div>
-                <div>
-                  <div className="eyebrow-tagline">{p.tag}</div>
-                  <h4 className="who-discipline-title">{p.title}</h4>
-                  <p className="who-discipline-description">{p.body}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+      {/* Pillars / Carve-Out Infrastructure */}
+      <section className="section" style={{ padding: '2rem 0 4rem' }}>
+        <div className="subpage-block-header">
+          <span className="eyebrow-tagline">// INSTITUTIONAL CARVE-OUT ARCHITECTURE</span>
+          <h2 className="subpage-block-title">
+            Three Structural <span className="brand-dot">Pillars</span>
+          </h2>
+          <p className="subpage-block-desc">
+            A comprehensive legal, organizational, and operational framework engineered for frictionless enterprise separation.
+          </p>
         </div>
 
-        {/* Roadmap */}
-        <div id="roadmap" className="who-unit-section-block">
-          <div className="eyebrow-tagline">// EXECUTION ROADMAP</div>
-          <h3 className="service-heading">Four Phases. Twelve Months. Enterprise De-risked<span className="brand-dot">.</span></h3>
-          <div className="protocol-disciplines-grid-4">
+        <div className="services-grid-3 subpage-block-container">
+          {pillars.map((p, i) => (
+            <div key={i} className="glass-panel purple-glow-card service-panel-card">
+              <div>
+                <div className="service-icon-wrap">
+                  <div className="icon-badge">{p.icon}</div>
+                </div>
+                <span className="protocol-card-tag">{p.tag}</span>
+                <h3 className="service-card-title">{p.title}</h3>
+                <p className="service-card-desc">{p.body}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Execution Roadmap / Playbook */}
+      <section id="roadmap" className="section" style={{ padding: '2rem 0 4rem' }}>
+        <div className="roadmap-section subpage-block-container">
+          <div className="section-header-center">
+            <span className="eyebrow-tagline">// EXECUTION ROADMAP</span>
+            <h2 className="section-title">
+              Four Phases. Twelve Months. <span className="brand-dot">Sovereign Spin-Out.</span>
+            </h2>
+            <p className="section-desc">
+              A disciplined venture formation protocol transforming proprietary corporate AI into an independently capitalized market leader.
+            </p>
+          </div>
+
+          <div className="playbook-grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
             {phases.map((ph, i) => (
-              <div key={i} className="glass-panel who-discipline-card">
+              <div key={i} className="glass-panel">
+                <span className="playbook-phase-badge">{ph.phase}</span>
+                <h4 className="faq-btn-text" style={{ fontSize: '1.1rem', marginBottom: '0.75rem' }}>{ph.title}</h4>
+                <p className="service-desc">{ph.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Deliverables */}
+      <section className="section" style={{ padding: '2rem 0 4rem' }}>
+        <div className="glass-panel outcomes-split-grid subpage-block-container">
+          <div>
+            <span className="eyebrow-tagline">// PROGRAMME DELIVERABLES</span>
+            <h3 className="service-heading" style={{ marginTop: '0.5rem' }}>
+              What You Walk Away With<span className="brand-dot">.</span>
+            </h3>
+            <p className="service-desc" style={{ marginTop: '0.75rem' }}>
+              Every Citadel corporate carve-out yields a sovereign corporate entity, complete with operational team, IP firewalls, and Tier-1 growth capitalization.
+            </p>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {deliverables.map((d, i) => (
+              <div key={i} className="anatomy-item">
+                <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" /></div>
                 <div>
-                  <div className="eyebrow-tagline">{ph.tag}</div>
-                  <h4 className="who-discipline-title">{ph.title}</h4>
-                  <p className="who-discipline-description">{ph.body}</p>
+                  <h4 className="faq-btn-text" style={{ fontSize: '1rem', color: '#fff' }}>{d}</h4>
                 </div>
               </div>
             ))}
           </div>
         </div>
+      </section>
 
-        {/* Deliverables */}
-        <div className="glass-panel who-territory-card">
-          <div>
-            <div className="eyebrow-tagline">// PROGRAMME DELIVERABLES</div>
-            <h3 className="service-heading who-territory-heading">What You Walk Away With<span className="brand-dot">.</span></h3>
+      {/* FAQs */}
+      <section className="section" style={{ padding: '2rem 0 4rem' }}>
+        <div className="faq-container-wide subpage-block-container">
+          <div className="section-header-center">
+            <span className="eyebrow-tagline">// PROTOCOL PARAMETERS</span>
+            <h3 className="section-title">Frequently Asked Questions</h3>
           </div>
-          <div className="who-credentials-list">
-            {deliverables.map((d, i) => (
-              <div key={i} className="who-credential-item">
-                <CheckCircle size={16} className="neon-icon who-credential-icon" />
-                <span className="who-credential-text">{d}</span>
-              </div>
-            ))}
-          </div>
-        </div>
 
-        {/* FAQs */}
-        <div className="who-unit-section-block">
-          <div className="eyebrow-tagline">// FREQUENTLY ASKED QUESTIONS</div>
-          <h3 className="service-heading">Protocol Parameters<span className="brand-dot">.</span></h3>
-          <div className="protocol-faq-list">
+          <div className="faq-list-wide">
             {faqs.map((f, i) => (
-              <div key={i} className="glass-panel who-faq-card">
-                <button
-                  className="who-faq-question-row"
-                  onClick={() => toggleFaq(i)}
-                >
-                  <span className="who-faq-question-text">{f.q}</span>
-                  {activeFaq === i ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+              <div key={i} className="glass-panel">
+                <button onClick={() => toggleFaq(i)} className="faq-btn-wide">
+                  <span className="faq-btn-text-wide">{f.q}</span>
+                  <ChevronDown size={16} className={`neon-icon transition-transform ${activeFaq === i ? 'rotate-180' : ''}`} />
                 </button>
                 {activeFaq === i && (
-                  <p className="who-faq-answer-text">{f.a}</p>
+                  <div className="faq-content-wide">{f.a}</div>
                 )}
               </div>
             ))}
           </div>
         </div>
+      </section>
 
-        {/* Application Form & Contact Matrix */}
-        <div id="contact" className="contact-grid">
-          <div className="glass-panel contact-card">
-            <h3 className="service-heading">
-              Initialize Protocol: Citadel
-            </h3>
+      {/* Application Form & Consult */}
+      <section id="contact" className="section hero-fullscreen-section" style={{ minHeight: 'auto', padding: '4rem 0 6rem' }}>
+        <div className="subpage-contact-grid contact-grid">
+          <div className="glass-panel subpage-contact-card">
+            <h3 className="subpage-contact-heading">Apply for Protocol: Citadel</h3>
 
             {formSubmitted ? (
-              <div className="hero-gauge-status">
-                <CheckCircle size={48} className="neon-icon" />
-                <h4>Engagement Received</h4>
-                <p>Our Corporate Development team will reach out under strict NDA within 24 hours.</p>
+              <div className="hero-gauge-status" style={{ padding: '2rem 0', flexDirection: 'column', textAlign: 'center' }}>
+                <CheckCircle size={48} className="neon-icon" style={{ marginBottom: '1rem' }} />
+                <h4 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '0.5rem' }}>Application Received</h4>
+                <p style={{ color: 'var(--text-gray)' }}>Our corporate development team will review your application and respond within 48 hours.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="contact-form">
                 <div>
-                  <label className="contact-label">Enterprise / Corporate Entity Name</label>
+                  <label className="contact-label">Parent Enterprise / Corporation Name</label>
                   <input
                     type="text"
                     name="orgName"
@@ -329,12 +361,12 @@ export default function ProtocolCitadel() {
                     value={formData.orgName}
                     onChange={handleInputChange}
                     className="contact-input"
-                    placeholder="e.g. Apex Global Logistics Corp"
+                    placeholder="e.g. Acme Financial Holdings"
                   />
                 </div>
 
                 <div>
-                  <label className="contact-label">Executive Sponsor / Lead Name</label>
+                  <label className="contact-label">Executive Lead / Sponsor Name</label>
                   <input
                     type="text"
                     name="execLead"
@@ -342,12 +374,12 @@ export default function ProtocolCitadel() {
                     value={formData.execLead}
                     onChange={handleInputChange}
                     className="contact-input"
-                    placeholder="e.g. Elena Rostova, VP Innovation"
+                    placeholder="e.g. Dr. Eleanor Vance (VP of Innovation)"
                   />
                 </div>
 
                 <div>
-                  <label className="contact-label">Corporate Work Email</label>
+                  <label className="contact-label">Direct Work Email</label>
                   <input
                     type="email"
                     name="email"
@@ -355,41 +387,41 @@ export default function ProtocolCitadel() {
                     value={formData.email}
                     onChange={handleInputChange}
                     className="contact-input"
-                    placeholder="e.rostova@apexlogistics.com"
+                    placeholder="e.vance@acme-holdings.com"
                   />
                 </div>
 
                 <div>
-                  <label className="contact-label">Proprietary IP / Technology Overview</label>
+                  <label className="contact-label">Proprietary AI / IP Overview</label>
                   <textarea
                     name="ipOverview"
                     value={formData.ipOverview}
                     onChange={handleInputChange}
                     className="contact-textarea"
-                    placeholder="Summarize the internal AI software/model asset, data origin, and initial internal validation..."
+                    placeholder="Briefly describe the proprietary AI models, datasets, or algorithms targeted for carve-out..."
                   />
                 </div>
 
                 <div>
-                  <label className="contact-label">Primary Commercial Spin-Out Objective</label>
+                  <label className="contact-label">Commercial Objective / Market Opportunity</label>
                   <textarea
                     name="commercialObjective"
                     value={formData.commercialObjective}
                     onChange={handleInputChange}
                     className="contact-textarea"
-                    placeholder="e.g. Monetize non-core software asset, attract external venture syndicate capital..."
+                    placeholder="What commercial problems does this spin-out solve for the broader external market?"
                   />
                 </div>
 
                 <div>
-                  <label className="contact-label">Target Corporate Development Timeline</label>
+                  <label className="contact-label">Desired Carve-Out Timeline</label>
                   <input
                     type="text"
-                    name="corpDevTimeline"
-                    value={formData.corpDevTimeline}
+                    name="spinOutTimeline"
+                    value={formData.spinOutTimeline}
                     onChange={handleInputChange}
                     className="contact-input"
-                    placeholder="e.g. Q3 2026 Board Approval"
+                    placeholder="e.g. 6–12 months, Q3 2026 target spin-out"
                   />
                 </div>
 
@@ -400,7 +432,7 @@ export default function ProtocolCitadel() {
                 )}
 
                 <button type="submit" className="cta-primary contact-submit-btn" disabled={formLoading}>
-                  {formLoading ? 'TRANSMITTING...' : 'INITIALIZE CITADEL PROTOCOL'}
+                  {formLoading ? 'TRANSMITTING...' : 'INITIALIZE PROTOCOL APPLICATION'}
                 </button>
               </form>
             )}
@@ -408,9 +440,9 @@ export default function ProtocolCitadel() {
 
           <div className="hero-gauge-wrapper">
             <div className="contact-card">
-              <h3 className="hero-heading">Corporate Spin-Out Consult</h3>
-              <p className="hero-body-copy">
-                Directly interface with our venture co-builders. We evaluate seed-stage model defensibility, infrastructure scalings, and capital velocity parameters under strict NDA.
+              <h3 className="subpage-contact-sidebar-heading">Corporate Studio Consult</h3>
+              <p className="subpage-contact-sidebar-desc">
+                Consult directly with our venture carve-out architects. We evaluate IP sovereign defensibility, parent governance terms, and institutional spin-out capitalization.
               </p>
               
               {/* Official LinkedIn Social Link */}

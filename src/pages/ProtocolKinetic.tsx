@@ -1,6 +1,6 @@
 import { submitContactForm } from '../services/contactService';
 import { useState } from 'react';
-import { ShieldCheck, Zap, Layers, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { ShieldCheck, Zap, Layers, CheckCircle, CheckCircle2, ChevronDown } from 'lucide-react';
 import { useRegion } from '../context/RegionContext';
 import LinkedInConnect from '../components/LinkedInConnect';
 
@@ -20,28 +20,28 @@ export default function ProtocolKinetic() {
   const [formError, setFormError] = useState<string | null>(null);
 
   const stats = [
-    { value: '6', label: 'Month engagement horizon' },
-    { value: '15-25%', label: 'Equity alignment' },
-    { value: `${country.symbol}500K`, label: 'Co-investment (milestone-gated)' },
-    { value: '1', label: 'Embedded engineering unit deployed' },
+    { value: '6mo', label: 'Engagement Horizon' },
+    { value: '15–25%', label: 'Equity Alignment' },
+    { value: `${country.symbol}500K`, label: 'Co-Investment (Milestone-Gated)' },
+    { value: '1 Unit', label: 'Embedded Engineering Squad' },
   ];
 
   const pillars = [
     {
-      icon: <ShieldCheck size={20} className="neon-icon" />,
+      icon: <ShieldCheck size={28} className="neon-icon" />,
       tag: '01 // ZERO-TRUST DATA ARCHITECTURE',
       title: 'Data Security and Privacy',
       body: 'Data pipeline security, vector database indexing, privacy enclaves, and SOC2/HIPAA compliance readiness to satisfy strict enterprise requirements.',
     },
     {
-      icon: <Zap size={20} className="neon-icon" />,
-      tag: '02 // MODEL and INFERENCE ORCHESTRATION',
+      icon: <Zap size={28} className="neon-icon" />,
+      tag: '02 // MODEL & INFERENCE ORCHESTRATION',
       title: 'Optimization and Cost Control',
       body: 'Latency optimization, custom fine-tuning, token cost reduction, and fail-safe routing designed for mission-critical production reliability.',
     },
     {
-      icon: <Layers size={20} className="neon-icon" />,
-      tag: '03 // ENTERPRISE INTERFACE and UI/UX',
+      icon: <Layers size={28} className="neon-icon" />,
+      tag: '03 // ENTERPRISE INTERFACE & UI/UX',
       title: 'High-Performance Design',
       body: 'High-performance, clinical software interfaces designed for rapid operator onboarding, high user retention, and enterprise buyer adoption.',
     },
@@ -49,40 +49,40 @@ export default function ProtocolKinetic() {
 
   const phases = [
     {
-      tag: 'PHASE 01 // MONTHS 1-2',
+      phase: 'PHASE 1 (Months 1–2)',
       title: 'Ingestion and System Architecture',
-      body: 'Audit problem space, establish vector and data pipelines, and codify core agentic workflows.',
+      body: 'Audit problem space, establish vector and data pipelines, and codify core deterministic agentic workflows.',
     },
     {
-      tag: 'PHASE 02 // MONTHS 3-4',
+      phase: 'PHASE 2 (Months 3–4)',
       title: 'Production Build and Hardening',
       body: 'Deploy functional MVP into live enterprise sandboxes, execute load/stress testing, and secure the perimeter.',
     },
     {
-      tag: 'PHASE 03 // MONTHS 5-6',
+      phase: 'PHASE 3 (Months 5–6)',
       title: 'Enterprise GTM and Capital Routing',
       body: 'Initiate buyer design partner pilots, calibrate institutional data room, and route to seed venture syndicates.',
     },
   ];
 
   const deliverables = [
-    'Embedded Technical Unit',
-    'Enterprise GTM Protocol',
-    'Institutional Capital Access',
+    'Embedded Technical Engineering Unit',
+    'Enterprise GTM Deployment Protocol',
+    'Institutional Capital Access & Syndicate Routing',
     `Co-Investment Capital (Up to ${country.symbol}500K milestone-gated)`,
   ];
 
   const faqs = [
     {
-      q: 'IP Ownership mechanics?',
-      a: '100% retained by founder. Lycos Core operates as a technical builder; we do not claim any intellectual property ownership or carve-outs on code engineered for your platform during the pathway timeline.',
+      q: 'What are the IP ownership mechanics?',
+      a: '100% retained by founder. Lycos Core operates as a technical co-builder; we do not claim any intellectual property ownership or carve-outs on code engineered for your platform during the pathway timeline.',
     },
     {
-      q: 'How Kinetic differs from accelerators?',
+      q: 'How does Kinetic differ from traditional accelerators?',
       a: 'Accelerators typically focus on advisory services, pitch decks, and general mentoring. Kinetic is an active technical co-building initiative. We deploy dedicated, full-stack AI engineering units directly into your codebase to build and harden production systems.',
     },
     {
-      q: `How ${country.symbol}500K co-investment is allocated?`,
+      q: `How is the ${country.symbol}500K co-investment allocated?`,
       a: `The co-investment capital of up to ${country.symbol}500K is milestone-gated. As you hit key engineering and architecture milestones over the 6-month timeline, syndicate funds are dynamically unlocked and routed to your corporate account.`,
     },
   ];
@@ -169,8 +169,8 @@ export default function ProtocolKinetic() {
               <div className="kinetic-timeline">
                 {[
                   { tag: 'MONTHS 1–2', title: 'Zero-State Architecture', meta: 'Data Pipelines · Vector Infra · Compliance', active: true },
-                  { tag: 'MONTHS 3–4', title: 'Production Build & Hardening', meta: 'Enterprise MVP · Load Testing · Security', active: true },
-                  { tag: 'MONTHS 5–6', title: 'Enterprise GTM & Capital', meta: `Seed Syndicate · Buyer Pilots · ${country.symbol}500K`, active: false },
+                  { tag: 'MONTHS 3–4', title: 'Production Build and Hardening', meta: 'Enterprise MVP · Load Testing · Security', active: true },
+                  { tag: 'MONTHS 5–6', title: 'Enterprise GTM and Capital', meta: `Seed Syndicate · Buyer Pilots · ${country.symbol}500K`, active: false },
                 ].map((m, i, arr) => (
                   <div key={i} className="kinetic-milestone">
                     <div className="kinetic-milestone-dot-col">
@@ -204,116 +204,148 @@ export default function ProtocolKinetic() {
         </div>
       </section>
 
-      {/* Below-fold — Stats + Content */}
-      <section className="protocol-content-section">
-        {/* Stats Strip */}
-        <div className="who-stats-grid">
+      {/* Stats Strip */}
+      <section className="section" style={{ padding: '3rem 0 2rem' }}>
+        <div className="outcome-stats-grid subpage-block-container">
           {stats.map((s, i) => (
-            <div key={i} className="glass-panel who-stat-card">
-              <div className="who-stat-value">{s.value}</div>
-              <div className="who-stat-label">{s.label}</div>
+            <div key={i} className="baseline-card outcome-stat-card">
+              <div className="stat-metric">{s.value}</div>
+              <div className="stat-label">{s.label}</div>
             </div>
           ))}
         </div>
+      </section>
 
-        {/* Thesis */}
-        <div className="glass-panel who-territory-card">
+      {/* Thesis */}
+      <section className="section" style={{ padding: '2rem 0 4rem' }}>
+        <div className="glass-panel outcomes-split-grid subpage-block-container">
           <div>
-            <div className="eyebrow-tagline">// OPERATIONAL THESIS</div>
-            <h3 className="service-heading who-territory-heading">
+            <span className="eyebrow-tagline">// OPERATIONAL THESIS</span>
+            <h3 className="service-heading" style={{ marginTop: '0.5rem' }}>
               The Bottleneck Isn't Ideation. Engineering Production Velocity in a High-Noise Market<span className="brand-dot">.</span>
             </h3>
-            <p className="hero-body-copy who-body-copy-flush">
+          </div>
+          <div>
+            <p className="service-desc" style={{ fontSize: '1rem', lineHeight: '1.7' }}>
               Most seed-stage AI startups fail at the infrastructure layer—struggling with token costs, latency spikes, brittle prototype code, and complex data governance. We eliminate technical debt before it forms by deploying full-stack engineering units alongside your team to construct zero-trust, enterprise-ready architectures from day zero.
             </p>
           </div>
         </div>
+      </section>
 
-        {/* Pillars */}
-        <div className="who-unit-section-block">
-          <div className="eyebrow-tagline">// TECHNICAL ARCHITECTURE BREAKDOWN</div>
-          <h3 className="service-heading">Modular Build Layers. Zero Compromise<span className="brand-dot">.</span></h3>
-          <div className="protocol-disciplines-grid-3">
-            {pillars.map((p, i) => (
-              <div key={i} className="glass-panel who-discipline-card">
-                <div className="icon-badge">{p.icon}</div>
-                <div>
-                  <div className="eyebrow-tagline">{p.tag}</div>
-                  <h4 className="who-discipline-title">{p.title}</h4>
-                  <p className="who-discipline-description">{p.body}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+      {/* Pillars / Technical Architecture */}
+      <section className="section" style={{ padding: '2rem 0 4rem' }}>
+        <div className="subpage-block-header">
+          <span className="eyebrow-tagline">// TECHNICAL ARCHITECTURE BREAKDOWN</span>
+          <h2 className="subpage-block-title">
+            Modular Build <span className="brand-dot">Layers</span>
+          </h2>
+          <p className="subpage-block-desc">
+            Three foundational pillars built to ensure production reliability, regulatory readiness, and rapid operator adoption.
+          </p>
         </div>
 
-        {/* Roadmap */}
-        <div id="roadmap" className="who-unit-section-block">
-          <div className="eyebrow-tagline">// EXECUTION ROADMAP</div>
-          <h3 className="service-heading">Three Phases. Six Months. Zero Drift<span className="brand-dot">.</span></h3>
-          <div className="protocol-disciplines-grid-3">
+        <div className="services-grid-3 subpage-block-container">
+          {pillars.map((p, i) => (
+            <div key={i} className="glass-panel purple-glow-card service-panel-card">
+              <div>
+                <div className="service-icon-wrap">
+                  <div className="icon-badge">{p.icon}</div>
+                </div>
+                <span className="protocol-card-tag">{p.tag}</span>
+                <h3 className="service-card-title">{p.title}</h3>
+                <p className="service-card-desc">{p.body}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Execution Roadmap / Playbook */}
+      <section id="roadmap" className="section" style={{ padding: '2rem 0 4rem' }}>
+        <div className="roadmap-section subpage-block-container">
+          <div className="section-header-center">
+            <span className="eyebrow-tagline">// EXECUTION ROADMAP</span>
+            <h2 className="section-title">
+              Three Phases. Six Months. <span className="brand-dot">Zero Drift.</span>
+            </h2>
+            <p className="section-desc">
+              A structured engineering acceleration framework designed to transition from zero-state prototypes to enterprise-ready deployments within 180 days.
+            </p>
+          </div>
+
+          <div className="playbook-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
             {phases.map((ph, i) => (
-              <div key={i} className="glass-panel who-discipline-card">
+              <div key={i} className="glass-panel">
+                <span className="playbook-phase-badge">{ph.phase}</span>
+                <h4 className="faq-btn-text" style={{ fontSize: '1.1rem', marginBottom: '0.75rem' }}>{ph.title}</h4>
+                <p className="service-desc">{ph.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Deliverables */}
+      <section className="section" style={{ padding: '2rem 0 4rem' }}>
+        <div className="glass-panel outcomes-split-grid subpage-block-container">
+          <div>
+            <span className="eyebrow-tagline">// PROGRAMME DELIVERABLES</span>
+            <h3 className="service-heading" style={{ marginTop: '0.5rem' }}>
+              What You Walk Away With<span className="brand-dot">.</span>
+            </h3>
+            <p className="service-desc" style={{ marginTop: '0.75rem' }}>
+              Every Kinetic cohort venture leaves with production-hardened assets, institutional documentation, and direct commercial relationships.
+            </p>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {deliverables.map((d, i) => (
+              <div key={i} className="anatomy-item">
+                <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" /></div>
                 <div>
-                  <div className="eyebrow-tagline">{ph.tag}</div>
-                  <h4 className="who-discipline-title">{ph.title}</h4>
-                  <p className="who-discipline-description">{ph.body}</p>
+                  <h4 className="faq-btn-text" style={{ fontSize: '1rem', color: '#fff' }}>{d}</h4>
                 </div>
               </div>
             ))}
           </div>
         </div>
+      </section>
 
-        {/* Deliverables */}
-        <div className="glass-panel who-territory-card">
-          <div>
-            <div className="eyebrow-tagline">// PROGRAMME DELIVERABLES</div>
-            <h3 className="service-heading who-territory-heading">What You Walk Away With<span className="brand-dot">.</span></h3>
+      {/* FAQs */}
+      <section className="section" style={{ padding: '2rem 0 4rem' }}>
+        <div className="faq-container-wide subpage-block-container">
+          <div className="section-header-center">
+            <span className="eyebrow-tagline">// PROTOCOL PARAMETERS</span>
+            <h3 className="section-title">Frequently Asked Questions</h3>
           </div>
-          <div className="who-credentials-list">
-            {deliverables.map((d, i) => (
-              <div key={i} className="who-credential-item">
-                <CheckCircle size={16} className="neon-icon who-credential-icon" />
-                <span className="who-credential-text">{d}</span>
-              </div>
-            ))}
-          </div>
-        </div>
 
-        {/* FAQs */}
-        <div className="who-unit-section-block">
-          <div className="eyebrow-tagline">// FREQUENTLY ASKED QUESTIONS</div>
-          <h3 className="service-heading">Protocol Parameters<span className="brand-dot">.</span></h3>
-          <div className="protocol-faq-list">
+          <div className="faq-list-wide">
             {faqs.map((f, i) => (
-              <div key={i} className="glass-panel who-faq-card">
-                <button
-                  className="who-faq-question-row"
-                  onClick={() => toggleFaq(i)}
-                >
-                  <span className="who-faq-question-text">{f.q}</span>
-                  {activeFaq === i ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+              <div key={i} className="glass-panel">
+                <button onClick={() => toggleFaq(i)} className="faq-btn-wide">
+                  <span className="faq-btn-text-wide">{f.q}</span>
+                  <ChevronDown size={16} className={`neon-icon transition-transform ${activeFaq === i ? 'rotate-180' : ''}`} />
                 </button>
                 {activeFaq === i && (
-                  <p className="who-faq-answer-text">{f.a}</p>
+                  <div className="faq-content-wide">{f.a}</div>
                 )}
               </div>
             ))}
           </div>
         </div>
+      </section>
 
-        {/* Application Form & Contact Matrix */}
-        <div id="contact" className="contact-grid">
-          <div className="glass-panel contact-card">
-            <h3 className="service-heading">
-              Apply for Protocol: Kinetic
-            </h3>
+      {/* Application Form & Consult */}
+      <section id="contact" className="section hero-fullscreen-section" style={{ minHeight: 'auto', padding: '4rem 0 6rem' }}>
+        <div className="subpage-contact-grid contact-grid">
+          <div className="glass-panel subpage-contact-card">
+            <h3 className="subpage-contact-heading">Apply for Protocol: Kinetic</h3>
 
             {formSubmitted ? (
-              <div className="hero-gauge-status">
-                <CheckCircle size={48} className="neon-icon" />
-                <h4>Application Received</h4>
-                <p>Our technical team will review your application and respond within 48 hours.</p>
+              <div className="hero-gauge-status" style={{ padding: '2rem 0', flexDirection: 'column', textAlign: 'center' }}>
+                <CheckCircle size={48} className="neon-icon" style={{ marginBottom: '1rem' }} />
+                <h4 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '0.5rem' }}>Application Received</h4>
+                <p style={{ color: 'var(--text-gray)' }}>Our technical team will review your application and respond within 48 hours.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="contact-form">
@@ -406,8 +438,8 @@ export default function ProtocolKinetic() {
 
           <div className="hero-gauge-wrapper">
             <div className="contact-card">
-              <h3 className="hero-heading">Venture Architecture Consult</h3>
-              <p className="hero-body-copy">
+              <h3 className="subpage-contact-sidebar-heading">Venture Architecture Consult</h3>
+              <p className="subpage-contact-sidebar-desc">
                 Directly interface with our venture co-builders. We evaluate seed-stage model defensibility, infrastructure scalings, and capital velocity parameters.
               </p>
               

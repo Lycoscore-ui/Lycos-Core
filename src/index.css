@@ -4,8 +4,8 @@
   --color-accent-green-hover: #7ae629;
   --color-accent-green-glow: #8cff3233;
   --color-bg-dark: #0a0f1d;
-  --color-card-bg: #ffffff08;
-  --color-card-border: #ffffff14;
+  --color-card-bg: rgba(10, 25, 47, 0.70);
+  --color-card-border: rgba(255, 255, 255, 0.08);
   --color-text-primary: #f8fafc;
   --color-text-secondary: #94a3b8;
   --bg-primary: #050d1a;
@@ -17,8 +17,8 @@
   --text-secondary: #8a9df8;
   --text-gray: #a4b3c6;
   --border-color: #ffffff0d;
-  --glass-bg: #0a192fb3;
-  --glass-border: #ffffff0a;
+  --glass-bg: rgba(10, 25, 47, 0.70);
+  --glass-border: rgba(255, 255, 255, 0.08);
   --font-title: "Outfit", sans-serif;
   --font-body: "Inter", sans-serif;
 }
@@ -28,29 +28,153 @@
   color: #84ff2b;
   display: inline;
 }
+/* UNIVERSAL CARD SYSTEM - OPERATIONAL THESIS GOLD STANDARD */
+.glass-panel,
 .baseline-card,
 .purple-glow-card,
 .framework-step-card,
+.subpage-framework-card,
 .deep-dive-panel,
-.glass-panel {
-  -webkit-backdrop-filter: blur(12px);
-  background: #0a192f73;
-  border: 1px solid #8a4bf340;
+.protocol-card,
+.home-protocol-card,
+.incubation-protocol-card,
+.service-panel-card,
+.service-detail-panel,
+.integrations-panel,
+.product-detail-card,
+.solution-card,
+.yield-metric-card,
+.pillars-yield-card,
+.subpage-contact-card,
+.contact-card,
+.home-contact-wrapper,
+.home-contact-form-panel,
+.home-usecase-card,
+.use-case-card,
+.subpage-usecase-main,
+.subpage-usecase-side-panel,
+.home-usecase-insight-panel,
+.use-case-insight-panel,
+.throughput-monitor-card,
+.pillars-throughput-card,
+.who-stat-card,
+.who-discipline-card,
+.who-territory-card,
+.who-faq-card,
+.leadership-card,
+.outcome-stat-card,
+.gov-control-card,
+.gov-internal-card,
+.gov-standard-card,
+.operate-phase-card,
+.operate-timeline-step,
+.insights-featured-card,
+.insights-secondary-card,
+.insights-empty-card,
+.kb-group-card,
+.pathway-detail-card,
+.pathway-card,
+.portfolio-active-card,
+.proto-visual-card,
+.parameter-card,
+.roadmap-card,
+.faq-card,
+.playbook-card,
+.roi-card,
+.roi-callout-panel,
+.synapse-simulator-panel,
+.vanguard-simulator-panel,
+.aegis-simulator-panel,
+.case-sidebar-item,
+.app-info-modal-card,
+.admin-control-panel,
+.admin-editor-card,
+.admin-candidate-card,
+.admin-published-card,
+.legal-block-card,
+.splash-modal-card,
+.hero-gauge-card,
+.containment-map-card,
+.case-detail-workspace,
+.insights-modal-content,
+.attestation-modal-card,
+.empty-fallback-card {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: 16px;
-  transition:
-    border-color 0.3s,
-    box-shadow 0.3s,
-    transform 0.3s;
-  box-shadow: 0 0 25px #8a4bf326;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
+
+.glass-panel:hover,
 .baseline-card:hover,
 .purple-glow-card:hover,
 .framework-step-card:hover,
+.subpage-framework-card:hover,
 .deep-dive-panel:hover,
-.glass-panel:hover {
-  border-color: #8cff3266;
+.protocol-card:hover,
+.home-protocol-card:hover,
+.incubation-protocol-card:hover,
+.service-panel-card:hover,
+.service-detail-panel:hover,
+.integrations-panel:hover,
+.product-detail-card:hover,
+.solution-card:hover,
+.yield-metric-card:hover,
+.pillars-yield-card:hover,
+.subpage-contact-card:hover,
+.contact-card:hover,
+.home-contact-wrapper:hover,
+.home-contact-form-panel:hover,
+.home-usecase-card:hover,
+.use-case-card:hover,
+.subpage-usecase-main:hover,
+.subpage-usecase-side-panel:hover,
+.home-usecase-insight-panel:hover,
+.use-case-insight-panel:hover,
+.throughput-monitor-card:hover,
+.pillars-throughput-card:hover,
+.who-stat-card:hover,
+.who-discipline-card:hover,
+.who-territory-card:hover,
+.who-faq-card:hover,
+.leadership-card:hover,
+.outcome-stat-card:hover,
+.gov-control-card:hover,
+.gov-internal-card:hover,
+.gov-standard-card:hover,
+.operate-phase-card:hover,
+.operate-timeline-step:hover,
+.insights-featured-card:hover,
+.insights-secondary-card:hover,
+.insights-empty-card:hover,
+.kb-group-card:hover,
+.pathway-detail-card:hover,
+.pathway-card:hover,
+.portfolio-active-card:hover,
+.proto-visual-card:hover,
+.parameter-card:hover,
+.roadmap-card:hover,
+.faq-card:hover,
+.playbook-card:hover,
+.roi-card:hover,
+.roi-callout-panel:hover,
+.synapse-simulator-panel:hover,
+.vanguard-simulator-panel:hover,
+.aegis-simulator-panel:hover,
+.case-sidebar-item:hover,
+.app-info-modal-card:hover,
+.admin-candidate-card:hover,
+.admin-published-card:hover,
+.legal-block-card:hover,
+.hero-gauge-card:hover,
+.containment-map-card:hover,
+.empty-fallback-card:hover {
+  border-color: rgba(140, 255, 50, 0.4);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), 0 0 15px rgba(140, 255, 50, 0.1);
   transform: translateY(-3px);
-  box-shadow: 0 0 30px #8cff3233;
 }
 .page-container {
   color: #fff;
@@ -997,7 +1121,7 @@ h6 {
 .lycos-chart-box {
   background: #ffffff03;
   border: 1px solid #ffffff08;
-  border-radius: 12px;
+  border-radius: 16px;
   margin-top: 1.5rem;
   padding: 1.5rem;
 }
@@ -1140,7 +1264,7 @@ h6 {
   background: var(--glass-bg);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
-  border-radius: 12px;
+  border-radius: 16px;
   flex-direction: column;
   justify-content: space-between;
   min-height: 280px;
@@ -1413,7 +1537,7 @@ h6 {
 }
 .subpage-usecase-side-panel {
   padding: 2.5rem;
-  border: 1px solid rgba(138, 75, 243, 0.2);
+  border: 1px solid var(--glass-border);
 }
 .subpage-usecase-side-heading {
   font-size: 1.2rem;
@@ -1451,7 +1575,7 @@ h6 {
 }
 .subpage-contact-card {
   padding: 2.5rem;
-  border: 1px solid rgba(138, 75, 243, 0.2);
+  border: 1px solid var(--glass-border);
 }
 .subpage-contact-heading {
   font-size: 1.25rem;
@@ -1527,9 +1651,9 @@ h6 {
   position: relative;
 }
 .framework-step-card {
-  background: #0d081966;
-  border: 1px solid #8a4bf326;
-  border-radius: 12px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
   padding: 2rem;
   transition: all 0.3s;
   position: relative;
@@ -1553,9 +1677,9 @@ h6 {
   display: grid;
 }
 .deep-dive-panel {
-  background: #0d081966;
-  border: 1px solid #8a4bf326;
-  border-radius: 12px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
   padding: 2.5rem;
   transition: all 0.3s;
   position: relative;
@@ -1585,7 +1709,7 @@ h6 {
   text-align: center;
   border: 1px solid var(--border-color);
   background: #ffffff05;
-  border-radius: 12px;
+  border-radius: 16px;
   flex-direction: column;
   align-items: center;
   padding: 2rem;
@@ -1791,8 +1915,8 @@ h6 {
   visibility: hidden;
   z-index: 200;
   background: rgba(5, 12, 26, 0.94);
-  border: 1px solid rgba(138, 75, 243, 0.25);
-  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
   min-width: 230px;
   padding: 0.75rem 0;
   list-style: none;
@@ -1988,7 +2112,7 @@ h6 {
   background: var(--glass-bg);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
-  border-radius: 12px;
+  border-radius: 16px;
   flex-direction: column;
   align-items: flex-start;
   padding: 1.5rem;
@@ -2406,7 +2530,7 @@ h6 {
 .pillar-card {
   background: #0a192f80;
   border: 1px solid #ffffff08;
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 2.5rem 2rem;
   transition: all 0.3s;
 }
@@ -2437,7 +2561,7 @@ h6 {
 .roadmap-card {
   background: #0a192fbf;
   border: 1px solid #ffffff0d;
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 2rem;
   position: relative;
   overflow: hidden;
@@ -2616,7 +2740,7 @@ h6 {
 .icon-badge {
   background: #0a192fb3;
   border: 1px solid #a3ff3340;
-  border-radius: 12px;
+  border-radius: 16px;
   justify-content: center;
   align-items: center;
   padding: 0.75rem;
@@ -3064,7 +3188,7 @@ h6 {
   padding: 1.25rem 1rem;
   background: rgba(255, 255, 255, 0.015);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3188,7 +3312,7 @@ h6 {
   padding: 0.3rem 0.75rem;
   background: rgba(255,255,255,0.04);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 16px;
   font-size: 0.78rem;
   color: var(--text-gray);
 }
@@ -3366,7 +3490,7 @@ h6 {
   padding: 1.25rem;
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 16px;
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
@@ -3469,7 +3593,7 @@ h6 {
 #subpage-wrapper .case-tech-sidebar {
   background-color: rgba(255, 255, 255, 0.01);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 1.5rem;
 }
 #subpage-wrapper .case-tech-title {
@@ -3524,7 +3648,7 @@ h6 {
   border-radius: 4px;
   font-size: 0.75rem;
   font-weight: 600;
-  border: 1px solid rgba(138, 75, 243, 0.2);
+  border: 1px solid var(--glass-border);
 }
 #subpage-wrapper .case-bullet-divider {
   color: var(--text-gray);
@@ -3638,7 +3762,7 @@ h6 {
   padding: 4rem 2rem;
   text-align: center;
   border: 1px dashed var(--border-color);
-  border-radius: 12px;
+  border-radius: 16px;
 }
 
 /* Insights Layout Styles */
@@ -3710,7 +3834,7 @@ h6 {
   text-align: center;
   background: var(--bg-secondary);
   border: 1px dashed var(--border-color);
-  border-radius: 12px;
+  border-radius: 16px;
 }
 #subpage-wrapper .insights-editorial-layout {
   display: flex;
@@ -3736,7 +3860,7 @@ h6 {
 #subpage-wrapper .insights-featured-image-container {
   width: 100%;
   height: 340px;
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
   position: relative;
   box-shadow: 0 8px 32px rgba(0,0,0,0.3);
@@ -3898,7 +4022,7 @@ h6 {
   padding: 1.5rem;
   background: rgba(255, 255, 255, 0.01);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 16px;
   margin-bottom: 2.5rem;
 }
 .insights-modal-author img {
@@ -4038,7 +4162,7 @@ h6 {
   text-align: center;
   background: var(--bg-secondary);
   border: 1px dashed var(--border-color);
-  border-radius: 12px;
+  border-radius: 16px;
 }
 #subpage-wrapper .articles-stream-layout {
   display: flex;
@@ -4050,7 +4174,7 @@ h6 {
   position: relative;
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 16px;
 }
 #subpage-wrapper .articles-card.critical {
   border-color: rgba(239, 68, 68, 0.3);
@@ -4174,7 +4298,7 @@ h6 {
 #subpage-wrapper .articles-advisory-column {
   background-color: rgba(138, 75, 243, 0.04);
   border: 1px solid rgba(138, 75, 243, 0.15);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 1.5rem 1.75rem;
   position: relative;
 }
@@ -4229,7 +4353,7 @@ h6 {
 #subpage-wrapper .kb-group-card {
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 2rem;
   margin-bottom: 2rem;
 }
@@ -4301,7 +4425,7 @@ h6 {
   top: 7.5rem;
   background: rgba(10, 25, 47, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 1.5rem;
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
@@ -4341,7 +4465,7 @@ h6 {
 #subpage-wrapper .legal-block-card {
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 3rem;
   margin-bottom: 3rem;
 }
@@ -4559,14 +4683,15 @@ h6 {
   }
 }
 #subpage-wrapper .who-discipline-card {
-  padding: 2rem;
+  padding: 2.25rem 2rem;
   display: flex;
+  flex-direction: column;
   gap: 1.25rem;
   align-items: flex-start;
 }
 #subpage-wrapper .who-discipline-title {
-  font-size: 1.1rem;
-  font-weight: 500;
+  font-size: 1.15rem;
+  font-weight: 600;
   margin-top: 0;
   margin-bottom: 0.6rem;
   color: #F8FAFC;
@@ -6122,7 +6247,7 @@ h6 {
   padding: 0.75rem 1.5rem;
   background: rgba(10, 25, 47, 0.9);
   border: 1px solid rgba(140, 255, 50, 0.25);
-  border-radius: 12px;
+  border-radius: 16px;
   font-family: monospace;
   font-size: 0.82rem;
   margin-bottom: 0;
@@ -7340,7 +7465,7 @@ h6 {
   padding: 1.25rem 1.75rem;
   margin-bottom: 2rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  border-radius: 16px;
   background: rgba(10, 20, 38, 0.6);
   flex-wrap: wrap;
 }
@@ -7585,7 +7710,7 @@ h6 {
 .admin-loading-card {
   padding: 4rem 2rem;
   text-align: center;
-  border-radius: 12px;
+  border-radius: 16px;
   border: 1px solid rgba(140, 255, 50, 0.2);
   margin: 2rem 0;
   display: flex;
@@ -7616,7 +7741,7 @@ h6 {
 .admin-empty-state {
   padding: 4.5rem 2rem;
   text-align: center;
-  border-radius: 12px;
+  border-radius: 16px;
   border: 1px dashed rgba(255, 255, 255, 0.15);
   margin: 2rem 0;
   display: flex;
@@ -7640,7 +7765,7 @@ h6 {
 }
 
 .admin-editor-card, .admin-linkedin-card, .admin-preview-card {
-  border-radius: 12px;
+  border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(10, 20, 38, 0.6);
   padding: 1.75rem;
@@ -8032,7 +8157,7 @@ h6 {
   background: rgba(140, 255, 50, 0.1);
   border: 1px solid rgba(140, 255, 50, 0.25);
   padding: 0.75rem;
-  border-radius: 12px;
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8297,7 +8422,7 @@ h6 {
   align-items: center;
   justify-content: space-between;
   background: rgba(13, 27, 42, 0.7);
-  border: 1px solid rgba(138, 75, 243, 0.25);
+  border: 1px solid var(--glass-border);
   border-radius: 6px;
   padding: 0.45rem 0.75rem;
   position: relative;
@@ -8405,7 +8530,7 @@ h6 {
   justify-content: center;
   align-items: center;
   background: radial-gradient(circle at center, rgba(138, 75, 243, 0.08) 0%, rgba(5, 8, 15, 0.6) 80%);
-  border: 1px solid rgba(138, 75, 243, 0.2);
+  border: 1px solid var(--glass-border);
   border-radius: 10px;
   padding: 0.5rem;
   overflow: hidden;
@@ -8474,7 +8599,7 @@ h6 {
   flex-direction: column;
   justify-content: space-between;
   background: radial-gradient(circle at bottom right, rgba(140, 255, 50, 0.06) 0%, rgba(5, 8, 15, 0.6) 80%);
-  border: 1px solid rgba(138, 75, 243, 0.2);
+  border: 1px solid var(--glass-border);
   border-radius: 10px;
   padding: 0.5rem 0.75rem;
   overflow: hidden;
@@ -8559,7 +8684,7 @@ h6 {
   align-items: center;
   justify-content: center;
   background: radial-gradient(circle at center, rgba(168, 85, 247, 0.1) 0%, rgba(5, 8, 15, 0.7) 80%);
-  border: 1px solid rgba(138, 75, 243, 0.2);
+  border: 1px solid var(--glass-border);
   border-radius: 10px;
   padding: 0.25rem;
   overflow: hidden;
@@ -8643,7 +8768,7 @@ h6 {
   flex-direction: column;
   justify-content: space-between;
   background: radial-gradient(circle at top center, rgba(0, 240, 255, 0.06) 0%, rgba(5, 8, 15, 0.7) 80%);
-  border: 1px solid rgba(138, 75, 243, 0.2);
+  border: 1px solid var(--glass-border);
   border-radius: 10px;
   padding: 0.6rem 0.75rem;
   overflow: hidden;
@@ -8750,7 +8875,7 @@ h6 {
   flex-direction: column;
   justify-content: space-between;
   background: radial-gradient(circle at center, rgba(140, 255, 50, 0.06) 0%, rgba(5, 8, 15, 0.75) 80%);
-  border: 1px solid rgba(138, 75, 243, 0.25);
+  border: 1px solid var(--glass-border);
   border-radius: 10px;
   padding: 0.5rem 0.75rem;
   overflow: hidden;
@@ -9993,9 +10118,9 @@ h6 {
   flex-direction: column;
   justify-content: space-between;
   padding: 2.25rem;
-  background: rgba(10, 16, 28, 0.7);
+  background: var(--glass-bg);
   border: 1px solid rgba(140, 255, 50, 0.2);
-  border-radius: 12px;
+  border-radius: 16px;
   position: relative;
   overflow: hidden;
 }
@@ -10100,9 +10225,9 @@ h6 {
 
 .yield-metric-card {
   padding: 1.5rem;
-  background: rgba(10, 16, 28, 0.7);
+  background: var(--glass-bg);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -10252,9 +10377,9 @@ h6 {
 
 .outcome-stat-card {
   padding: 1.75rem;
-  background: rgba(10, 16, 28, 0.7);
+  background: var(--glass-bg);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  border-radius: 16px;
 }
 
 .outcome-stat-top {
@@ -10290,7 +10415,7 @@ h6 {
   align-items: center;
   gap: 0.75rem;
   padding: 0.85rem 1.5rem;
-  background: rgba(10, 16, 28, 0.6);
+  background: var(--glass-bg);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   color: #94a3b8;
@@ -10309,9 +10434,9 @@ h6 {
 
 .pathway-detail-card {
   padding: 2.5rem;
-  background: rgba(10, 16, 28, 0.75);
+  background: var(--glass-bg);
   border: 1px solid rgba(140, 255, 50, 0.2);
-  border-radius: 12px;
+  border-radius: 16px;
 }
 
 .pathway-detail-header {
@@ -10397,9 +10522,9 @@ h6 {
 
 .incubation-protocol-card {
   padding: 2rem;
-  background: rgba(10, 16, 28, 0.7);
+  background: var(--glass-bg);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -10470,7 +10595,7 @@ h6 {
   align-items: center;
   gap: 0.25rem;
   padding: 0.75rem 1.5rem;
-  background: rgba(10, 16, 28, 0.6);
+  background: var(--glass-bg);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   cursor: pointer;
@@ -10497,9 +10622,9 @@ h6 {
 
 .portfolio-active-card {
   padding: 2.5rem;
-  background: rgba(10, 16, 28, 0.75);
+  background: var(--glass-bg);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  border-radius: 16px;
 }
 
 .portfolio-card-grid {
@@ -10605,7 +10730,7 @@ h6 {
 }
 
 .who-faq-card {
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -10662,21 +10787,126 @@ h6 {
 .pillars-telemetry-block {
   display: grid;
   grid-template-columns: 1.4fr 0.6fr;
-  gap: 1.5rem;
+  gap: 1.75rem;
   width: 100%;
-  margin-top: 2rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  align-items: stretch;
 }
 
 .pillars-throughput-card {
   flex: 1;
   min-width: 0;
+  padding: 0.85rem 1.5rem !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 16px !important;
+  background: var(--glass-bg) !important;
+  border: 1px solid var(--glass-border) !important;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5) !important;
+}
+
+.throughput-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.35rem;
+  gap: 1rem;
+}
+
+.throughput-tag {
+  font-family: monospace;
+  font-size: 0.65rem;
+  color: #8ce63f;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.15rem;
+  line-height: 1.2;
+}
+
+.throughput-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  font-family: var(--font-title);
+  line-height: 1.2;
+  margin: 0;
+}
+
+.throughput-latency-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(140, 255, 50, 0.08);
+  border: 1px solid rgba(140, 255, 50, 0.3);
+  padding: 0.25rem 0.65rem;
+  border-radius: 20px;
+  font-family: monospace;
+  font-size: 0.72rem;
+  color: #fff;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.throughput-stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 0.35rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.throughput-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.throughput-stat-label {
+  font-family: monospace;
+  font-size: 0.65rem;
+  color: #64748b;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.1rem;
+}
+
+.throughput-stat-value {
+  font-size: 1.25rem;
+  font-weight: 800;
+  font-family: var(--font-title);
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.throughput-stat-sub {
+  font-size: 0.68rem;
+  color: #8a9df8;
+  font-family: monospace;
+  line-height: 1.2;
+  margin-top: 0.1rem;
+}
+
+.throughput-graph-wrapper {
+  position: relative;
+  width: 100%;
+  height: 42px;
+  margin-top: 0.15rem;
 }
 
 .pillars-yield-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  align-content: start;
+  gap: 1.25rem;
+  align-content: stretch;
 }
 
 .pillars-yield-card {
@@ -10684,8 +10914,18 @@ h6 {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  padding: 1.25rem 1.5rem;
-  border-radius: 12px;
+  padding: 1.75rem 1.75rem;
+  border-radius: 16px;
+  background: rgba(10, 25, 47, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pillars-yield-card:hover {
+  border-color: rgba(140, 255, 50, 0.3) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(140, 255, 50, 0.05);
 }
 
 .pillars-yield-label {
@@ -10693,24 +10933,28 @@ h6 {
   font-size: 0.72rem;
   color: #64748b;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 0.4rem;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  line-height: 1.4;
 }
 
 .pillars-yield-value {
-  font-size: 1.6rem;
+  font-size: 1.95rem;
   font-weight: 800;
   font-family: var(--font-title);
   color: #fff;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
-  line-height: 1;
-  margin-bottom: 0.25rem;
+  line-height: 1.2;
+  margin-bottom: 0.4rem;
 }
 
 .pillars-yield-sub {
-  font-size: 0.75rem;
-  color: #64748b;
+  font-size: 0.8rem;
+  color: #8a9df8;
+  font-family: monospace;
+  line-height: 1.4;
 }
 
 @media (max-width: 1100px) {
@@ -10728,6 +10972,89 @@ h6 {
   }
   .pillars-yield-grid {
     grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ==========================================================================
+   PERFORMANCE SECTION — 4 Commercial Yield Blocks (Section 4)
+   ========================================================================== */
+.performance-yield-only-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.75rem;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  align-items: stretch;
+}
+
+.yield-metric-card {
+  background: rgba(10, 25, 47, 0.75) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 18px !important;
+  padding: 2.25rem 2rem !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.yield-metric-card:hover {
+  border-color: rgba(140, 255, 50, 0.35) !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), 0 0 25px rgba(140, 255, 50, 0.08);
+  transform: translateY(-4px);
+}
+
+.yield-card-top {
+  margin-bottom: 1.25rem;
+}
+
+.yield-metric-tag {
+  font-family: monospace;
+  font-size: 0.72rem;
+  color: #8ce63f;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  display: block;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+
+.yield-metric-value {
+  font-size: 2.35rem;
+  font-weight: 800;
+  font-family: var(--font-title);
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.yield-metric-label {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.4;
+  margin-bottom: 0.75rem;
+}
+
+.yield-metric-context {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  line-height: 1.65;
+  margin: 0;
+}
+
+@media (max-width: 1100px) {
+  .performance-yield-only-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .performance-yield-only-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -11018,3 +11345,185 @@ h6 {
   border-radius: 4px;
   padding: 0.2rem 0.6rem;
 }
+
+/* ==========================================================================
+   SERVICES GRID 3 & PROTOCOL PILLARS ALIGNMENT
+   ========================================================================== */
+.services-grid-3,
+.protocol-disciplines-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: stretch;
+}
+
+@media (max-width: 1000px) {
+  .services-grid-3,
+  .protocol-disciplines-grid-3 {
+    grid-template-columns: 1fr;
+    max-width: 550px;
+  }
+}
+
+.service-panel-card {
+  padding: 2.25rem 2rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  text-align: left !important;
+  border-radius: 16px !important;
+}
+
+.service-icon-wrap {
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.service-icon-wrap .icon-badge {
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 16px;
+  background: #0a192fb3;
+  border: 1px solid #a3ff3340;
+  box-shadow: 0 0 15px #a3ff331f, inset 0 0 10px #a3ff330d;
+}
+
+.protocol-card-tag {
+  font-family: monospace;
+  font-size: 0.72rem;
+  color: #8ce63f;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  line-height: 1.4;
+  display: block;
+}
+
+/* Home Section 2: Core Protocols + Fullwidth Telemetry Stream */
+.home-section-pillars {
+  padding-top: 5.5rem !important;
+  padding-bottom: 1.5rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+}
+
+.home-section-pillars-inner {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.home-pillars-title {
+  font-size: 2.2rem;
+  text-transform: none;
+  font-family: var(--font-title);
+  margin: 0 0 0.15rem 0;
+  text-wrap: balance;
+  line-height: 1.2;
+}
+
+.home-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  width: 100%;
+}
+
+@media (max-width: 1100px) {
+  .home-pillars-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .home-pillars-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.home-protocol-card {
+  padding: 1.35rem 1.25rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  border-radius: 16px !important;
+}
+
+.home-protocol-icon-wrap {
+  margin-bottom: 0.75rem;
+}
+
+.home-protocol-icon-wrap .icon-badge {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 12px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 0 15px rgba(140, 255, 50, 0.1);
+}
+
+.home-protocol-card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.35rem;
+  font-family: var(--font-title);
+  line-height: 1.3;
+}
+
+.home-protocol-card-desc {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  line-height: 1.45;
+  margin-bottom: 0.75rem;
+}
+
+.home-protocol-btn {
+  color: #8ce63f;
+  font-family: monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.home-protocol-btn:hover {
+  color: #fff;
+  transform: translateX(3px);
+}
+
+.pillars-telemetry-fullwidth {
+  grid-template-columns: 1fr !important;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0.35rem auto 0 auto !important;
+}
+

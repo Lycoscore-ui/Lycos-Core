@@ -1,6 +1,6 @@
 import { submitContactForm } from '../services/contactService';
 import { useState } from 'react';
-import { BarChart3, FileCheck, Coins, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { BarChart3, FileCheck, Coins, CheckCircle, CheckCircle2, ChevronDown } from 'lucide-react';
 import { useRegion } from '../context/RegionContext';
 import LinkedInConnect from '../components/LinkedInConnect';
 
@@ -13,77 +13,77 @@ export default function ProtocolApex() {
     email: '',
     ventureName: '',
     currentArr: '',
-    gtmBottleneck: '',
-    targetSeriesADate: '',
+    commercialModel: '',
+    pipelineStage: '',
   });
   const [formLoading, setFormLoading] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
 
   const stats = [
-    { value: '9', label: 'Month engagement horizon' },
-    { value: '8-15%', label: 'Equity alignment' },
-    { value: `${country.symbol}250K+`, label: 'ARR entry threshold' },
-    { value: '1', label: 'Series A capitalization target' },
+    { value: '9mo', label: 'Scale Horizon' },
+    { value: '8–15%', label: 'Equity Alignment' },
+    { value: `${country.symbol}250K+`, label: 'Minimum Entry ARR' },
+    { value: '340%', label: 'Target ARR Acceleration' },
   ];
 
   const pillars = [
     {
-      icon: <BarChart3 size={20} className="neon-icon" />,
-      tag: '01 // REVOPS and TELEMETRY INFRASTRUCTURE',
-      title: 'Pipeline Telemetry',
-      body: 'Production-grade CRM pipeline architecture, automated forecasting, usage-based billing telemetry, and real-time ACV/NDR analytics.',
+      icon: <BarChart3 size={28} className="neon-icon" />,
+      tag: '01 // REVENUE ENGINE & REVOPS',
+      title: 'Automated Sales Telemetry',
+      body: 'Automated deal qualification pipelines, programmatic buyer outreach, and structured multi-stakeholder contract acceleration telemetry.',
     },
     {
-      icon: <FileCheck size={20} className="neon-icon" />,
-      tag: '02 // ENTERPRISE PROCUREMENT NAVIGATION',
-      title: 'Procurement and MSAs',
-      body: 'Security questionnaire automation, standardized legal MSA/SLA frameworks, enterprise tier pricing, and vendor risk clearance protocols.',
+      icon: <FileCheck size={28} className="neon-icon" />,
+      tag: '02 // PROCUREMENT & COMPLIANCE',
+      title: 'Audit-Ready Security Dossiers',
+      body: 'SOC 2, ISO 27001, and HIPAA compliance readiness kits packaged for rapid enterprise security and legal reviews.',
     },
     {
-      icon: <Coins size={20} className="neon-icon" />,
-      tag: '03 // SYNDICATE CAPITALIZATION ENGINE',
-      title: 'Capital Strategy',
-      body: 'Financial model auditing, cohort analysis, institutional data-room engineering, and targeted Series A LP/VC mapping models.',
+      icon: <Coins size={28} className="neon-icon" />,
+      tag: '03 // PRICING & UNIT ECONOMICS',
+      title: 'Margin Optimization',
+      body: 'Token-cost pass-through pricing, tiered enterprise SLAs, consumption-based billing models, and gross margin optimization.',
     },
   ];
 
   const phases = [
     {
-      tag: 'PHASE 01 // MONTHS 1-3',
-      title: 'Pipeline Diagnostics and Playbook Construction',
-      body: 'Audit current sales pipeline, establish CRM tracking standards, and draft enterprise sales playbooks.',
+      phase: 'PHASE 1 (Months 1–3)',
+      title: 'RevOps Audit and Packaging',
+      body: 'Standardize sales collateral, pricing calculators, security documentation, and inbound qualification pipelines.',
     },
     {
-      tag: 'PHASE 02 // MONTHS 4-6',
-      title: 'Contract Velocity and Network Route',
-      body: 'Automate procurement security answers, clear vendor risk hurdles, and activate warm routes into Lycos buyer networks.',
+      phase: 'PHASE 2 (Months 4–6)',
+      title: 'Enterprise Pipeline Blitz',
+      body: 'Deploy structured enterprise sales playbooks across high-value prospect pipelines with dedicated deal architecture support.',
     },
     {
-      tag: 'PHASE 03 // MONTHS 7-9',
-      title: 'Series A Capitalization Run',
-      body: 'Engage top-tier lead investors with audited telemetry, institutional data room, and coordinated partner pitches.',
+      phase: 'PHASE 3 (Months 7–9)',
+      title: 'Series A Institutional Routing',
+      body: 'Calibrate growth telemetry, audit retention Cohorts, and route into vetted Tier-1 growth venture syndicates.',
     },
   ];
 
   const deliverables = [
-    'Enterprise GTM Architecture',
-    'RevOps and Telemetry Infrastructure',
-    'Proprietary Network Distribution',
-    'Series A Capitalization Protocol',
+    'Enterprise RevOps Infrastructure',
+    'Procurement & Compliance Fast-Track Kit',
+    'Pricing & Margin Optimization Model',
+    'Series A Institutional Data Room',
   ];
 
   const faqs = [
     {
-      q: 'Criteria for Apex Protocol qualification?',
-      a: `Ventures must show demonstrated initial PMF with a minimum ARR threshold of ${country.symbol}250K+ (or equivalent pilot volume) and a live, deployed software architecture.`,
+      q: 'What is the target profile for Protocol: Apex?',
+      a: `Apex is engineered for AI startups with active market traction and early commercial validation (${country.symbol}250K+ ARR) who need institutional RevOps systems and enterprise sales architecture to scale toward Series A.`,
     },
     {
-      q: 'Do you take equity or cash fees?',
-      a: 'We align purely on equity (8–15%) alongside performance-linked milestone incentives, ensuring zero misalignment with existing cap table shareholders.',
+      q: 'How does Apex accelerate sales velocity?',
+      a: 'We eliminate procurement friction by pre-building enterprise-grade compliance dossiers, standardizing MSA frameworks, and optimizing consumption pricing models to compress deal cycles from 6 months down to weeks.',
     },
     {
-      q: 'What does warm routing into the Lycos buyer network entail?',
-      a: 'We provide direct, vetted warm introductions to VP and C-level decision-makers across our enterprise consulting and institutional client roster.',
+      q: 'What is the equity structure for Apex?',
+      a: 'Apex operates on an 8–15% equity alignment structured against revenue milestones and institutional capital routing, ensuring complete alignment with founding teams.',
     },
   ];
 
@@ -100,10 +100,10 @@ export default function ProtocolApex() {
     setFormError(null);
 
     const fullMessage = [
-      `Venture Name: ${formData.ventureName}`,
+      `Venture / Company: ${formData.ventureName}`,
       formData.currentArr ? `Current ARR: ${formData.currentArr}` : '',
-      formData.targetSeriesADate ? `Target Series A Date: ${formData.targetSeriesADate}` : '',
-      formData.gtmBottleneck ? `GTM Bottlenecks: ${formData.gtmBottleneck}` : ''
+      formData.commercialModel ? `Commercial Model: ${formData.commercialModel}` : '',
+      formData.pipelineStage ? `Pipeline Stage / Target: ${formData.pipelineStage}` : ''
     ].filter(Boolean).join('\n\n');
 
     const res = await submitContactForm({
@@ -111,7 +111,7 @@ export default function ProtocolApex() {
       email: formData.email,
       company: formData.ventureName,
       message: fullMessage,
-      serviceContext: 'Protocol: Apex (Scale & Institutional Capture)'
+      serviceContext: 'Protocol: Apex (Scale & Commercialization)'
     });
 
     setFormLoading(false);
@@ -119,7 +119,7 @@ export default function ProtocolApex() {
       setFormSubmitted(true);
       setTimeout(() => {
         setFormSubmitted(false);
-        setFormData({ executiveName: '', email: '', ventureName: '', currentArr: '', gtmBottleneck: '', targetSeriesADate: '' });
+        setFormData({ executiveName: '', email: '', ventureName: '', currentArr: '', commercialModel: '', pipelineStage: '' });
       }, 6000);
     } else {
       setFormError(res.error || 'Failed to submit application.');
@@ -137,20 +137,20 @@ export default function ProtocolApex() {
         <div className="hero-grid">
           <div>
             <div className="eyebrow-tagline-green">
-              // INCUBATION PROTOCOL // REVENUE SCALE & CAPTURE
+              // INCUBATION PROTOCOL // SCALE & CAPTURE
             </div>
             <h1 className="hero-heading">
               Protocol: Apex<span className="brand-dot">.</span>
             </h1>
 
             <div className="hero-tags-row">
-              {['Series A Acceleration', 'Enterprise GTM', '9-Month Horizon'].map((tag, i) => (
+              {['Scale and Capture', 'RevOps Telemetry', '9-Month Horizon'].map((tag, i) => (
                 <span key={i} className="hero-pill-badge">{tag}</span>
               ))}
             </div>
 
             <p className="hero-body-copy">
-              For post-revenue ventures ready to capture institutional market share. We deploy enterprise GTM playbooks, streamline complex procurement cycles, and architect high-conviction Series A capitalization rounds.
+              Transitioning from initial traction to institutional revenue engine. We deploy RevOps automation, enterprise procurement playbooks, and margin calibration to accelerate your pathway to Series A.
             </p>
 
             <div className="subpage-hero-cta-row">
@@ -220,121 +220,153 @@ export default function ProtocolApex() {
         </div>
       </section>
 
-      {/* Below-fold — Stats + Content */}
-      <section className="protocol-content-section">
-        {/* Stats Strip */}
-        <div className="who-stats-grid">
+      {/* Stats Strip */}
+      <section className="section" style={{ padding: '3rem 0 2rem' }}>
+        <div className="outcome-stats-grid subpage-block-container">
           {stats.map((s, i) => (
-            <div key={i} className="glass-panel who-stat-card">
-              <div className="who-stat-value">{s.value}</div>
-              <div className="who-stat-label">{s.label}</div>
+            <div key={i} className="baseline-card outcome-stat-card">
+              <div className="stat-metric">{s.value}</div>
+              <div className="stat-label">{s.label}</div>
             </div>
           ))}
         </div>
+      </section>
 
-        {/* Thesis */}
-        <div className="glass-panel who-territory-card">
+      {/* Thesis */}
+      <section className="section" style={{ padding: '2rem 0 4rem' }}>
+        <div className="glass-panel outcomes-split-grid subpage-block-container">
           <div>
-            <div className="eyebrow-tagline">// OPERATIONAL THESIS</div>
-            <h3 className="service-heading who-territory-heading">
+            <span className="eyebrow-tagline">// OPERATIONAL THESIS</span>
+            <h3 className="service-heading" style={{ marginTop: '0.5rem' }}>
               Initial Traction Isn't Scalability. Transitioning from Founder-Led Sales to Systemic Engine Mechanics<span className="brand-dot">.</span>
             </h3>
-            <p className="hero-body-copy who-body-copy-flush">
+          </div>
+          <div>
+            <p className="service-desc" style={{ fontSize: '1rem', lineHeight: '1.7' }}>
               Generating early revenue proves market demand; scaling it requires institutional architecture. Post-revenue AI ventures often hit performance plateaus due to elongated procurement cycles, fragmented sales workflows, and informal pipeline tracking. Protocol: Apex replaces ad-hoc selling with automated RevOps telemetry, standardized enterprise playbooks, and direct routing into institutional buyer networks.
             </p>
           </div>
         </div>
+      </section>
 
-        {/* Pillars */}
-        <div className="who-unit-section-block">
-          <div className="eyebrow-tagline">// HARDENED REVENUE INFRASTRUCTURE</div>
-          <h3 className="service-heading">Three Revenue Pillars. One Scalable Engine<span className="brand-dot">.</span></h3>
-          <div className="protocol-disciplines-grid-3">
-            {pillars.map((p, i) => (
-              <div key={i} className="glass-panel who-discipline-card">
-                <div className="icon-badge">{p.icon}</div>
-                <div>
-                  <div className="eyebrow-tagline">{p.tag}</div>
-                  <h4 className="who-discipline-title">{p.title}</h4>
-                  <p className="who-discipline-description">{p.body}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+      {/* Pillars / Revenue Infrastructure */}
+      <section className="section" style={{ padding: '2rem 0 4rem' }}>
+        <div className="subpage-block-header">
+          <span className="eyebrow-tagline">// HARDENED REVENUE INFRASTRUCTURE</span>
+          <h2 className="subpage-block-title">
+            Three Revenue <span className="brand-dot">Pillars</span>
+          </h2>
+          <p className="subpage-block-desc">
+            A hardened commercial stack designed to compress sales cycles and institutionalize buyer acquisition.
+          </p>
         </div>
 
-        {/* Roadmap */}
-        <div id="roadmap" className="who-unit-section-block">
-          <div className="eyebrow-tagline">// EXECUTION ROADMAP</div>
-          <h3 className="service-heading">Three Phases. Nine Months. Series A Ready<span className="brand-dot">.</span></h3>
-          <div className="protocol-disciplines-grid-3">
+        <div className="services-grid-3 subpage-block-container">
+          {pillars.map((p, i) => (
+            <div key={i} className="glass-panel purple-glow-card service-panel-card">
+              <div>
+                <div className="service-icon-wrap">
+                  <div className="icon-badge">{p.icon}</div>
+                </div>
+                <span className="protocol-card-tag">{p.tag}</span>
+                <h3 className="service-card-title">{p.title}</h3>
+                <p className="service-card-desc">{p.body}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Execution Roadmap / Playbook */}
+      <section id="roadmap" className="section" style={{ padding: '2rem 0 4rem' }}>
+        <div className="roadmap-section subpage-block-container">
+          <div className="section-header-center">
+            <span className="eyebrow-tagline">// EXECUTION ROADMAP</span>
+            <h2 className="section-title">
+              Three Phases. Nine Months. <span className="brand-dot">Institutional Scale.</span>
+            </h2>
+            <p className="section-desc">
+              A phased commercial acceleration program engineered to scale post-revenue AI products into enterprise category leaders.
+            </p>
+          </div>
+
+          <div className="playbook-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
             {phases.map((ph, i) => (
-              <div key={i} className="glass-panel who-discipline-card">
+              <div key={i} className="glass-panel">
+                <span className="playbook-phase-badge">{ph.phase}</span>
+                <h4 className="faq-btn-text" style={{ fontSize: '1.1rem', marginBottom: '0.75rem' }}>{ph.title}</h4>
+                <p className="service-desc">{ph.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Deliverables */}
+      <section className="section" style={{ padding: '2rem 0 4rem' }}>
+        <div className="glass-panel outcomes-split-grid subpage-block-container">
+          <div>
+            <span className="eyebrow-tagline">// PROGRAMME DELIVERABLES</span>
+            <h3 className="service-heading" style={{ marginTop: '0.5rem' }}>
+              What You Walk Away With<span className="brand-dot">.</span>
+            </h3>
+            <p className="service-desc" style={{ marginTop: '0.75rem' }}>
+              Every Apex cohort venture leaves with institutional RevOps infrastructure, audit-ready compliance kits, and direct Tier-1 syndicate access.
+            </p>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {deliverables.map((d, i) => (
+              <div key={i} className="anatomy-item">
+                <div className="anatomy-icon-badge"><CheckCircle2 size={16} className="neon-icon" /></div>
                 <div>
-                  <div className="eyebrow-tagline">{ph.tag}</div>
-                  <h4 className="who-discipline-title">{ph.title}</h4>
-                  <p className="who-discipline-description">{ph.body}</p>
+                  <h4 className="faq-btn-text" style={{ fontSize: '1rem', color: '#fff' }}>{d}</h4>
                 </div>
               </div>
             ))}
           </div>
         </div>
+      </section>
 
-        {/* Deliverables */}
-        <div className="glass-panel who-territory-card">
-          <div>
-            <div className="eyebrow-tagline">// PROGRAMME DELIVERABLES</div>
-            <h3 className="service-heading who-territory-heading">What You Walk Away With<span className="brand-dot">.</span></h3>
+      {/* FAQs */}
+      <section className="section" style={{ padding: '2rem 0 4rem' }}>
+        <div className="faq-container-wide subpage-block-container">
+          <div className="section-header-center">
+            <span className="eyebrow-tagline">// PROTOCOL PARAMETERS</span>
+            <h3 className="section-title">Frequently Asked Questions</h3>
           </div>
-          <div className="who-credentials-list">
-            {deliverables.map((d, i) => (
-              <div key={i} className="who-credential-item">
-                <CheckCircle size={16} className="neon-icon who-credential-icon" />
-                <span className="who-credential-text">{d}</span>
-              </div>
-            ))}
-          </div>
-        </div>
 
-        {/* FAQs */}
-        <div className="who-unit-section-block">
-          <div className="eyebrow-tagline">// FREQUENTLY ASKED QUESTIONS</div>
-          <h3 className="service-heading">Protocol Parameters<span className="brand-dot">.</span></h3>
-          <div className="protocol-faq-list">
+          <div className="faq-list-wide">
             {faqs.map((f, i) => (
-              <div key={i} className="glass-panel who-faq-card">
-                <button
-                  className="who-faq-question-row"
-                  onClick={() => toggleFaq(i)}
-                >
-                  <span className="who-faq-question-text">{f.q}</span>
-                  {activeFaq === i ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+              <div key={i} className="glass-panel">
+                <button onClick={() => toggleFaq(i)} className="faq-btn-wide">
+                  <span className="faq-btn-text-wide">{f.q}</span>
+                  <ChevronDown size={16} className={`neon-icon transition-transform ${activeFaq === i ? 'rotate-180' : ''}`} />
                 </button>
                 {activeFaq === i && (
-                  <p className="who-faq-answer-text">{f.a}</p>
+                  <div className="faq-content-wide">{f.a}</div>
                 )}
               </div>
             ))}
           </div>
         </div>
+      </section>
 
-        {/* Application Form & Contact Matrix */}
-        <div id="contact" className="contact-grid">
-          <div className="glass-panel contact-card">
-            <h3 className="service-heading">
-              Apply for Protocol: Apex
-            </h3>
+      {/* Application Form & Consult */}
+      <section id="contact" className="section hero-fullscreen-section" style={{ minHeight: 'auto', padding: '4rem 0 6rem' }}>
+        <div className="subpage-contact-grid contact-grid">
+          <div className="glass-panel subpage-contact-card">
+            <h3 className="subpage-contact-heading">Apply for Protocol: Apex</h3>
 
             {formSubmitted ? (
-              <div className="hero-gauge-status">
-                <CheckCircle size={48} className="neon-icon" />
-                <h4>Application Received</h4>
-                <p>Our capital and GTM leads will review your metrics and respond within 48 hours.</p>
+              <div className="hero-gauge-status" style={{ padding: '2rem 0', flexDirection: 'column', textAlign: 'center' }}>
+                <CheckCircle size={48} className="neon-icon" style={{ marginBottom: '1rem' }} />
+                <h4 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '0.5rem' }}>Application Received</h4>
+                <p style={{ color: 'var(--text-gray)' }}>Our commercial growth team will review your application and respond within 48 hours.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="contact-form">
                 <div>
-                  <label className="contact-label">Executive / Founder Name</label>
+                  <label className="contact-label">Commercial Lead / Founder Name</label>
                   <input
                     type="text"
                     name="executiveName"
@@ -342,7 +374,7 @@ export default function ProtocolApex() {
                     value={formData.executiveName}
                     onChange={handleInputChange}
                     className="contact-input"
-                    placeholder="e.g. Jordan Lee"
+                    placeholder="e.g. Jordan Vance"
                   />
                 </div>
 
@@ -355,12 +387,12 @@ export default function ProtocolApex() {
                     value={formData.email}
                     onChange={handleInputChange}
                     className="contact-input"
-                    placeholder="jordan@growthventure.ai"
+                    placeholder="jordan@enterprise-ai.com"
                   />
                 </div>
 
                 <div>
-                  <label className="contact-label">Venture / Organization Name</label>
+                  <label className="contact-label">Company / Venture Name</label>
                   <input
                     type="text"
                     name="ventureName"
@@ -368,42 +400,42 @@ export default function ProtocolApex() {
                     value={formData.ventureName}
                     onChange={handleInputChange}
                     className="contact-input"
-                    placeholder="e.g. OmniCore Technologies"
+                    placeholder="e.g. Apex Neural Core"
                   />
                 </div>
 
                 <div>
-                  <label className="contact-label">Current ARR / TTM Revenue Run-Rate</label>
+                  <label className="contact-label">Current ARR / Monthly Revenue</label>
                   <input
                     type="text"
                     name="currentArr"
                     value={formData.currentArr}
                     onChange={handleInputChange}
                     className="contact-input"
-                    placeholder="e.g. $450K ARR"
+                    placeholder="e.g. $350K ARR ($30K MRR)"
                   />
                 </div>
 
                 <div>
-                  <label className="contact-label">Primary GTM / Scaling Bottleneck</label>
+                  <label className="contact-label">Commercial Model / Pricing Structure</label>
                   <textarea
-                    name="gtmBottleneck"
-                    value={formData.gtmBottleneck}
+                    name="commercialModel"
+                    value={formData.commercialModel}
                     onChange={handleInputChange}
                     className="contact-textarea"
-                    placeholder="Describe procurement delays, pipeline leakage, sales team scaling bottlenecks..."
+                    placeholder="Briefly describe your pricing tiers, contract sizes, and sales cycles..."
                   />
                 </div>
 
                 <div>
-                  <label className="contact-label">Target Series A Capitalization Window</label>
+                  <label className="contact-label">Active Enterprise Pipeline Stage</label>
                   <input
                     type="text"
-                    name="targetSeriesADate"
-                    value={formData.targetSeriesADate}
+                    name="pipelineStage"
+                    value={formData.pipelineStage}
                     onChange={handleInputChange}
                     className="contact-input"
-                    placeholder="e.g. Q4 2026"
+                    placeholder="e.g. 4 pilots in evaluation, 2 enterprise contracts in legal"
                   />
                 </div>
 
@@ -422,9 +454,9 @@ export default function ProtocolApex() {
 
           <div className="hero-gauge-wrapper">
             <div className="contact-card">
-              <h3 className="hero-heading">Growth Architecture Consult</h3>
-              <p className="hero-body-copy">
-                Directly interface with our venture co-builders. We evaluate seed-stage model defensibility, infrastructure scalings, and capital velocity parameters.
+              <h3 className="subpage-contact-sidebar-heading">Commercial Architecture Consult</h3>
+              <p className="subpage-contact-sidebar-desc">
+                Consult directly with our growth architects. We analyze your commercial pipeline telemetry, pricing power, and institutional capitalization roadmap.
               </p>
               
               {/* Official LinkedIn Social Link */}

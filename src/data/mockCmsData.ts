@@ -34,7 +34,7 @@ export const mockInsights: Insight[] = [
     category: 'Agentic Frameworks',
     readTime: 6,
     publishedDate: '2026-06-15',
-    featuredImage: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=600&auto=format&fit=crop',
+    featuredImage: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80andw=600&auto=format&fit=crop',
     status: 'Published',
     tags: ['Agents', 'Orchestration', 'Cognitive Layer', 'Architecture'],
     author: {
@@ -73,7 +73,7 @@ export const mockInsights: Insight[] = [
     category: 'AI Governance',
     readTime: 8,
     publishedDate: '2026-05-28',
-    featuredImage: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?q=80&w=600&auto=format&fit=crop',
+    featuredImage: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?q=80andw=600&auto=format&fit=crop',
     status: 'Published',
     tags: ['Compliance', 'AI Law', 'Ethics', 'MLOps', 'Governance'],
     author: {

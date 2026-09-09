@@ -979,7 +979,7 @@ export default function AdminPage() {
           </div>
         )}
 
-        {/* Tab 2: Industry Articles Intelligence Matrix (Scrape & Metadata Pipeline) */}
+        {/* Tab 2: Industry Articles Intelligence Matrix (Scrape and Metadata Pipeline) */}
         {activeTab === 'industry' && (
           <div className="admin-pipeline-layout">
             
@@ -1052,7 +1052,7 @@ export default function AdminPage() {
                   <div className="admin-card-header">
                     <div className="admin-header-title-wrap">
                       <Newspaper size={18} className="neon-icon" />
-                      <h3>Industry Metadata & Curation Studio</h3>
+                      <h3>Industry Metadata and Curation Studio</h3>
                     </div>
                     <div className="admin-draft-meta-tags">
                       <span className="admin-meta-pill">{fromN8nIndustryScrape ? 'N8N SCRAPED' : 'INDUSTRY DRAFT'}</span>
@@ -1397,7 +1397,7 @@ export default function AdminPage() {
                 {isScrapingIndustry && (
                   <div className="admin-loading-card glass-panel">
                     <Activity size={36} className="spin-icon neon-icon" />
-                    <h4>Scraping Target URL & Harvesting Deep Metadata via N8N...</h4>
+                    <h4>Scraping Target URL and Harvesting Deep Metadata via N8N...</h4>
                     <p>Contacting (<code>{n8nConfig.industryScrapeWebhookUrl || 'lycos-industry-scrape'}</code>) to parse publish date, attribution, and imagery options.</p>
                   </div>
                 )}
@@ -1470,12 +1470,12 @@ export default function AdminPage() {
           </div>
         )}
 
-        {/* Tab 3: Published Articles & Insights Repository */}
+        {/* Tab 3: Published Articles and Insights Repository */}
         {activeTab === 'published' && (
           <div className="admin-published-section">
             <div className="admin-section-heading-row">
               <div>
-                <h3 className="admin-sec-title">Website Articles & Insights Repository</h3>
+                <h3 className="admin-sec-title">Website Articles and Insights Repository</h3>
                 <p className="admin-sec-subtitle">
                   Articles and thought leadership pieces currently live and accessible on the public Lycos Core website.
                 </p>
@@ -1526,7 +1526,7 @@ export default function AdminPage() {
                           <span className="admin-mock-importance">{art.importance} Priority</span>
                         </div>
                         {isOwned ? (
-                          <div className="admin-pub-corner-badge admin-badge-owned" title="Owned Industry Insight (AI Rewritten & Synthesized)">
+                          <div className="admin-pub-corner-badge admin-badge-owned" title="Owned Industry Insight (AI Rewritten and Synthesized)">
                             <Sparkles size={11} />
                             <span>OWNED INSIGHT</span>
                           </div>
@@ -1581,7 +1581,7 @@ export default function AdminPage() {
             <div className="admin-modal-header">
               <div className="admin-header-title-wrap">
                 <Settings size={20} className="neon-icon" />
-                <h3>N8N & GitHub Deployment Settings</h3>
+                <h3>N8N and GitHub Deployment Settings</h3>
               </div>
               <button className="admin-modal-close" onClick={() => setShowSettingsModal(false)}>
                 <X size={18} />

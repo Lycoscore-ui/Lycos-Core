@@ -29,7 +29,7 @@ interface SearchItem {
 const SEARCH_DATABASE: SearchItem[] = [
   {
     id: 'prod-sentinel',
-    title: 'Lycos Sentinel // Customer Operations & ROI Simulator',
+    title: 'Lycos Sentinel // Customer Operations and ROI Simulator',
     category: 'Products and Simulators',
     description: 'Autonomous customer operations, defect reduction, and resolution accuracy model.',
     slug: 'ai-products',
@@ -38,7 +38,7 @@ const SEARCH_DATABASE: SearchItem[] = [
   },
   {
     id: 'prod-vector',
-    title: 'Lycos Vector // Back-Office Operations & ROI Simulator',
+    title: 'Lycos Vector // Back-Office Operations and ROI Simulator',
     category: 'Products and Simulators',
     description: 'Automated invoice processing, claims, and back-office workforce optimization.',
     slug: 'ai-products',
@@ -47,7 +47,7 @@ const SEARCH_DATABASE: SearchItem[] = [
   },
   {
     id: 'prod-aegis',
-    title: 'Lycos Aegis // Security & Node Network Simulator',
+    title: 'Lycos Aegis // Security and Node Network Simulator',
     category: 'Products and Simulators',
     description: 'Zero-trust agent orchestration matrix, node network security, and compliance telemetry.',
     slug: 'ai-products',
@@ -56,7 +56,7 @@ const SEARCH_DATABASE: SearchItem[] = [
   },
   {
     id: 'prod-synapse',
-    title: 'Lycos Synapse // Data Integration & ETL Simulator',
+    title: 'Lycos Synapse // Data Integration and ETL Simulator',
     category: 'Products and Simulators',
     description: 'Autonomous schema mapping, ETL latency reduction, and multi-source pipeline synthesis.',
     slug: 'ai-products',
@@ -65,7 +65,7 @@ const SEARCH_DATABASE: SearchItem[] = [
   },
   {
     id: 'prod-vanguard',
-    title: 'Lycos Vanguard // Predictive Intelligence & Inventory Simulator',
+    title: 'Lycos Vanguard // Predictive Intelligence and Inventory Simulator',
     category: 'Products and Simulators',
     description: 'Demand forecasting, carrying cost optimization, and stockout prevention engine.',
     slug: 'ai-products',
@@ -74,7 +74,7 @@ const SEARCH_DATABASE: SearchItem[] = [
   },
   {
     id: 'proto-kinetic',
-    title: 'Protocol: Kinetic // Seed & Pre-Seed Co-Building',
+    title: 'Protocol: Kinetic // Seed and Pre-Seed Co-Building',
     category: 'Protocols and Incubation',
     description: 'Zero-state architecture, embedded technical co-building, and milestone-gated capital.',
     slug: 'incubation/kinetic',
@@ -101,7 +101,7 @@ const SEARCH_DATABASE: SearchItem[] = [
   },
   {
     id: 'proto-hub',
-    title: 'Incubation Hub // Overview & Cohort Pathways',
+    title: 'Incubation Hub // Overview and Cohort Pathways',
     category: 'Protocols and Incubation',
     description: 'Stage-specific venture tracks and full-stack technical capital allocation.',
     slug: 'incubation-hub',
@@ -110,7 +110,7 @@ const SEARCH_DATABASE: SearchItem[] = [
   },
   {
     id: 'coll-consulting',
-    title: 'AI Consulting // Enterprise Architecture & Strategy',
+    title: 'AI Consulting // Enterprise Architecture and Strategy',
     category: 'The Collective',
     description: 'Strategic roadmap formulation, infrastructure audits, and operational integration.',
     slug: 'ai-consulting',
@@ -128,7 +128,7 @@ const SEARCH_DATABASE: SearchItem[] = [
   },
   {
     id: 'coll-who',
-    title: 'Who We Are // Modular Disciplines & Leadership',
+    title: 'Who We Are // Modular Disciplines and Leadership',
     category: 'The Collective',
     description: 'Our cross-functional unit of neural architects, tactical operators, and engineers.',
     slug: 'who-we-are',
@@ -137,7 +137,7 @@ const SEARCH_DATABASE: SearchItem[] = [
   },
   {
     id: 'coll-operate',
-    title: 'How We Operate // High-Velocity Sprints & Telemetry',
+    title: 'How We Operate // High-Velocity Sprints and Telemetry',
     category: 'The Collective',
     description: 'Clinical telemetry sweeps, target blueprints, weekly demos, and 90-day tuning.',
     slug: 'how-we-operate',
@@ -146,7 +146,7 @@ const SEARCH_DATABASE: SearchItem[] = [
   },
   {
     id: 'coll-governance',
-    title: 'Governance & Security // Zero-Trust Compliance',
+    title: 'Governance and Security // Zero-Trust Compliance',
     category: 'The Collective',
     description: 'EU AI Act, NIST AI RMF, HIPAA, SOC 2, and hardcoded tenant isolation guardrails.',
     slug: 'governance-security',
@@ -182,7 +182,7 @@ const SEARCH_DATABASE: SearchItem[] = [
   },
   {
     id: 'intel-kb',
-    title: 'Master Knowledge Base // FAQs & Spec Repository',
+    title: 'Master Knowledge Base // FAQs and Spec Repository',
     category: 'Intelligence and Research',
     description: 'Complete operational runbooks, technical FAQs, and protocol specifications.',
     slug: 'knowledge-base',
@@ -218,7 +218,7 @@ const SEARCH_DATABASE: SearchItem[] = [
   },
   {
     id: 'legal-cookies',
-    title: 'Cookie Policy // Telemetry & Consent',
+    title: 'Cookie Policy // Telemetry and Consent',
     category: 'Legal and Governance',
     description: 'On-site cookie preferences, zero ad-brokerage, non-training telemetry protocols.',
     slug: 'cookie-policy',
@@ -227,7 +227,7 @@ const SEARCH_DATABASE: SearchItem[] = [
   },
   {
     id: 'system-splash',
-    title: 'Splash & Coming Soon // Public Initialization Preview',
+    title: 'Splash and Coming Soon // Public Initialization Preview',
     category: 'Protocols and Incubation',
     description: 'Executive briefing intake, 3D Cipher volumetric particle sphere, and readiness telemetry.',
     slug: 'coming-soon',

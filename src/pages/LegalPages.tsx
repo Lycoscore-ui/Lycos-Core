@@ -98,7 +98,7 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
           }
         },
         {
-          heading: '4. Interactive Tool & Simulation Telemetry',
+          heading: '4. Interactive Tool and Simulation Telemetry',
           body: 'When using interactive tools, ROI simulators, or enterprise demonstration modules on our platform (including components powering Lycos Aegis, Lycos Sentinel, Lycos Synapse, Lycos Vector, Lycos Vanguard, and the Incubation Den), temporary session cookies or local storage objects may be generated to preserve your inputs during your active browser session.',
           bullets: [
             {
@@ -164,7 +164,7 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
           ]
         },
         {
-          heading: '3. Permitted & Prohibited Use',
+          heading: '3. Permitted and Prohibited Use',
           body: 'You agree to use this website only for lawful business, consulting, and informational purposes. You agree not to:',
           bullets: [
             { text: 'Attempt to gain unauthorized access to any port, server, engine module, or administrative interface of Lycos Core.' },
@@ -174,7 +174,7 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
           ]
         },
         {
-          heading: '4. Enterprise Services & Demonstrations',
+          heading: '4. Enterprise Services and Demonstrations',
           body: 'Any interactive tools, return-on-investment (ROI) simulators, platform product demonstrations, or service estimates provided on this website are for illustrative and informational purposes only.',
           bullets: [
             { text: 'An interactive sandbox or ROI simulation does not constitute a binding legal contract, guaranteed performance SLA, or formal software delivery agreement.' },
@@ -182,7 +182,7 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
           ]
         },
         {
-          heading: '5. Privacy, POPIA Compliance & Cookies',
+          heading: '5. Privacy, POPIA Compliance and Cookies',
           body: 'Your privacy and data sovereignty are central to our operational principles.',
           bullets: [
             {
@@ -200,7 +200,7 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
           ]
         },
         {
-          heading: '6. Disclaimers & Limitation of Liability',
+          heading: '6. Disclaimers and Limitation of Liability',
           bullets: [
             {
               label: '"As Is" Basis',
@@ -217,11 +217,11 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
           ]
         },
         {
-          heading: '7. Third-Party Links & Services',
+          heading: '7. Third-Party Links and Services',
           body: 'This website may contain links to third-party platforms, resources, or client showcases. Lycos Core does not control, endorse, or assume responsibility for the content, privacy practices, or security policies of third-party websites.'
         },
         {
-          heading: '8. Governing Law & Jurisdiction',
+          heading: '8. Governing Law and Jurisdiction',
           body: 'These terms are governed by and construed in accordance with the laws of the Republic of South Africa. Any disputes arising in connection with these terms or site access shall be subject to the exclusive jurisdiction of the South African courts.'
         },
         {
@@ -296,7 +296,7 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
           }
         },
         {
-          heading: '4. Non-Training Commitment & AI Safeguards',
+          heading: '4. Non-Training Commitment and AI Safeguards',
           body: 'In accordance with our Responsible Use of AI Policy:',
           bullets: [
             {
@@ -324,7 +324,7 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
           ]
         },
         {
-          heading: '6. Data Retention & Security Measures',
+          heading: '6. Data Retention and Security Measures',
           bullets: [
             {
               label: 'Security Safeguards',
@@ -337,7 +337,7 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
           ]
         },
         {
-          heading: '7. Cookies & Tracking Technologies',
+          heading: '7. Cookies and Tracking Technologies',
           body: 'We use cookies and similar web technologies to enable core site functionality and analyze operational telemetry:',
           bullets: [
             {
@@ -368,7 +368,7 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
           ]
         },
         {
-          heading: '9. Complaints & Regulatory Recourse',
+          heading: '9. Complaints and Regulatory Recourse',
           body: 'If you believe your personal data has been handled unlawfully, we encourage you to contact us first so we can address your concern. However, you retain the right to lodge a complaint with the relevant supervisory authority:',
           bullets: [
             {
@@ -382,7 +382,7 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
           ]
         },
         {
-          heading: '10. Contact Details & Information Officer',
+          heading: '10. Contact Details and Information Officer',
           body: 'For privacy inquiries, POPIA access requests, or regulatory communications:',
           bullets: [
             { label: 'Entity', text: 'Lycos Core (Pty) Ltd' },
@@ -440,7 +440,7 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
           ]
         },
         {
-          heading: '4. Multi-Jurisdictional Regulatory Alignment & Cross-Border Compliance',
+          heading: '4. Multi-Jurisdictional Regulatory Alignment and Cross-Border Compliance',
           body: 'For operations, enterprise integrations, and clients located outside of South Africa:',
           bullets: [
             {
@@ -454,7 +454,7 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
           ]
         },
         {
-          heading: '5. Deployment Protocols & Security Architecture',
+          heading: '5. Deployment Protocols and Security Architecture',
           bullets: [
             {
               label: 'Risk Classification',
@@ -467,7 +467,7 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
           ]
         },
         {
-          heading: '6. Client Responsibilities & Acceptable Use',
+          heading: '6. Client Responsibilities and Acceptable Use',
           body: 'Clients and partners utilizing Lycos Core platforms or custom deployments agree not to:',
           bullets: [
             { text: 'Re-configure or bypass built-in safety filters, rate limits, or oversight mechanisms.' },
@@ -476,7 +476,7 @@ const LegalPageContent: React.FC<LegalPageProps> = ({ type }) => {
           ]
         },
         {
-          heading: '7. Governance, Incident Reporting & Policy Review',
+          heading: '7. Governance, Incident Reporting and Policy Review',
           bullets: [
             {
               label: 'Governance Oversight',

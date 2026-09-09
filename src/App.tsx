@@ -10,7 +10,6 @@ import {
   Activity, 
   TrendingUp, 
   CheckCircle, 
-  Info,
   Search,
   Menu,
   X,
@@ -92,7 +91,7 @@ const FALLBACK_HOME = {
   },
   performance: {
     title: 'Enterprise Data Pipeline Telemetry',
-    subtitle: 'Real-Time Ingestion Throughput & Token Vectorization',
+    subtitle: 'Real-Time Ingestion Throughput and Token Vectorization',
     throughputMetrics: [
       { label: 'Stream Ingestion Rate', value: '14.8 GB/s', change: '+34% Peak Capacity' },
       { label: 'Vector Token Pipeline', value: '1.85M/s', change: 'Sub-8ms Latency' },
@@ -878,7 +877,7 @@ export default function App() {
                 <div className="matrix-stack-container">
                   <div className="matrix-scan-beam" />
                   
-                  {/* Layer 1: Strategy & Governance */}
+                  {/* Layer 1: Strategy and Governance */}
                   <div className="matrix-tier-row active-tier">
                     <div className="matrix-tier-label-wrap">
                       <span className="matrix-tier-tag tier-1">L1</span>
@@ -984,7 +983,7 @@ export default function App() {
                   }
                 }} 
               >
-                INSPECT PROTOCOL &gt;
+                INSPECT PROTOCOL andgt;
               </button>
             </div>
           ))}
@@ -1488,12 +1487,12 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Layout Spacer for Section 1 Right Column (Global Canvas is mounted globally) */}
+{/* Layout Spacer for Section 1 Right Column (Global Canvas is mounted globally) */}
               <div className="hero-right-spacer" />
             </div>
           </section>
 
-          {/* Section 2: Pillars */}
+          {/* Section 2: Core Protocols */}
           <section className="section home-section-pillars">
             <div className="home-section-pillars-inner">
               <h2 className="home-pillars-title">
@@ -1501,7 +1500,7 @@ export default function App() {
               </h2>
               <div className="pillars-grid home-pillars-grid">
                 {pageData.pillars.items.map((item: any, idx: number) => (
-                  <div key={idx} className="protocol-card home-protocol-card">
+                  <div key={idx} className="protocol-card home-protocol-card glass-panel purple-glow-card">
                     <div>
                       <div className="home-protocol-icon-wrap">
                         <div className="icon-badge">
@@ -1527,13 +1526,13 @@ export default function App() {
                 ))}
               </div>
 
-              {/* Enterprise Data Pipeline Telemetry Block */}
-              <div className="pillars-telemetry-block">
+              {/* Enterprise Data Pipeline Telemetry Block (Throughput Monitor Standalone) */}
+              <div className="pillars-telemetry-block pillars-telemetry-fullwidth">
                 <div className="glass-panel throughput-monitor-card pillars-throughput-card">
                   <div className="throughput-card-header">
                     <div>
                       <span className="throughput-tag">TELEMETRY STREAM // PIPELINE THROUGHPUT</span>
-                      <h3 className="throughput-title">Ingestion & Token Vectorization</h3>
+                      <h3 className="throughput-title">Ingestion and Token Vectorization</h3>
                     </div>
                     <div className="throughput-latency-pill">
                       <Activity size={14} className="neon-icon" />
@@ -1542,50 +1541,36 @@ export default function App() {
                   </div>
                   <div className="throughput-stats-row">
                     <div className="throughput-stat-item">
-                      <div className="throughput-stat-label">Stream Ingestion</div>
+                      <div className="throughput-stat-label">STREAM INGESTION</div>
                       <div className="throughput-stat-value accent-highlight">14.8 GB/s</div>
                       <div className="throughput-stat-sub">+34% Peak Capacity</div>
                     </div>
                     <div className="throughput-stat-item">
-                      <div className="throughput-stat-label">Vector Tokens</div>
+                      <div className="throughput-stat-label">VECTOR TOKENS</div>
                       <div className="throughput-stat-value">1.85M /s</div>
                       <div className="throughput-stat-sub">Zero Ingestion Loss</div>
                     </div>
                     <div className="throughput-stat-item">
-                      <div className="throughput-stat-label">Stream Integrity</div>
+                      <div className="throughput-stat-label">STREAM INTEGRITY</div>
                       <div className="throughput-stat-value">99.999%</div>
                       <div className="throughput-stat-sub">Zero Context Drift</div>
                     </div>
                   </div>
                   <div className="throughput-graph-wrapper">
-                    <svg viewBox="0 0 540 80" className="throughput-svg" preserveAspectRatio="none">
+                    <svg viewBox="0 0 540 100" className="throughput-svg" preserveAspectRatio="none">
                       <defs>
                         <linearGradient id="pillars-throughput-grad" x1="0" y1="0" x2="0" y2="1">
                           <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.3" />
                           <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
                         </linearGradient>
                       </defs>
-                      <line x1="0" y1="20" x2="540" y2="20" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 6" />
-                      <line x1="0" y1="40" x2="540" y2="40" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 6" />
-                      <line x1="0" y1="60" x2="540" y2="60" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 6" />
-                      <path d="M 0,65 C 60,50 110,35 170,48 C 230,60 290,20 360,28 C 430,36 480,12 540,5 L 540,80 L 0,80 Z" fill="url(#pillars-throughput-grad)" />
-                      <path d="M 0,65 C 60,50 110,35 170,48 C 230,60 290,20 360,28 C 430,36 480,12 540,5" fill="none" stroke="var(--accent)" strokeWidth="2" className="chart-glow-path" />
+                      <line x1="0" y1="25" x2="540" y2="25" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 6" />
+                      <line x1="0" y1="50" x2="540" y2="50" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 6" />
+                      <line x1="0" y1="75" x2="540" y2="75" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 6" />
+                      <path d="M 0,85 C 60,70 110,45 170,60 C 230,75 290,25 360,35 C 430,45 480,15 540,5 L 540,100 L 0,100 Z" fill="url(#pillars-throughput-grad)" />
+                      <path d="M 0,85 C 60,70 110,45 170,60 C 230,75 290,25 360,35 C 430,45 480,15 540,5" fill="none" stroke="var(--accent)" strokeWidth="2.5" className="chart-glow-path" />
                     </svg>
                   </div>
-                </div>
-                <div className="pillars-yield-grid">
-                  {[
-                    { label: 'Data Fidelity', value: '99.9%', sub: 'Ingestion Accuracy' },
-                    { label: 'Latency SLA', value: '<8ms', sub: 'P99 Response' },
-                    { label: 'Throughput', value: '14.8', sub: 'GB/s Peak' },
-                    { label: 'Uptime', value: '99.99%', sub: 'Zero Drift SLA' },
-                  ].map((item, i) => (
-                    <div key={i} className="glass-panel pillars-yield-card">
-                      <div className="pillars-yield-label">{item.label}</div>
-                      <div className="pillars-yield-value accent-highlight">{item.value}</div>
-                      <div className="pillars-yield-sub">{item.sub}</div>
-                    </div>
-                  ))}
                 </div>
               </div>
             </div>
@@ -1639,107 +1624,17 @@ export default function App() {
           {/* Section 4: Performance */}
           <section className="section home-section-performance">
             <div className="home-performance-shell">
-              <div className="performance-split-grid">
-                {/* Left Panel: Enterprise Data Pipeline Throughput Monitor */}
-                <div className="glass-panel throughput-monitor-card">
-                  <div className="throughput-card-header">
-                    <div>
-                      <span className="throughput-tag">TELEMETRY STREAM // PIPELINE THROUGHPUT</span>
-                      <h3 className="throughput-title">Ingestion & Token Vectorization</h3>
+              <div className="performance-yield-only-grid">
+                {pageData.performance?.yieldMetrics?.map((m: any, idx: number) => (
+                  <div key={idx} className="glass-panel yield-metric-card">
+                    <div className="yield-card-top">
+                      <span className="yield-metric-tag">{m.tag}</span>
+                      <div className="yield-metric-value accent-highlight">{m.value}</div>
                     </div>
-                    <div className="throughput-latency-pill">
-                      <Activity size={14} className="neon-icon" />
-                      <span>7.8ms Avg Latency</span>
-                    </div>
+                    <h4 className="yield-metric-label">{m.label}</h4>
+                    <p className="yield-metric-context">{m.context}</p>
                   </div>
-
-                  {/* Top 3 Live Counters */}
-                  <div className="throughput-stats-row">
-                    <div className="throughput-stat-item">
-                      <div className="throughput-stat-label">Stream Ingestion</div>
-                      <div className="throughput-stat-value accent-highlight">14.8 GB/s</div>
-                      <div className="throughput-stat-sub">+34% Peak Capacity</div>
-                    </div>
-                    <div className="throughput-stat-item">
-                      <div className="throughput-stat-label">Vector Tokens</div>
-                      <div className="throughput-stat-value">1.85M /s</div>
-                      <div className="throughput-stat-sub">Zero Ingestion Loss</div>
-                    </div>
-                    <div className="throughput-stat-item">
-                      <div className="throughput-stat-label">Stream Integrity</div>
-                      <div className="throughput-stat-value">99.999%</div>
-                      <div className="throughput-stat-sub">Zero Context Drift</div>
-                    </div>
-                  </div>
-
-                  {/* Dynamic Animated Telemetry SVG Graph */}
-                  <div className="throughput-graph-wrapper">
-                    <svg viewBox="0 0 540 130" className="throughput-svg" preserveAspectRatio="none">
-                      <defs>
-                        <linearGradient id="throughput-glow-grad" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.3" />
-                          <stop offset="60%" stopColor="var(--accent)" stopOpacity="0.08" />
-                          <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
-                        </linearGradient>
-                      </defs>
-
-                      {/* Subtle Grid Lines */}
-                      <line x1="0" y1="32" x2="540" y2="32" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 6" />
-                      <line x1="0" y1="65" x2="540" y2="65" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 6" />
-                      <line x1="0" y1="98" x2="540" y2="98" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 6" />
-
-                      {/* Area Fill */}
-                      <path 
-                        d="M 0,110 C 60,95 110,65 170,80 C 230,95 290,40 360,50 C 430,60 480,25 540,15 L 540,130 L 0,130 Z" 
-                        fill="url(#throughput-glow-grad)" 
-                      />
-
-                      {/* Secondary Flow Line */}
-                      <path 
-                        d="M 0,118 C 70,105 130,85 190,95 C 260,105 320,65 380,75 C 440,85 490,45 540,35" 
-                        fill="none" 
-                        stroke="rgba(138, 157, 248, 0.5)" 
-                        strokeWidth="1.5" 
-                        strokeDasharray="4 4"
-                      />
-
-                      {/* Primary Glowing Pulse Line */}
-                      <path 
-                        d="M 0,110 C 60,95 110,65 170,80 C 230,95 290,40 360,50 C 430,60 480,25 540,15" 
-                        fill="none" 
-                        stroke="var(--accent)" 
-                        strokeWidth="2.5" 
-                        className="throughput-glow-path" 
-                      />
-
-                      {/* Active Pulse Nodes */}
-                      <circle cx="170" cy="80" r="3.5" fill="#8a9df8" />
-                      <circle cx="360" cy="50" r="3.5" fill="var(--accent)" />
-                      <circle cx="540" cy="15" r="5" fill="var(--accent)" filter="drop-shadow(0 0 6px var(--accent))" />
-                    </svg>
-                  </div>
-
-                  <div className="throughput-card-footer">
-                    <Info size={13} className="neon-icon" />
-                    <span>Real-time vector tokenization stream telemetry validated across active node pipelines.</span>
-                  </div>
-                </div>
-
-                {/* Right Panel: 4 Strategic Non-Overlapping Commercial Yield Blocks */}
-                <div className="yield-blocks-container">
-                  <div className="yield-cards-grid">
-                    {pageData.performance?.yieldMetrics?.map((m: any, idx: number) => (
-                      <div key={idx} className="glass-panel yield-metric-card">
-                        <div className="yield-card-top">
-                          <span className="yield-metric-tag">{m.tag}</span>
-                          <div className="yield-metric-value accent-highlight">{m.value}</div>
-                        </div>
-                        <h4 className="yield-metric-label">{m.label}</h4>
-                        <p className="yield-metric-context">{m.context}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </section>
