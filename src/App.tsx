@@ -91,12 +91,39 @@ const FALLBACK_HOME = {
     insightLink: 'Read the full case study',
   },
   performance: {
-    title: 'Internal Hub Performance',
-    metrics: [
-      { label: 'Resolved Queries', value: '12,842', change: '+22.6% vs last 30 days' },
-      { label: 'Resolution Rate', value: '92%', change: '92%' },
-      { label: 'Avg. Handle Time', value: '02:18', change: '+1.3% vs last 30 days' },
+    title: 'Enterprise Data Pipeline Telemetry',
+    subtitle: 'Real-Time Ingestion Throughput & Token Vectorization',
+    throughputMetrics: [
+      { label: 'Stream Ingestion Rate', value: '14.8 GB/s', change: '+34% Peak Capacity' },
+      { label: 'Vector Token Pipeline', value: '1.85M/s', change: 'Sub-8ms Latency' },
+      { label: 'Stream Uptime & Integrity', value: '99.999%', change: 'Zero Context Drift' },
     ],
+    yieldMetrics: [
+      {
+        tag: '01 // OPEX COMPRESSION',
+        value: '42% – 68%',
+        label: 'Operational Overhead Compression',
+        context: 'Direct reduction in repetitive analytical workflows, manual data auditing & support tier overhead within 90 days.'
+      },
+      {
+        tag: '02 // VELOCITY YIELD',
+        value: '85% Faster',
+        label: 'Decision & Cycle Acceleration',
+        context: 'Compression of multi-department contract audits, underwriting, and compliance validation from 14 days down to < 4 hours.'
+      },
+      {
+        tag: '03 // ADOPTION STANDARD',
+        value: '94.6%',
+        label: 'Enterprise Operator Retention',
+        context: 'Sustained daily active adoption across internal operational units, bypassing typical 80% AI pilot abandonment.'
+      },
+      {
+        tag: '04 // CAPITAL RETURN',
+        value: '< 4.5 Months',
+        label: 'Capital Payback Horizon',
+        context: 'Average timeline to achieve 100% breakeven on custom engineering, foundation model integration & runtime deployment.'
+      }
+    ]
   },
 }
 
@@ -265,7 +292,10 @@ export default function App() {
   
   // Single Page Client-side Routing state
   const [slug, setSlug] = useState(() => {
-    const path = window.location.pathname.replace(/^\//, '')
+    let path = window.location.pathname.replace(/^\//, '').replace(/\/$/, '')
+    if (path === 'incubation-kinetic' || path === 'protocol-kinetic') path = 'incubation/kinetic'
+    if (path === 'incubation-apex' || path === 'protocol-apex') path = 'incubation/apex'
+    if (path === 'incubation-citadel' || path === 'protocol-citadel') path = 'incubation/citadel'
     return path || 'home'
   })
 
@@ -314,8 +344,6 @@ export default function App() {
 
   // Count up animated values
   const [displayedUseCaseMetrics, setDisplayedUseCaseMetrics] = useState<string[]>([])
-  const [displayedPerformanceMetrics, setDisplayedPerformanceMetrics] = useState<string[]>([])
-  const [displayedEfficiencyGain, setDisplayedEfficiencyGain] = useState<string>('+0%')
   
   // Modal state
   const [modalOpen, setModalOpen] = useState(false)
@@ -504,13 +532,6 @@ export default function App() {
         return '0'
       }))
     }
-    if (pageData.performance?.metrics) {
-      setDisplayedPerformanceMetrics(pageData.performance.metrics.map((m: any) => {
-        if (m.value.includes(':')) return '00:00'
-        if (m.value.includes('%')) return '0%'
-        return '0'
-      }))
-    }
   }, [pageData])
 
   // Helper to parse metric value details
@@ -570,47 +591,6 @@ export default function App() {
 
     if (activeSection === 3 && !hasLandedOnPerformance) {
       setHasLandedOnPerformance(true)
-      if (pageData.performance?.metrics) {
-        const parsed = pageData.performance.metrics.map((m: any) => {
-          if (m.value.includes(':')) {
-            const parts = m.value.split(':')
-            const totalSec = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10)
-            return { isDuration: true, target: totalSec, prefix: '', suffix: '' }
-          } else {
-            const pm = parseMetric(m.value)
-            return { isDuration: false, target: pm.value, prefix: pm.prefix, suffix: pm.suffix }
-          }
-        })
-        const obj = { val0: 0, val1: 0, val2: 0 }
-        gsap.to(obj, {
-          val0: parsed[0]?.target || 0,
-          val1: parsed[1]?.target || 0,
-          val2: parsed[2]?.target || 0,
-          duration: 2,
-          ease: 'power1.out',
-          onUpdate: () => {
-            const displayValues = pageData.performance.metrics.map((m: any, idx: number) => {
-              const item = parsed[idx]
-              if (!item) return m.value
-              const animatedVal = obj[`val${idx}` as keyof typeof obj]
-              if (item.isDuration) {
-                const totalSecs = Math.round(animatedVal)
-                const mins = Math.floor(totalSecs / 60)
-                const secs = totalSecs % 60
-                return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
-              } else {
-                const roundedVal = Math.round(animatedVal)
-                if (m.value.includes(',')) {
-                  return `${item.prefix}${roundedVal.toLocaleString()}${item.suffix}`
-                }
-                return `${item.prefix}${roundedVal}${item.suffix}`
-              }
-            })
-            setDisplayedPerformanceMetrics(displayValues)
-          }
-        })
-      }
-
       if (performanceClipRectRef.current) {
         gsap.to(performanceClipRectRef.current, {
           width: 500,
@@ -618,16 +598,6 @@ export default function App() {
           ease: 'power1.inOut'
         })
       }
-
-      const bubbleObj = { val: 0 }
-      gsap.to(bubbleObj, {
-        val: 23,
-        duration: 2,
-        ease: 'power1.out',
-        onUpdate: () => {
-          setDisplayedEfficiencyGain(`+${Math.round(bubbleObj.val)}%`)
-        }
-      })
     }
   }, [activeSection, hasLandedOnPillars, hasLandedOnUseCase, hasLandedOnPerformance, pageData, slug])
 
@@ -1635,57 +1605,120 @@ export default function App() {
 
           {/* Section 4: Performance */}
           <section className="section home-section-performance">
-            <div className="performance-grid">
-              <div className="glass-panel home-perf-panel">
-                <h3 className="home-perf-title">
-                  {pageData.performance.title}
-                </h3>
-                
-                <div className="home-perf-metrics-grid">
-                  {pageData.performance.metrics.map((m: any, idx: number) => (
-                    <div key={idx} className="home-perf-metric-card">
-                      <div className="home-perf-metric-lbl">{m.label}</div>
-                      <div className={`home-perf-metric-val ${idx === 1 ? 'accent-highlight' : ''}`}>
-                        {displayedPerformanceMetrics[idx] || m.value}
-                      </div>
-                      <div className="home-perf-metric-chg">{m.change}</div>
-                    </div>
-                  ))}
+            <div className="home-performance-shell">
+              <div className="performance-header-row">
+                <div>
+                  <span className="eyebrow-tagline-green">// REAL-TIME DATA TELEMETRY & YIELD</span>
+                  <h2 className="home-perf-main-title">
+                    Enterprise Data Pipeline Telemetry<span className="brand-dot">.</span>
+                  </h2>
                 </div>
-                
-                <div className="home-perf-footer">
-                  <Info size={12} /> Metric updates are synchronized directly from local dataset pools.
+                <div className="perf-header-badge">
+                  <span className="live-stream-dot"></span>
+                  <span>LIVE INGESTION STREAM</span>
                 </div>
               </div>
 
-              <div className="glass-panel home-perf-panel">
-                <div>
-                  <h3 className="home-perf-trends-title">AI Solution Trends</h3>
-                  <div className="home-perf-trends-subtitle">Operations Score Improvement / Yield Curve</div>
-                </div>
+              <div className="performance-split-grid">
+                {/* Left Panel: Enterprise Data Pipeline Throughput Monitor */}
+                <div className="glass-panel throughput-monitor-card">
+                  <div className="throughput-card-header">
+                    <div>
+                      <span className="throughput-tag">TELEMETRY STREAM // PIPELINE THROUGHPUT</span>
+                      <h3 className="throughput-title">Ingestion & Token Vectorization</h3>
+                    </div>
+                    <div className="throughput-latency-pill">
+                      <Activity size={14} className="neon-icon" />
+                      <span>7.8ms Avg Latency</span>
+                    </div>
+                  </div>
 
-                <div className="home-perf-chart-wrap">
-                  <svg viewBox="0 0 500 100" className="home-perf-chart-svg">
-                    <defs>
-                      <linearGradient id="chart-glow" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.3" />
-                        <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
-                      </linearGradient>
-                      <clipPath id="performance-clip">
-                        <rect x="0" y="0" width="0" height="100" ref={performanceClipRectRef} />
-                      </clipPath>
-                    </defs>
-                    <path d="M0,80 Q75,60 150,80 T300,35 T450,15 L450,100 L0,100 Z" fill="url(#chart-glow)" clipPath="url(#performance-clip)" />
-                    <path d="M0,80 Q75,60 150,80 T300,35 T450,15" fill="none" stroke="var(--accent)" strokeWidth="2.5" className="chart-glow-path" clipPath="url(#performance-clip)" />
-                    <circle cx="450" cy="15" r="4" fill="var(--accent)" />
-                  </svg>
-                  <div className="home-perf-chart-badge">
-                    Efficiency Gains <span className="home-perf-chart-badge-val">{displayedEfficiencyGain}</span>
+                  {/* Top 3 Live Counters */}
+                  <div className="throughput-stats-row">
+                    <div className="throughput-stat-item">
+                      <div className="throughput-stat-label">Stream Ingestion</div>
+                      <div className="throughput-stat-value accent-highlight">14.8 GB/s</div>
+                      <div className="throughput-stat-sub">+34% Peak Capacity</div>
+                    </div>
+                    <div className="throughput-stat-item">
+                      <div className="throughput-stat-label">Vector Tokens</div>
+                      <div className="throughput-stat-value">1.85M /s</div>
+                      <div className="throughput-stat-sub">Zero Ingestion Loss</div>
+                    </div>
+                    <div className="throughput-stat-item">
+                      <div className="throughput-stat-label">Stream Integrity</div>
+                      <div className="throughput-stat-value">99.999%</div>
+                      <div className="throughput-stat-sub">Zero Context Drift</div>
+                    </div>
+                  </div>
+
+                  {/* Dynamic Animated Telemetry SVG Graph */}
+                  <div className="throughput-graph-wrapper">
+                    <svg viewBox="0 0 540 130" className="throughput-svg" preserveAspectRatio="none">
+                      <defs>
+                        <linearGradient id="throughput-glow-grad" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.3" />
+                          <stop offset="60%" stopColor="var(--accent)" stopOpacity="0.08" />
+                          <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
+                        </linearGradient>
+                      </defs>
+
+                      {/* Subtle Grid Lines */}
+                      <line x1="0" y1="32" x2="540" y2="32" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 6" />
+                      <line x1="0" y1="65" x2="540" y2="65" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 6" />
+                      <line x1="0" y1="98" x2="540" y2="98" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 6" />
+
+                      {/* Area Fill */}
+                      <path 
+                        d="M 0,110 C 60,95 110,65 170,80 C 230,95 290,40 360,50 C 430,60 480,25 540,15 L 540,130 L 0,130 Z" 
+                        fill="url(#throughput-glow-grad)" 
+                      />
+
+                      {/* Secondary Flow Line */}
+                      <path 
+                        d="M 0,118 C 70,105 130,85 190,95 C 260,105 320,65 380,75 C 440,85 490,45 540,35" 
+                        fill="none" 
+                        stroke="rgba(138, 157, 248, 0.5)" 
+                        strokeWidth="1.5" 
+                        strokeDasharray="4 4"
+                      />
+
+                      {/* Primary Glowing Pulse Line */}
+                      <path 
+                        d="M 0,110 C 60,95 110,65 170,80 C 230,95 290,40 360,50 C 430,60 480,25 540,15" 
+                        fill="none" 
+                        stroke="var(--accent)" 
+                        strokeWidth="2.5" 
+                        className="throughput-glow-path" 
+                      />
+
+                      {/* Active Pulse Nodes */}
+                      <circle cx="170" cy="80" r="3.5" fill="#8a9df8" />
+                      <circle cx="360" cy="50" r="3.5" fill="var(--accent)" />
+                      <circle cx="540" cy="15" r="5" fill="var(--accent)" filter="drop-shadow(0 0 6px var(--accent))" />
+                    </svg>
+                  </div>
+
+                  <div className="throughput-card-footer">
+                    <Info size={13} className="neon-icon" />
+                    <span>Real-time vector tokenization stream telemetry validated across active node pipelines.</span>
                   </div>
                 </div>
 
-                <div className="home-perf-chart-axis">
-                  <span>Month 1</span><span>Month 2</span><span>Month 3</span><span>Month 4</span><span>Month 5</span><span>Month 6</span>
+                {/* Right Panel: 4 Strategic Non-Overlapping Commercial Yield Blocks */}
+                <div className="yield-blocks-container">
+                  <div className="yield-cards-grid">
+                    {pageData.performance?.yieldMetrics?.map((m: any, idx: number) => (
+                      <div key={idx} className="glass-panel yield-metric-card">
+                        <div className="yield-card-top">
+                          <span className="yield-metric-tag">{m.tag}</span>
+                          <div className="yield-metric-value accent-highlight">{m.value}</div>
+                        </div>
+                        <h4 className="yield-metric-label">{m.label}</h4>
+                        <p className="yield-metric-context">{m.context}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

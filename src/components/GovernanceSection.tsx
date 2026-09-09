@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { submitContactForm } from '../services/contactService';
-import { CheckCircle, CheckCircle2, Shield } from 'lucide-react';
+import { CheckCircle, CheckCircle2, Lock, Layers, Key, Activity, CheckSquare, Cpu, ChevronDown } from 'lucide-react';
 import LinkedInConnect from './LinkedInConnect';
 
 interface StandardItem {
@@ -85,26 +85,32 @@ const standards: StandardItem[] = [
 
 const operationalControls = [
   {
+    icon: <Lock size={20} className="neon-icon gov-control-icon" />,
     title: 'Access Control',
     desc: 'We enforce strict Role-Based Access Control (RBAC) across all systems. Operational access to target environments is provisioned on a per-run basis—strictly neutralizing standing access to live production environments. Every access vector is continuously logged and audited.',
   },
   {
+    icon: <Layers size={20} className="neon-icon gov-control-icon" />,
     title: 'Data Isolation',
     desc: 'Zero commingling. Each client environment is isolated within a dedicated, hardcoded infrastructure perimeter. Cross-tenant data transfer is rendered architecturally impossible at the code level—not merely prohibited by policy.',
   },
   {
+    icon: <Key size={20} className="neon-icon gov-control-icon" />,
     title: 'Encryption',
     desc: 'Every data stream routed through our ecosystem is secured at rest via AES-256 and in motion via TLS 1.3. Cryptographic key management is synchronized to NIST standards, executing automated periodic rotation cycles.',
   },
   {
+    icon: <Activity size={20} className="neon-icon gov-control-icon" />,
     title: 'Incident Response',
     desc: 'We operate a systematic, high-alert incident response framework with automated escalation paths, strict containment SLAs, and instant client telemetry updates. Any detected threat triggers structured logging, immediate countermeasures, and regulatory alignment.',
   },
   {
+    icon: <CheckSquare size={20} className="neon-icon gov-control-icon" />,
     title: 'Vendor Assessment',
     desc: 'Every third-party component introduced to our delivery pipeline must clear rigorous security vetting before deployment. We maintain a strict whitelist of validated integrations and run deep annual compliance audits on all active assets.',
   },
   {
+    icon: <Cpu size={20} className="neon-icon gov-control-icon" />,
     title: 'AI Model Governance',
     desc: 'Every deployed model undergoes an exhaustive pre-launch review—evaluating bias metrics, mapping explainability paths, and validating adversarial failure modes. Active model vectors are continuously monitored in production against locked performance and drift thresholds.',
   },
@@ -156,10 +162,15 @@ export const GovernanceSection: React.FC = () => {
     }
   };
 
+  const scrollToContent = () => {
+    const el = document.getElementById('block-gov');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <>
-      {/* Above-the-Fold Dedicated Hero Section (Strictly 100vh) */}
-      <section id="gov-hero" className="section hero-fullscreen-section">
+      {/* Above-the-Fold Dedicated Hero Section (Centered Viewport with Scroll Prompt) */}
+      <section id="gov-hero" className="section hero-fullscreen-section the-collective-hero">
         <div className="hero-centered-content">
           <div className="eyebrow-tagline-green">
             // ZERO-TRUST COMPLIANCE
@@ -181,6 +192,17 @@ export const GovernanceSection: React.FC = () => {
           <p className="hero-body-copy hero-body-copy-centered">
             We design for high-trust, heavily regulated digital territories. Our governance architecture is compiled directly into our delivery pipelines, from telemetry diagnosis to active deployment.
           </p>
+
+          {/* Animated Scroll Down Indicator */}
+          <button 
+            type="button"
+            className="collective-scroll-prompt"
+            onClick={scrollToContent}
+            aria-label="Scroll to explore boundaries"
+          >
+            <span className="scroll-prompt-text">SCROLL TO EXPLORE BOUNDARIES</span>
+            <ChevronDown size={18} className="neon-icon scroll-prompt-chevron" />
+          </button>
         </div>
       </section>
 
@@ -208,7 +230,7 @@ export const GovernanceSection: React.FC = () => {
                 </div>
                 {s.link ? (
                   <div className="gov-standard-link-wrap">
-<a
+                    <a
                       href={s.link}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -235,7 +257,7 @@ export const GovernanceSection: React.FC = () => {
           <div className="gov-controls-grid">
             {operationalControls.map((c, idx) => (
               <div key={idx} className="glass-panel gov-control-card">
-                <Shield size={20} className="neon-icon gov-control-icon" />
+                {c.icon}
                 <div>
                   <h4 className="gov-control-title">{c.title}</h4>
                   <p className="gov-control-desc">{c.desc}</p>

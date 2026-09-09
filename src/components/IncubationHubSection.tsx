@@ -1,39 +1,94 @@
 import { useState } from 'react';
 import { submitContactForm } from '../services/contactService';
-import { CheckCircle, Cpu, Workflow, Shield, TrendingUp, Zap } from 'lucide-react';
+import { 
+  CheckCircle, 
+  Shield, 
+  TrendingUp, 
+  Zap, 
+  Building2, 
+  Layers, 
+  ArrowRight 
+} from 'lucide-react';
 import LinkedInConnect from './LinkedInConnect';
 
 const tracks = [
   {
     name: 'Architecture to Production',
     tag: 'EARLY-STAGE VENTURE',
+    icon: <Layers size={20} className="neon-icon" />,
     desc: 'Designed for high-conviction teams with early market validation. We embed as full-stack technical co-builders to engineer your AI-native architecture, construct zero-trust data infrastructure, and accelerate initial enterprise buyer deployment.',
-    deliverables: ['Full-Stack Build Execution: Dedicated AI engineering, data architecture, and production UI/UX deployment.', 'Enterprise GTM Protocol: Precision Ideal Customer Profile (ICP) targeting, enterprise pricing design, and pipeline activation.', 'Institutional Capital Access: Pitch architecture calibration and direct introductions to top-tier venture syndicates.', 'Co-Investment Capital: Direct deployment of up to $500K in seed-stage syndicate capital.'],
+    deliverables: [
+      'Full-Stack Build Execution: Dedicated AI engineering, data architecture, and production UI/UX deployment.',
+      'Enterprise GTM Protocol: Precision Ideal Customer Profile (ICP) targeting, enterprise pricing design, and pipeline activation.',
+      'Institutional Capital Access: Pitch architecture calibration and direct introductions to top-tier venture syndicates.',
+      'Co-Investment Capital: Direct deployment of up to $500K in seed-stage syndicate capital.'
+    ],
     duration: '6 MONTHS',
     equity: '15–25%',
   },
   {
     name: 'Systemic Scale and Capture',
     tag: 'INSTITUTIONAL EXPANSION',
+    icon: <TrendingUp size={20} className="neon-icon" />,
     desc: 'Designed for scaling ventures seeking exponential revenue multiplication. We optimize your GTM architecture, deploy enterprise deal-structuring frameworks, and build the scalable RevOps infrastructure required to capture market share and secure Series A valuation multiples.',
-    deliverables: ['Enterprise GTM Architecture: Custom enterprise sales playbooks, procurement navigation protocols, and team enablement.', 'RevOps and Telemetry Infrastructure: Production-grade CRM pipeline architecture, automated forecasting, and data-driven deal tracking.', 'Proprietary Network Distribution: Direct warm routing to decision-makers across Lycos Core\'s enterprise buyer network.', 'Series A Capitalization Protocol: Institutional data-room engineering, financial modeling, and syndicate investor routing.'],
+    deliverables: [
+      'Enterprise GTM Architecture: Custom enterprise sales playbooks, procurement navigation protocols, and team enablement.',
+      'RevOps and Telemetry Infrastructure: Production-grade CRM pipeline architecture, automated forecasting, and data-driven deal tracking.',
+      'Proprietary Network Distribution: Direct warm routing to decision-makers across Lycos Core\'s enterprise buyer network.',
+      'Series A Capitalization Protocol: Institutional data-room engineering, financial modeling, and syndicate investor routing.'
+    ],
     duration: '9 MONTHS',
     equity: '8–15%',
   },
   {
     name: 'Corporate Venture Studio',
     tag: 'INTRAPRENEURIAL VENTURES',
+    icon: <Building2 size={20} className="neon-icon" />,
     desc: 'Engineered for enterprise organizations commercializing proprietary internal AI capabilities into standalone corporate spin-outs. We execute the end-to-end lifecycle—from IP carve-out and technical validation to independent entity formation—systematically de-risking enterprise capital.',
-    deliverables: ['Entity Formation and Corporate Governance: Clean IP carve-outs, independent board structures, and enterprise regulatory compliance protocols.', 'Bespoke Brand Architecture: Autonomous corporate positioning, market go-to-market strategy, and brand execution.', 'Executive Talent Acquisition: Executive search and placement for dedicated, venture-grade founding leadership.', 'Capital Structuring and Equity Design: Institutional capitalization table modeling, enterprise valuation, and management option pool engineering.'],
+    deliverables: [
+      'Entity Formation and Corporate Governance: Clean IP carve-outs, independent board structures, and enterprise regulatory compliance protocols.',
+      'Bespoke Brand Architecture: Autonomous corporate positioning, market go-to-market strategy, and brand execution.',
+      'Executive Talent Acquisition: Executive search and placement for dedicated, venture-grade founding leadership.',
+      'Capital Structuring and Equity Design: Institutional capitalization table modeling, enterprise valuation, and management option pool engineering.'
+    ],
     duration: '12 MONTHS',
     equity: 'BESPOKE',
   },
 ];
 
+const protocols = [
+  {
+    id: 'kinetic',
+    tag: 'ARCHITECTURE TO PRODUCTION',
+    title: 'Kinetic Protocol',
+    icon: <Layers size={24} className="neon-icon" />,
+    desc: 'Full-stack technical co-building for early-stage teams. Zero-trust data infrastructure, rapid PMF validation, and seed syndication.',
+    meta: '6 Months • 15–25% Equity • Up to $500K Syndicate',
+    route: '/incubation/kinetic'
+  },
+  {
+    id: 'apex',
+    tag: 'SYSTEMIC SCALE & CAPTURE',
+    title: 'Apex Protocol',
+    icon: <TrendingUp size={24} className="neon-icon" />,
+    desc: 'Institutional revenue multiplication and RevOps infrastructure. Deal-structuring playbooks, buyer routing, and Series A positioning.',
+    meta: '9 Months • 8–15% Equity • Series A Readiness',
+    route: '/incubation/apex'
+  },
+  {
+    id: 'citadel',
+    tag: 'CORPORATE VENTURE STUDIO',
+    title: 'Citadel Protocol',
+    icon: <Building2 size={24} className="neon-icon" />,
+    desc: 'Commercializing internal enterprise AI IP into autonomous venture spin-outs with clean corporate carve-outs and governance.',
+    meta: '12 Months • Bespoke Terms • Clean IP Carve-Out',
+    route: '/incubation/citadel'
+  }
+];
+
 const portfolio = [
   {
     name: 'SentryFlow',
-    sector: 'Fintech / Compliance',
     stage: 'Seed',
     cohort: '2025-A',
     headline: 'Automated compliance audit software for multi-jurisdiction financial institutions.',
@@ -78,6 +133,12 @@ export default function IncubationHubSection() {
   const [contactSubmitted, setContactSubmitted] = useState(false);
   const [contactLoading, setContactLoading] = useState(false);
   const [contactError, setContactError] = useState<string | null>(null);
+
+  const navigateTo = (path: string) => {
+    window.history.pushState(null, '', path);
+    window.dispatchEvent(new PopStateEvent('popstate'));
+    window.scrollTo(0, 0);
+  };
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -215,207 +276,160 @@ export default function IncubationHubSection() {
               </div>
 
               {/* Metric Label Strictly Underneath */}
-              <span className="hero-gauge-label">
-                Series A Capital Velocity
-              </span>
-
-              <div className="hero-gauge-status">
-                <CheckCircle size={16} className="neon-icon" /> Institutional-Grade Hardening
+              <div className="hero-gauge-label">
+                <div className="integrations-eyebrow">Cohort {portfolio[activePortco].cohort} Benchmark</div>
+                <div className="stat-metric accent-highlight">
+                  {portfolio[activePortco].metric}
+                </div>
+                <p className="service-desc">{portfolio[activePortco].result}</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Below-the-Fold Section: Cohort Performance Stats */}
-      <section id="block-outcomes" className="section">
-        {/* Outcome Stats (Grid of 4 Horizontal Cards) */}
+      {/* Outcome Stats Grid Section */}
+      <section id="block-outcomes" className="section outcome-stats-section">
+        <div className="section-header-centered">
+          <div className="eyebrow-tagline-green">// VALIDATED PERFORMANCE METRICS</div>
+          <h2 className="section-title">Institutional Acceleration Yield<span className="accent-dot">.</span></h2>
+        </div>
         <div className="outcome-stats-grid">
-          {stats.map((s, idx) => (
-            <div key={idx} className="baseline-card outcome-stat-card">
-              <div className="count-up-trigger stat-metric stat-metric-green" data-target={s.value.replace(/[^0-9.]/g, '')} data-percent={s.value.includes('%')}>
-                {s.value}
+          {stats.map((st, sIdx) => (
+            <div key={sIdx} className="glass-panel outcome-stat-card">
+              <div className="outcome-stat-top">
+                <div className="icon-badge">{st.icon}</div>
+                <div className="outcome-stat-val accent-highlight">{st.value}</div>
               </div>
-              <div className="stat-label">{s.label}</div>
+              <p className="outcome-stat-desc">{st.label}</p>
             </div>
           ))}
         </div>
+      </section>
 
-        {/* Programme Tracks Selector Section */}
-        <div className="section-content-wrapper">
-          <div className="section-header-center">
-            <h2 className="section-title">
-              Structured <span className="brand-dot">Pathways.</span>
-            </h2>
-            <p className="section-desc">
-              Architected for stage-specific execution—deploying targeted technical capital from initial validation through enterprise capitalization.
-            </p>
+      {/* Structured Incubation Pathways Section */}
+      <section id="block-pathways" className="section structured-pathways-section">
+        <div className="section-header-centered">
+          <div className="eyebrow-tagline-green">// PROGRAM ARCHITECTURE</div>
+          <h2 className="section-title">Structured Incubation Pathways<span className="accent-dot">.</span></h2>
+        </div>
+
+        {/* Pathway Tabs */}
+        <div className="pathway-tabs-row">
+          {tracks.map((t, idx) => (
+            <button
+              key={idx}
+              className={`pathway-tab-btn ${activeTrack === idx ? 'active' : ''}`}
+              onClick={() => setActiveTrack(idx)}
+            >
+              {t.icon}
+              <span>{t.name}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Active Pathway Detail Card */}
+        <div className="glass-panel pathway-detail-card">
+          <div className="pathway-detail-header">
+            <div>
+              <span className="pathway-tag">{tracks[activeTrack].tag}</span>
+              <h3 className="pathway-name">{tracks[activeTrack].name}</h3>
+            </div>
+            <div className="pathway-meta-badges">
+              <span className="pathway-meta-pill">DURATION: {tracks[activeTrack].duration}</span>
+              <span className="pathway-meta-pill">EQUITY: {tracks[activeTrack].equity}</span>
+            </div>
           </div>
+          <p className="pathway-desc">{tracks[activeTrack].desc}</p>
           
-          <div className="services-split-grid">
-            <div className="services-nav-list">
-              {tracks.map((t, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveTrack(idx)}
-                  className={`baseline-card service-nav-btn ${activeTrack === idx ? 'active' : ''}`}
-                >
-                  <div className="service-title-wrap">
-                    <div className="icon-badge">
-                      <Cpu size={20} className="neon-icon" />
-                    </div>
-                    <span className="service-title-text">{t.name}</span>
-                  </div>
-                  <div className="service-summary-text">{t.tag}</div>
-                </button>
-              ))}
-            </div>
-
-            <div className="baseline-card service-detail-panel">
-              <div>
-                <div className="service-icon-badge">
-                  <div className="icon-badge">
-                    <Cpu size={20} className="neon-icon" />
-                  </div>
-                </div>
-                <h4 className="service-heading">{tracks[activeTrack].name}</h4>
-                <div className="hero-tags-row">
-                  <span className="hero-pill-badge">DURATION: {tracks[activeTrack].duration}</span>
-                  <span className="hero-pill-badge">EQUITY: {tracks[activeTrack].equity}</span>
-                </div>
-                <p className="service-desc">{tracks[activeTrack].desc}</p>
+          <div className="pathway-deliverables-header">Key Protocol Deliverables:</div>
+          <div className="pathway-deliverables-grid">
+            {tracks[activeTrack].deliverables.map((d, dIdx) => (
+              <div key={dIdx} className="pathway-deliverable-item">
+                <CheckCircle size={18} className="neon-icon deliverable-icon" />
+                <span>{d}</span>
               </div>
-              <div className="service-impact-divider">
-                <div className="service-impact-title">PROGRAMME DELIVERABLES</div>
-                <div className="service-impact-list">
-                  {tracks[activeTrack].deliverables.map((d, i) => (
-                    <div key={i} className="service-impact-item">
-                      <CheckCircle size={16} className="neon-icon" /> {d}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Select Protocol Pathways (Grid of 3 Horizontal Cards) */}
-      <section className="section">
-        <div className="section-header-center">
-          <h2 className="section-title">
-            Select <span className="brand-dot">Protocol.</span>
-          </h2>
-          <p className="section-desc">
-            Tailored venture incubation tracks engineered to scale early-stage AI startups, optimize revenue infrastructure, and govern high-yield enterprise spin-outs.
-          </p>
-        </div>
-
-        <div className="grid-3col">
-          {/* Card 1: Protocol Kinetic */}
-          <a 
-            href="/incubation/kinetic" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="pathway-card group"
-          >
-            <div className="icon-badge">
-              <Cpu size={22} className="neon-icon" />
-            </div>
-            <span className="pathway-tag">
-              PATHWAY 01 // SEED and PRE-SEED
-            </span>
-            <h3 className="pathway-title">
-              Protocol: Kinetic
-            </h3>
-            <p className="pathway-desc">
-              Technical Co-Building and Zero-State Architecture for Seed-Stage AI.
-            </p>
-          </a>
-
-          {/* Card 2: Protocol Apex */}
-          <a 
-            href="/incubation/apex" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="pathway-card group"
-          >
-            <div className="icon-badge">
-              <Workflow size={22} className="neon-icon" />
-            </div>
-            <span className="pathway-tag">
-              PATHWAY 02 // SERIES A READINESS
-            </span>
-            <h3 className="pathway-title">
-              Protocol: Apex
-            </h3>
-            <p className="pathway-desc">
-              Systemic Revenue Engineering and RevOps Telemetry ($250K+ ARR).
-            </p>
-          </a>
-
-          {/* Card 3: Protocol Citadel */}
-          <a 
-            href="/incubation/citadel" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="pathway-card group"
-          >
-            <div className="icon-badge">
-              <Shield size={22} className="neon-icon" />
-            </div>
-            <span className="pathway-tag">
-              PATHWAY 03 // ENTERPRISE SPIN-OUTS
-            </span>
-            <h3 className="pathway-title">
-              Protocol: Citadel
-            </h3>
-            <p className="pathway-desc">
-              IP Carve-Outs and High-Yield Enterprise Spin-Out Governance.
-            </p>
-          </a>
-        </div>
-      </section>
-
-      {/* Active Incubation Assets (Portfolio Selector) */}
-      <section className="section">
-        <div className="section-header-center">
-          <h2 className="section-title">
-            Incubation <span className="brand-dot">Assets.</span>
-          </h2>
-          <p className="section-desc">
-            High-growth AI ventures engineered in partnership with Lycos Core—and their operational milestones.
-          </p>
-        </div>
-
-        <div className="section-content-wrapper">
-          <div className="hero-tags-row">
-            {portfolio.map((p, idx) => (
-              <button
-                key={idx}
-                onClick={() => setActivePortco(idx)}
-                className={`integration-chip ${activePortco === idx ? 'active' : ''}`}
-              >
-                {p.name}
-              </button>
             ))}
           </div>
 
-          <div className="baseline-card service-detail-panel portfolio-detail-card">
-            <div>
-              <div className="hero-tags-row">
-                <span className="hero-pill-badge">{portfolio[activePortco].sector}</span>
-                <span className="hero-pill-badge">{portfolio[activePortco].stage}</span>
+          <div className="pathway-card-footer">
+            <button 
+              className="cta-primary"
+              onClick={() => {
+                const el = document.getElementById('contact');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              APPLY FOR THIS TRACK
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Select Protocol Deep-Dive Cards */}
+      <section id="block-protocols" className="section protocol-cards-section">
+        <div className="section-header-centered">
+          <div className="eyebrow-tagline-green">// PROTOCOL DIRECTORY</div>
+          <h2 className="section-title">Select Incubation Protocol<span className="accent-dot">.</span></h2>
+          <p className="section-sub">Direct access to specialized venture acceleration playbooks and governance frameworks.</p>
+        </div>
+
+        <div className="incubation-protocol-grid">
+          {protocols.map((p, idx) => (
+            <div key={idx} className="glass-panel incubation-protocol-card">
+              <div className="protocol-card-head">
+                <div className="icon-badge">{p.icon}</div>
+                <span className="protocol-badge-tag">{p.tag}</span>
               </div>
-              <h4 className="service-heading">{portfolio[activePortco].name}</h4>
-              <p className="service-desc">{portfolio[activePortco].headline}</p>
+              <h3 className="protocol-card-title">{p.title}</h3>
+              <p className="protocol-card-desc">{p.desc}</p>
+              <div className="protocol-card-meta">{p.meta}</div>
+              <button 
+                className="cta-secondary protocol-action-btn"
+                onClick={() => navigateTo(p.route)}
+              >
+                <span>INITIALIZE PROTOCOL</span>
+                <ArrowRight size={16} className="neon-icon" />
+              </button>
             </div>
-            <div className="portfolio-metrics-col">
-              <div className="integrations-eyebrow">Cohort {portfolio[activePortco].cohort} Result</div>
-              <div className="count-up-trigger stat-metric" data-target={portfolio[activePortco].metric.replace(/[^0-9.]/g, '')}>
-                {portfolio[activePortco].metric}
+          ))}
+        </div>
+      </section>
+
+      {/* Incubation Portfolio Explorer */}
+      <section id="block-portfolio" className="section portfolio-explorer-section">
+        <div className="section-header-centered">
+          <div className="eyebrow-tagline-green">// PROVEN DEPLOYMENTS</div>
+          <h2 className="section-title">Portfolio Cohort Milestones<span className="accent-dot">.</span></h2>
+        </div>
+
+        <div className="portfolio-tabs-row">
+          {portfolio.map((p, idx) => (
+            <button
+              key={idx}
+              className={`portfolio-tab-btn ${activePortco === idx ? 'active' : ''}`}
+              onClick={() => setActivePortco(idx)}
+            >
+              <span className="portco-tab-name">{p.name}</span>
+              <span className="portco-tab-stage">{p.stage}</span>
+            </button>
+          ))}
+        </div>
+
+        <div className="glass-panel portfolio-active-card">
+          <div className="portfolio-card-grid">
+            <div>
+              <div className="portfolio-meta-row">
+                <span className="portfolio-cohort-badge">Cohort {portfolio[activePortco].cohort}</span>
+                <span className="portfolio-stage-badge">{portfolio[activePortco].stage} Stage</span>
               </div>
-              <p className="service-desc">{portfolio[activePortco].result}</p>
+              <h3 className="portfolio-headline">{portfolio[activePortco].headline}</h3>
+              <p className="portfolio-result">{portfolio[activePortco].result}</p>
+            </div>
+            <div className="portfolio-metric-box">
+              <span className="portfolio-metric-label">Key Growth Metric</span>
+              <div className="portfolio-metric-value accent-highlight">{portfolio[activePortco].metric}</div>
+              <span className="portfolio-metric-verified">✓ Telemetry Verified</span>
             </div>
           </div>
         </div>

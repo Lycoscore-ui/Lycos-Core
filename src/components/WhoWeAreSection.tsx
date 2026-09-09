@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { submitContactForm } from '../services/contactService';
-import { CheckCircle, CheckCircle2, Cpu, Settings, Layers, Terminal, ClipboardList, Target, Shield, TrendingUp } from 'lucide-react';
+import { CheckCircle, CheckCircle2, Cpu, Settings, Layers, Terminal, ClipboardList, Target, Shield, TrendingUp, ChevronDown } from 'lucide-react';
 import LinkedInConnect from './LinkedInConnect';
 
 const disciplines = [
@@ -63,11 +63,11 @@ const stats = [
 
 const leadershipTeam = [
   {
-    name: 'Alexander Vance',
-    role: 'Chief Systems Architect',
+    name: 'Akira Wolf',
+    role: 'Founder & Chief Systems Architect',
     bio: 'Pioneered zero-trust cognitive architectures and high-throughput vector pipelines for multinational financial institutions and tier-1 intelligence infrastructures.',
-    linkedin: 'https://www.linkedin.com/company/lycos-core',
-    avatar: 'AV'
+    linkedin: 'https://www.linkedin.com/in/akira-wolf-5284a4435/',
+    avatar: 'AW'
   },
   {
     name: 'Marcus Reid',
@@ -122,10 +122,15 @@ export const WhoWeAreSection: React.FC = () => {
     }
   };
 
+  const scrollToContent = () => {
+    const el = document.getElementById('block-unit');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <>
-      {/* Above-the-Fold Dedicated Hero Section (Strictly 100vh) */}
-      <section id="who-hero" className="section hero-fullscreen-section">
+      {/* Above-the-Fold Dedicated Hero Section (Centered Viewport with Scroll Prompt) */}
+      <section id="who-hero" className="section hero-fullscreen-section the-collective-hero">
         <div className="hero-centered-content">
           <div className="eyebrow-tagline-green">
             // SYSTEMIC EXPERTISE
@@ -147,6 +152,17 @@ export const WhoWeAreSection: React.FC = () => {
           <p className="hero-body-copy hero-body-copy-centered">
             Lycos Core is a highly coordinated collective of AI engineers, system architects, and seasoned deployment specialists. We design, harden, and execute machine intelligence within the world's most complex, heavily regulated digital environments.
           </p>
+
+          {/* Animated Scroll Down Indicator */}
+          <button 
+            type="button"
+            className="collective-scroll-prompt"
+            onClick={scrollToContent}
+            aria-label="Scroll to explore intel"
+          >
+            <span className="scroll-prompt-text">SCROLL TO EXPLORE INTEL</span>
+            <ChevronDown size={18} className="neon-icon scroll-prompt-chevron" />
+          </button>
         </div>
       </section>
 

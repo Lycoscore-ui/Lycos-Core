@@ -1,6 +1,6 @@
 import { submitContactForm } from '../services/contactService';
 import { useState } from 'react';
-import { CheckCircle2, Cpu, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { CheckCircle2, ShieldCheck, Zap, Layers, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { useRegion } from '../context/RegionContext';
 import LinkedInConnect from '../components/LinkedInConnect';
 
@@ -28,16 +28,19 @@ export default function ProtocolKinetic() {
 
   const pillars = [
     {
+      icon: <ShieldCheck size={20} className="neon-icon" />,
       tag: '01 // ZERO-TRUST DATA ARCHITECTURE',
       title: 'Data Security and Privacy',
       body: 'Data pipeline security, vector database indexing, privacy enclaves, and SOC2/HIPAA compliance readiness to satisfy strict enterprise requirements.',
     },
     {
+      icon: <Zap size={20} className="neon-icon" />,
       tag: '02 // MODEL and INFERENCE ORCHESTRATION',
       title: 'Optimization and Cost Control',
       body: 'Latency optimization, custom fine-tuning, token cost reduction, and fail-safe routing designed for mission-critical production reliability.',
     },
     {
+      icon: <Layers size={20} className="neon-icon" />,
       tag: '03 // ENTERPRISE INTERFACE and UI/UX',
       title: 'High-Performance Design',
       body: 'High-performance, clinical software interfaces designed for rapid operator onboarding, high user retention, and enterprise buyer adoption.',
@@ -213,7 +216,7 @@ export default function ProtocolKinetic() {
           <div className="protocol-disciplines-grid-3">
             {pillars.map((p, i) => (
               <div key={i} className="glass-panel who-discipline-card">
-                <div className="icon-badge"><Cpu size={20} className="neon-icon" /></div>
+                <div className="icon-badge">{p.icon}</div>
                 <div>
                   <div className="eyebrow-tagline">{p.tag}</div>
                   <h4 className="who-discipline-title">{p.title}</h4>
@@ -259,66 +262,123 @@ export default function ProtocolKinetic() {
 
         {/* FAQs */}
         <div className="who-unit-section-block">
-          <div className="eyebrow-tagline">// PROTOCOL TELEMETRY and FAQS</div>
-          <h3 className="service-heading">Common Questions<span className="brand-dot">.</span></h3>
-          <div className="faq-accordion">
-            {faqs.map((faq, idx) => (
-              <div key={idx} className="faq-item">
-                <button className="faq-question-btn" onClick={() => toggleFaq(idx)}>
-                  <span>{faq.q}</span>
-                  {activeFaq === idx ? <ChevronUp size={18} className="neon-icon" /> : <ChevronDown size={18} className="neon-icon" />}
+          <div className="eyebrow-tagline">// FREQUENTLY ASKED QUESTIONS</div>
+          <h3 className="service-heading">Protocol Parameters<span className="brand-dot">.</span></h3>
+          <div className="protocol-faq-list">
+            {faqs.map((f, i) => (
+              <div key={i} className="glass-panel who-faq-card">
+                <button
+                  className="who-faq-question-row"
+                  onClick={() => toggleFaq(i)}
+                >
+                  <span className="who-faq-question-text">{f.q}</span>
+                  {activeFaq === i ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                 </button>
-                {activeFaq === idx && <div className="faq-answer">{faq.a}</div>}
+                {activeFaq === i && (
+                  <p className="who-faq-answer-text">{f.a}</p>
+                )}
               </div>
             ))}
           </div>
         </div>
-      </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="section hero-fullscreen-section">
-        <div className="contact-grid">
+        {/* Application Form & Contact Matrix */}
+        <div id="contact" className="contact-grid">
           <div className="glass-panel contact-card">
-            <h3 className="service-heading">Initialize Protocol: Kinetic<span className="brand-dot">.</span></h3>
+            <h3 className="service-heading">
+              Apply for Protocol: Kinetic
+            </h3>
+
             {formSubmitted ? (
               <div className="hero-gauge-status">
-                <CheckCircle2 size={48} className="neon-icon" />
-                <h4>Protocol Initialized</h4>
-                <p>Your technical submission has been received. Our systems unit will reach out to analyze your codebase architecture.</p>
+                <CheckCircle size={48} className="neon-icon" />
+                <h4>Application Received</h4>
+                <p>Our technical team will review your application and respond within 48 hours.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="contact-form">
                 <div>
-                  <label className="contact-label">Founder Name</label>
-                  <input type="text" name="founderName" required value={formData.founderName} onChange={handleInputChange} className="contact-input" placeholder="e.g. Dr. Helen Vance" />
+                  <label className="contact-label">Founder / Technical Lead Name</label>
+                  <input
+                    type="text"
+                    name="founderName"
+                    required
+                    value={formData.founderName}
+                    onChange={handleInputChange}
+                    className="contact-input"
+                    placeholder="e.g. Alex Morgan"
+                  />
                 </div>
+
                 <div>
-                  <label className="contact-label">Founder Email Address</label>
-                  <input type="email" name="email" required value={formData.email} onChange={handleInputChange} className="contact-input" placeholder="e.g. helen@sentryflow.io" />
+                  <label className="contact-label">Direct Work Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="contact-input"
+                    placeholder="alex@venture.ai"
+                  />
                 </div>
+
                 <div>
-                  <label className="contact-label">Company Name</label>
-                  <input type="text" name="companyName" required value={formData.companyName} onChange={handleInputChange} className="contact-input" placeholder="e.g. SentryFlow" />
+                  <label className="contact-label">Company / Venture Name</label>
+                  <input
+                    type="text"
+                    name="companyName"
+                    required
+                    value={formData.companyName}
+                    onChange={handleInputChange}
+                    className="contact-input"
+                    placeholder="e.g. SentryFlow Systems"
+                  />
                 </div>
+
                 <div>
-                  <label className="contact-label">Link to Code Repo or Demo</label>
-                  <input type="text" name="codeRepo" value={formData.codeRepo} onChange={handleInputChange} className="contact-input" placeholder="e.g. github.com/sentryflow" />
+                  <label className="contact-label">Model Architecture / Stack Overview</label>
+                  <textarea
+                    name="modelArchitecture"
+                    value={formData.modelArchitecture}
+                    onChange={handleInputChange}
+                    className="contact-textarea"
+                    placeholder="Briefly describe your model stack, embeddings, database, and infrastructure..."
+                  />
                 </div>
+
                 <div>
-                  <label className="contact-label">Model Architecture Description</label>
-                  <textarea name="modelArchitecture" value={formData.modelArchitecture} onChange={handleInputChange} className="contact-textarea" placeholder="Briefly describe your foundation model base, parameters, or vector pipelines." />
+                  <label className="contact-label">Current Traction / Enterprise Pilots</label>
+                  <input
+                    type="text"
+                    name="currentTraction"
+                    value={formData.currentTraction}
+                    onChange={handleInputChange}
+                    className="contact-input"
+                    placeholder="e.g. 2 LOIs signed, beta testing with 500 users"
+                  />
                 </div>
+
                 <div>
-                  <label className="contact-label">Current Traction / Milestones</label>
-                  <textarea name="currentTraction" value={formData.currentTraction} onChange={handleInputChange} className="contact-textarea" placeholder="Summarize validation results, client pilots, or active metrics." />
+                  <label className="contact-label">Code Repository / Demo Link (Optional)</label>
+                  <input
+                    type="text"
+                    name="codeRepo"
+                    value={formData.codeRepo}
+                    onChange={handleInputChange}
+                    className="contact-input"
+                    placeholder="https://github.com/... or loom.com/..."
+                  />
                 </div>
+
                 {formError && (
                   <div style={{ color: '#ef4444', fontSize: '0.85rem', marginBottom: '0.75rem', fontFamily: 'monospace' }}>
                     {formError}
                   </div>
                 )}
+
                 <button type="submit" className="cta-primary contact-submit-btn" disabled={formLoading}>
-                  {formLoading ? 'TRANSMITTING...' : 'INITIALIZE INCUBATION PROTOCOL'}
+                  {formLoading ? 'TRANSMITTING...' : 'INITIALIZE PROTOCOL APPLICATION'}
                 </button>
               </form>
             )}
@@ -326,10 +386,12 @@ export default function ProtocolKinetic() {
 
           <div className="hero-gauge-wrapper">
             <div className="contact-card">
-              <h3 className="hero-heading">Deploy Direct Technical Capital<span className="brand-dot">.</span></h3>
+              <h3 className="hero-heading">Venture Architecture Consult</h3>
               <p className="hero-body-copy">
-                Begin technical co-building alignment. Our embedded engineering units operate directly inside your codebase to eliminate infrastructure debt and accelerate production deployment.
+                Directly interface with our venture co-builders. We evaluate seed-stage model defensibility, infrastructure scalings, and capital velocity parameters.
               </p>
+              
+              {/* Official LinkedIn Social Link */}
               <LinkedInConnect />
             </div>
           </div>

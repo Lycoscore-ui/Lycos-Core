@@ -1,6 +1,6 @@
 import { submitContactForm } from '../services/contactService';
 import { useState } from 'react';
-import { CheckCircle2, Workflow, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { CheckCircle2, BarChart3, FileCheck, Coins, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { useRegion } from '../context/RegionContext';
 import LinkedInConnect from '../components/LinkedInConnect';
 
@@ -28,16 +28,19 @@ export default function ProtocolApex() {
 
   const pillars = [
     {
+      icon: <BarChart3 size={20} className="neon-icon" />,
       tag: '01 // REVOPS and TELEMETRY INFRASTRUCTURE',
       title: 'Pipeline Telemetry',
       body: 'Production-grade CRM pipeline architecture, automated forecasting, usage-based billing telemetry, and real-time ACV/NDR analytics.',
     },
     {
+      icon: <FileCheck size={20} className="neon-icon" />,
       tag: '02 // ENTERPRISE PROCUREMENT NAVIGATION',
       title: 'Procurement and MSAs',
       body: 'Security questionnaire automation, standardized legal MSA/SLA frameworks, enterprise tier pricing, and vendor risk clearance protocols.',
     },
     {
+      icon: <Coins size={20} className="neon-icon" />,
       tag: '03 // SYNDICATE CAPITALIZATION ENGINE',
       title: 'Capital Strategy',
       body: 'Financial model auditing, cohort analysis, institutional data-room engineering, and targeted Series A LP/VC mapping models.',
@@ -58,29 +61,29 @@ export default function ProtocolApex() {
     {
       tag: 'PHASE 03 // MONTHS 7-9',
       title: 'Series A Capitalization Run',
-      body: 'Harden financial models, assemble secure institutional data rooms, and launch targeted Series A capitalization campaigns.',
+      body: 'Engage top-tier lead investors with audited telemetry, institutional data room, and coordinated partner pitches.',
     },
   ];
 
   const deliverables = [
-    'RevOps System Setup and CRM Telemetry',
-    'Procurement and Deal Structuring Playbooks',
-    'Warm Buyer Introductions and Channel Routing',
-    'Series A Syndicate LP/VC Investor Mapping',
+    'Enterprise GTM Architecture',
+    'RevOps and Telemetry Infrastructure',
+    'Proprietary Network Distribution',
+    'Series A Capitalization Protocol',
   ];
 
   const faqs = [
     {
-      q: 'What are the $250K ARR entry requirements?',
-      a: 'We require a verified run-rate of $250K+ ARR. This demonstrates initial product-market validation and ensures that our revenue engineering mechanisms can immediately be applied to scaling, rather than discovering initial customer demand.',
+      q: 'Criteria for Apex Protocol qualification?',
+      a: `Ventures must show demonstrated initial PMF with a minimum ARR threshold of ${country.symbol}250K+ (or equivalent pilot volume) and a live, deployed software architecture.`,
     },
     {
-      q: 'Does Apex assist directly with enterprise deal closure?',
-      a: 'Yes. Our senior corporate developers and advisors embed within your pipeline to navigate procurement hurdles, security reviews, and MSA/SLA negotiations, accelerating time-to-close by up to 60%.',
+      q: 'Do you take equity or cash fees?',
+      a: 'We align purely on equity (8–15%) alongside performance-linked milestone incentives, ensuring zero misalignment with existing cap table shareholders.',
     },
     {
-      q: 'What does the Series A capitalization protocol involve?',
-      a: 'We build your institutional data room from scratch—auditing financial models, preparing cohort analyses, and structuring mapping matrices to align your venture with the exact investment thesis of top-tier Series A venture capital firms.',
+      q: 'What does warm routing into the Lycos buyer network entail?',
+      a: 'We provide direct, vetted warm introductions to VP and C-level decision-makers across our enterprise consulting and institutional client roster.',
     },
   ];
 
@@ -97,10 +100,10 @@ export default function ProtocolApex() {
     setFormError(null);
 
     const fullMessage = [
-      `Venture: ${formData.ventureName}`,
-      `Current ARR: ${formData.currentArr}`,
-      formData.gtmBottleneck ? `GTM Bottleneck / ACV: ${formData.gtmBottleneck}` : '',
-      formData.targetSeriesADate ? `Target Series A Date: ${formData.targetSeriesADate}` : ''
+      `Venture Name: ${formData.ventureName}`,
+      formData.currentArr ? `Current ARR: ${formData.currentArr}` : '',
+      formData.targetSeriesADate ? `Target Series A Date: ${formData.targetSeriesADate}` : '',
+      formData.gtmBottleneck ? `GTM Bottlenecks: ${formData.gtmBottleneck}` : ''
     ].filter(Boolean).join('\n\n');
 
     const res = await submitContactForm({
@@ -108,7 +111,7 @@ export default function ProtocolApex() {
       email: formData.email,
       company: formData.ventureName,
       message: fullMessage,
-      serviceContext: 'Protocol: Apex (Scale & Series A Acceleration)'
+      serviceContext: 'Protocol: Apex (Scale & Institutional Capture)'
     });
 
     setFormLoading(false);
@@ -134,20 +137,20 @@ export default function ProtocolApex() {
         <div className="hero-grid">
           <div>
             <div className="eyebrow-tagline-green">
-              // INCUBATION PROTOCOL // SERIES A AND SCALE
+              // INCUBATION PROTOCOL // REVENUE SCALE & CAPTURE
             </div>
             <h1 className="hero-heading">
               Protocol: Apex<span className="brand-dot">.</span>
             </h1>
 
             <div className="hero-tags-row">
-              {['Series A Readiness', 'RevOps Engine', '9-Month Horizon'].map((tag, i) => (
+              {['Series A Acceleration', 'Enterprise GTM', '9-Month Horizon'].map((tag, i) => (
                 <span key={i} className="hero-pill-badge">{tag}</span>
               ))}
             </div>
 
             <p className="hero-body-copy">
-              Systemic Revenue Engineering for Scaling Enterprise Operations. Protocol: Apex equips post-revenue AI ventures with high-velocity GTM engines and RevOps telemetry to compress procurement cycles and command top-tier Series A valuation multiples.
+              For post-revenue ventures ready to capture institutional market share. We deploy enterprise GTM playbooks, streamline complex procurement cycles, and architect high-conviction Series A capitalization rounds.
             </p>
 
             <div className="subpage-hero-cta-row">
@@ -162,11 +165,11 @@ export default function ProtocolApex() {
 
           <div className="hero-gauge-wrapper">
             <div className="baseline-card hero-gauge-card">
-              <span className="hero-gauge-tag">// PATHWAY 02 // SERIES A READINESS</span>
+              <span className="hero-gauge-tag">// PATHWAY 02 // SCALE & CAPTURE</span>
               <div className="hero-gauge-svg-container">
                 <svg width="100%" height="100%" viewBox="0 0 100 100">
                   <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="8" />
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="#8CFF32" strokeWidth="8" strokeDasharray="251.2" strokeDashoffset="63" strokeLinecap="round" />
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="#8CFF32" strokeWidth="8" strokeDasharray="251.2" strokeDashoffset="0" strokeLinecap="round" />
                 </svg>
                 <div className="hero-gauge-number-wrap">
                   <span className="stat-metric">9mo</span>
@@ -174,7 +177,7 @@ export default function ProtocolApex() {
               </div>
               <span className="hero-gauge-label">Engagement Horizon</span>
               <div className="hero-gauge-status">
-                <CheckCircle2 size={16} className="neon-icon" /> Revenue Stage Verified
+                <CheckCircle2 size={16} className="neon-icon" /> Systems Fully Operational
               </div>
             </div>
           </div>
@@ -213,7 +216,7 @@ export default function ProtocolApex() {
           <div className="protocol-disciplines-grid-3">
             {pillars.map((p, i) => (
               <div key={i} className="glass-panel who-discipline-card">
-                <div className="icon-badge"><Workflow size={20} className="neon-icon" /></div>
+                <div className="icon-badge">{p.icon}</div>
                 <div>
                   <div className="eyebrow-tagline">{p.tag}</div>
                   <h4 className="who-discipline-title">{p.title}</h4>
@@ -259,66 +262,123 @@ export default function ProtocolApex() {
 
         {/* FAQs */}
         <div className="who-unit-section-block">
-          <div className="eyebrow-tagline">// PROTOCOL TELEMETRY and FAQS</div>
-          <h3 className="service-heading">Common Questions<span className="brand-dot">.</span></h3>
-          <div className="faq-accordion">
-            {faqs.map((faq, idx) => (
-              <div key={idx} className="faq-item">
-                <button className="faq-question-btn" onClick={() => toggleFaq(idx)}>
-                  <span>{faq.q}</span>
-                  {activeFaq === idx ? <ChevronUp size={18} className="neon-icon" /> : <ChevronDown size={18} className="neon-icon" />}
+          <div className="eyebrow-tagline">// FREQUENTLY ASKED QUESTIONS</div>
+          <h3 className="service-heading">Protocol Parameters<span className="brand-dot">.</span></h3>
+          <div className="protocol-faq-list">
+            {faqs.map((f, i) => (
+              <div key={i} className="glass-panel who-faq-card">
+                <button
+                  className="who-faq-question-row"
+                  onClick={() => toggleFaq(i)}
+                >
+                  <span className="who-faq-question-text">{f.q}</span>
+                  {activeFaq === i ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                 </button>
-                {activeFaq === idx && <div className="faq-answer">{faq.a}</div>}
+                {activeFaq === i && (
+                  <p className="who-faq-answer-text">{f.a}</p>
+                )}
               </div>
             ))}
           </div>
         </div>
-      </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="section hero-fullscreen-section">
-        <div className="contact-grid">
+        {/* Application Form & Contact Matrix */}
+        <div id="contact" className="contact-grid">
           <div className="glass-panel contact-card">
-            <h3 className="service-heading">Initialize Protocol: Apex<span className="brand-dot">.</span></h3>
+            <h3 className="service-heading">
+              Apply for Protocol: Apex
+            </h3>
+
             {formSubmitted ? (
               <div className="hero-gauge-status">
-                <CheckCircle2 size={48} className="neon-icon" />
-                <h4>Protocol Initialized</h4>
-                <p>Your venture submission has been received. Our revenue operations lead will contact you to perform a telemetry audit.</p>
+                <CheckCircle size={48} className="neon-icon" />
+                <h4>Application Received</h4>
+                <p>Our capital and GTM leads will review your metrics and respond within 48 hours.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="contact-form">
                 <div>
-                  <label className="contact-label">Executive Name</label>
-                  <input type="text" name="executiveName" required value={formData.executiveName} onChange={handleInputChange} className="contact-input" placeholder="e.g. Marcus Vance" />
+                  <label className="contact-label">Executive / Founder Name</label>
+                  <input
+                    type="text"
+                    name="executiveName"
+                    required
+                    value={formData.executiveName}
+                    onChange={handleInputChange}
+                    className="contact-input"
+                    placeholder="e.g. Jordan Lee"
+                  />
                 </div>
+
                 <div>
-                  <label className="contact-label">Executive Email Address</label>
-                  <input type="email" name="email" required value={formData.email} onChange={handleInputChange} className="contact-input" placeholder="e.g. marcus@omnicore.ai" />
+                  <label className="contact-label">Direct Work Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="contact-input"
+                    placeholder="jordan@growthventure.ai"
+                  />
                 </div>
+
                 <div>
-                  <label className="contact-label">Venture Name</label>
-                  <input type="text" name="ventureName" required value={formData.ventureName} onChange={handleInputChange} className="contact-input" placeholder="e.g. OmniCore" />
+                  <label className="contact-label">Venture / Organization Name</label>
+                  <input
+                    type="text"
+                    name="ventureName"
+                    required
+                    value={formData.ventureName}
+                    onChange={handleInputChange}
+                    className="contact-input"
+                    placeholder="e.g. OmniCore Technologies"
+                  />
                 </div>
+
                 <div>
-                  <label className="contact-label">Current ARR ($250K+)</label>
-                  <input type="text" name="currentArr" required value={formData.currentArr} onChange={handleInputChange} className="contact-input" placeholder="e.g. $420,000" />
+                  <label className="contact-label">Current ARR / TTM Revenue Run-Rate</label>
+                  <input
+                    type="text"
+                    name="currentArr"
+                    value={formData.currentArr}
+                    onChange={handleInputChange}
+                    className="contact-input"
+                    placeholder="e.g. $450K ARR"
+                  />
                 </div>
+
                 <div>
-                  <label className="contact-label">ACV and Primary GTM Bottleneck</label>
-                  <textarea name="gtmBottleneck" value={formData.gtmBottleneck} onChange={handleInputChange} className="contact-textarea" placeholder="State your average contract value and specify roadblocks." />
+                  <label className="contact-label">Primary GTM / Scaling Bottleneck</label>
+                  <textarea
+                    name="gtmBottleneck"
+                    value={formData.gtmBottleneck}
+                    onChange={handleInputChange}
+                    className="contact-textarea"
+                    placeholder="Describe procurement delays, pipeline leakage, sales team scaling bottlenecks..."
+                  />
                 </div>
+
                 <div>
-                  <label className="contact-label">Target Series A Date</label>
-                  <input type="text" name="targetSeriesADate" value={formData.targetSeriesADate} onChange={handleInputChange} className="contact-input" placeholder="e.g. Q4 2026" />
+                  <label className="contact-label">Target Series A Capitalization Window</label>
+                  <input
+                    type="text"
+                    name="targetSeriesADate"
+                    value={formData.targetSeriesADate}
+                    onChange={handleInputChange}
+                    className="contact-input"
+                    placeholder="e.g. Q4 2026"
+                  />
                 </div>
+
                 {formError && (
                   <div style={{ color: '#ef4444', fontSize: '0.85rem', marginBottom: '0.75rem', fontFamily: 'monospace' }}>
                     {formError}
                   </div>
                 )}
+
                 <button type="submit" className="cta-primary contact-submit-btn" disabled={formLoading}>
-                  {formLoading ? 'TRANSMITTING...' : 'INITIALIZE INCUBATION PROTOCOL'}
+                  {formLoading ? 'TRANSMITTING...' : 'INITIALIZE PROTOCOL APPLICATION'}
                 </button>
               </form>
             )}
@@ -326,10 +386,12 @@ export default function ProtocolApex() {
 
           <div className="hero-gauge-wrapper">
             <div className="contact-card">
-              <h3 className="hero-heading">Initialize Revenue Diagnostics<span className="brand-dot">.</span></h3>
+              <h3 className="hero-heading">Growth Architecture Consult</h3>
               <p className="hero-body-copy">
-                Initialize revenue diagnostics and Series A readiness protocol. Our senior operators embed within your pipeline to compress procurement cycles and route directly into institutional capital networks.
+                Directly interface with our venture co-builders. We evaluate seed-stage model defensibility, infrastructure scalings, and capital velocity parameters.
               </p>
+              
+              {/* Official LinkedIn Social Link */}
               <LinkedInConnect />
             </div>
           </div>

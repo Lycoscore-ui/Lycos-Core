@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { submitContactForm } from '../services/contactService';
-import { CheckCircle, CheckCircle2 } from 'lucide-react';
+import { CheckCircle, CheckCircle2, ChevronDown } from 'lucide-react';
 import LinkedInConnect from './LinkedInConnect';
 
 const phases = [
@@ -114,10 +114,15 @@ export const HowWeOperateSection: React.FC = () => {
     }
   };
 
+  const scrollToContent = () => {
+    const el = document.getElementById('block-protocol');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <>
-      {/* Above-the-Fold Dedicated Hero Section (Strictly 100vh) */}
-      <section id="operate-hero" className="section hero-fullscreen-section">
+      {/* Above-the-Fold Dedicated Hero Section (Centered Viewport with Scroll Prompt) */}
+      <section id="operate-hero" className="section hero-fullscreen-section the-collective-hero">
         <div className="hero-centered-content">
           <div className="eyebrow-tagline-green">
             // OPERATIONAL PARADIGM
@@ -139,6 +144,17 @@ export const HowWeOperateSection: React.FC = () => {
           <p className="hero-body-copy hero-body-copy-centered">
             We operate on high-velocity sprint cycles defined by absolute transparency, real-time telemetry, and a dedicated, named squad from day one. Every run is systematically structured and continuously benchmarked.
           </p>
+
+          {/* Animated Scroll Down Indicator */}
+          <button 
+            type="button"
+            className="collective-scroll-prompt"
+            onClick={scrollToContent}
+            aria-label="Scroll to explore methodology"
+          >
+            <span className="scroll-prompt-text">SCROLL TO EXPLORE METHODOLOGY</span>
+            <ChevronDown size={18} className="neon-icon scroll-prompt-chevron" />
+          </button>
         </div>
       </section>
 

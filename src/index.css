@@ -9963,3 +9963,620 @@ h6 {
     width: 100% !important;
   }
 }
+/* ==========================================================================
+   ALIGNMENT AUDIT STYLES (Section 4 Telemetry, The Collective Hero, Incubation Hub)
+   ========================================================================== */
+
+/* Section 4 Performance Telemetry & Commercial Yield Split Grid */
+.home-performance-shell {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.performance-split-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 2rem;
+  align-items: stretch;
+}
+
+.throughput-monitor-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2.25rem;
+  background: rgba(10, 16, 28, 0.7);
+  border: 1px solid rgba(140, 255, 50, 0.2);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.throughput-monitor-card:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #8CFF32, transparent);
+}
+
+.throughput-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.throughput-monitor-tag {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.75rem;
+  color: #8CFF32;
+  letter-spacing: 0.1em;
+}
+
+.throughput-stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.throughput-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.throughput-stat-label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.throughput-stat-num {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: var(--font-title, sans-serif);
+  color: #8CFF32;
+}
+
+.throughput-stat-change {
+  font-size: 0.72rem;
+  color: #38bdf8;
+  font-family: var(--font-mono, monospace);
+}
+
+.throughput-chart-container {
+  width: 100%;
+  height: 140px;
+  margin: 1rem 0;
+}
+
+.throughput-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.throughput-glow-path {
+  filter: drop-shadow(0 0 8px rgba(140, 255, 50, 0.6));
+}
+
+.throughput-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 1rem;
+  font-family: var(--font-mono, monospace);
+}
+
+.yield-blocks-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.yield-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  height: 100%;
+}
+
+.yield-metric-card {
+  padding: 1.5rem;
+  background: rgba(10, 16, 28, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.yield-metric-card:hover {
+  border-color: rgba(140, 255, 50, 0.4);
+  transform: translateY(-2px);
+}
+
+.yield-card-top {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+}
+
+.yield-metric-tag {
+  font-size: 0.7rem;
+  color: #8CFF32;
+  font-family: var(--font-mono, monospace);
+  letter-spacing: 0.08em;
+}
+
+.yield-metric-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #fff;
+  font-family: var(--font-title, sans-serif);
+}
+
+.yield-metric-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  margin-bottom: 0.35rem;
+}
+
+.yield-metric-context {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+/* The Collective Centered Hero */
+.the-collective-hero {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  padding: 4rem 1.5rem 3rem;
+}
+
+.the-collective-hero .hero-heading {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.the-collective-hero .hero-tags-row {
+  justify-content: center;
+}
+
+.the-collective-hero .hero-body-copy {
+  max-width: 780px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.the-collective-hero .subpage-hero-cta-row {
+  justify-content: center;
+}
+
+.collective-scroll-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #94a3b8;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  transition: color 0.2s ease;
+}
+
+.collective-scroll-prompt:hover {
+  color: #8CFF32;
+}
+
+.scroll-cue-bounce {
+  animation: scrollCueBounce 2s infinite ease-in-out;
+}
+
+@keyframes scrollCueBounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(6px);
+  }
+  60% {
+    transform: translateY(3px);
+  }
+}
+
+/* Incubation Hub Specific Section Styles */
+.outcome-stats-section,
+.structured-pathways-section,
+.protocol-cards-section,
+.portfolio-explorer-section {
+  padding: 5rem 1.5rem;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.section-header-centered {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-sub {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+
+.outcome-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.outcome-stat-card {
+  padding: 1.75rem;
+  background: rgba(10, 16, 28, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+.outcome-stat-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.outcome-stat-val {
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: var(--font-title, sans-serif);
+  color: #8CFF32;
+}
+
+.outcome-stat-desc {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  line-height: 1.45;
+}
+
+.pathway-tabs-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.pathway-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.5rem;
+  background: rgba(10, 16, 28, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #94a3b8;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.pathway-tab-btn.active,
+.pathway-tab-btn:hover {
+  background: rgba(140, 255, 50, 0.08);
+  border-color: #8CFF32;
+  color: #fff;
+}
+
+.pathway-detail-card {
+  padding: 2.5rem;
+  background: rgba(10, 16, 28, 0.75);
+  border: 1px solid rgba(140, 255, 50, 0.2);
+  border-radius: 12px;
+}
+
+.pathway-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.pathway-tag {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.75rem;
+  color: #8CFF32;
+  letter-spacing: 0.1em;
+}
+
+.pathway-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-top: 0.25rem;
+}
+
+.pathway-meta-badges {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.pathway-meta-pill {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.75rem;
+  padding: 0.4rem 0.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: #38bdf8;
+}
+
+.pathway-desc {
+  font-size: 0.95rem;
+  color: #cbd5e1;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.pathway-deliverables-header {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.8rem;
+  color: #8CFF32;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+}
+
+.pathway-deliverables-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.pathway-deliverable-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  color: #e2e8f0;
+  line-height: 1.45;
+}
+
+.deliverable-icon {
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.incubation-protocol-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.incubation-protocol-card {
+  padding: 2rem;
+  background: rgba(10, 16, 28, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+}
+
+.incubation-protocol-card:hover {
+  border-color: rgba(140, 255, 50, 0.4);
+  transform: translateY(-3px);
+}
+
+.protocol-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.protocol-badge-tag {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.7rem;
+  color: #8CFF32;
+  letter-spacing: 0.05em;
+}
+
+.protocol-card-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.75rem;
+}
+
+.protocol-card-desc {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+}
+
+.protocol-card-meta {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.75rem;
+  color: #38bdf8;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(56, 189, 248, 0.06);
+  border-radius: 4px;
+}
+
+.protocol-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.portfolio-tabs-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.portfolio-tab-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(10, 16, 28, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.portfolio-tab-btn.active,
+.portfolio-tab-btn:hover {
+  background: rgba(140, 255, 50, 0.08);
+  border-color: #8CFF32;
+}
+
+.portco-tab-name {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.portco-tab-stage {
+  color: #94a3b8;
+  font-size: 0.72rem;
+  font-family: var(--font-mono, monospace);
+}
+
+.portfolio-active-card {
+  padding: 2.5rem;
+  background: rgba(10, 16, 28, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+.portfolio-card-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.portfolio-meta-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.portfolio-cohort-badge,
+.portfolio-stage-badge {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.72rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #8CFF32;
+  border: 1px solid rgba(140, 255, 50, 0.2);
+}
+
+.portfolio-headline {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+
+.portfolio-result {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+.portfolio-metric-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.75rem;
+  background: rgba(140, 255, 50, 0.04);
+  border: 1px solid rgba(140, 255, 50, 0.2);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.portfolio-metric-label {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.75rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.portfolio-metric-value {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #8CFF32;
+  font-family: var(--font-title, sans-serif);
+}
+
+.portfolio-metric-verified {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.7rem;
+  color: #38bdf8;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 900px) {
+  .performance-split-grid {
+    grid-template-columns: 1fr;
+  }
+  .yield-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .throughput-stats-row {
+    grid-template-columns: 1fr;
+  }
+  .outcome-stats-grid,
+  .incubation-protocol-grid {
+    grid-template-columns: 1fr;
+  }
+  .pathway-deliverables-grid,
+  .portfolio-card-grid {
+    grid-template-columns: 1fr;
+  }
+}
