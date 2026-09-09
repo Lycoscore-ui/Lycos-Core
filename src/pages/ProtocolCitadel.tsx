@@ -1,6 +1,6 @@
 import { submitContactForm } from '../services/contactService';
 import { useState } from 'react';
-import { CheckCircle2, ShieldAlert, Scale, Users, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { ShieldAlert, Scale, Users, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import LinkedInConnect from '../components/LinkedInConnect';
 
 export default function ProtocolCitadel() {
@@ -167,21 +167,40 @@ export default function ProtocolCitadel() {
             </div>
           </div>
 
-          <div className="hero-gauge-wrapper">
-            <div className="baseline-card hero-gauge-card">
-              <span className="hero-gauge-tag">// PATHWAY 03 // CORPORATE STUDIO</span>
-              <div className="hero-gauge-svg-container">
-                <svg width="100%" height="100%" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="8" />
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="#8CFF32" strokeWidth="8" strokeDasharray="251.2" strokeDashoffset="0" strokeLinecap="round" />
-                </svg>
-                <div className="hero-gauge-number-wrap">
-                  <span className="stat-metric">12mo</span>
+          <div className="proto-hero-visual">
+            <div className="proto-visual-card">
+              <div className="proto-visual-eyebrow">// CITADEL // IP CARVE-OUT ARCHITECTURE</div>
+              <div className="citadel-structure">
+                <div className="citadel-node">
+                  <div className="citadel-node-box corp">CORPORATE PARENT</div>
+                  <div className="citadel-node-sub">Proprietary AI / Enterprise IP</div>
+                </div>
+                <div className="citadel-connector blue" />
+                <div className="citadel-firewall-label">▼ LYCOS CITADEL PROTOCOL ▼</div>
+                <div className="citadel-connector" />
+                <div className="citadel-node">
+                  <div className="citadel-node-box firewall">IP FIREWALL STRUCTURE</div>
+                  <div className="citadel-node-sub">Legal Carve-Out · Clean Capital Table · NDA Architecture</div>
+                </div>
+                <div className="citadel-connector" />
+                <div className="citadel-node">
+                  <div className="citadel-node-box spinout">AUTONOMOUS SPIN-OUT ENTITY</div>
+                  <div className="citadel-node-sub">Executive Placement · Institutional Capital · Market-Ready</div>
                 </div>
               </div>
-              <span className="hero-gauge-label">Engagement Horizon</span>
-              <div className="hero-gauge-status">
-                <CheckCircle2 size={16} className="neon-icon" /> Systems Fully Operational
+              <div className="proto-visual-stats">
+                <div className="proto-stat-item">
+                  <div className="proto-stat-val">12</div>
+                  <div className="proto-stat-lbl">Month Horizon</div>
+                </div>
+                <div className="proto-stat-item">
+                  <div className="proto-stat-val">Bespoke</div>
+                  <div className="proto-stat-lbl">Equity Terms</div>
+                </div>
+                <div className="proto-stat-item">
+                  <div className="proto-stat-val">100%</div>
+                  <div className="proto-stat-lbl">IP Firewall</div>
+                </div>
               </div>
             </div>
           </div>

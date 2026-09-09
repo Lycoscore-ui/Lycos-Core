@@ -1,6 +1,6 @@
 import { submitContactForm } from '../services/contactService';
 import { useState } from 'react';
-import { CheckCircle2, ShieldCheck, Zap, Layers, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { ShieldCheck, Zap, Layers, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { useRegion } from '../context/RegionContext';
 import LinkedInConnect from '../components/LinkedInConnect';
 
@@ -163,21 +163,41 @@ export default function ProtocolKinetic() {
             </div>
           </div>
 
-          <div className="hero-gauge-wrapper">
-            <div className="baseline-card hero-gauge-card">
-              <span className="hero-gauge-tag">// PATHWAY 01 // SEED AND PRE-SEED</span>
-              <div className="hero-gauge-svg-container">
-                <svg width="100%" height="100%" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="8" />
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="#8CFF32" strokeWidth="8" strokeDasharray="251.2" strokeDashoffset="0" strokeLinecap="round" />
-                </svg>
-                <div className="hero-gauge-number-wrap">
-                  <span className="stat-metric">6mo</span>
-                </div>
+          <div className="proto-hero-visual">
+            <div className="proto-visual-card">
+              <div className="proto-visual-eyebrow">// KINETIC // BUILD-TO-PRODUCTION PATHWAY</div>
+              <div className="kinetic-timeline">
+                {[
+                  { tag: 'MONTHS 1–2', title: 'Zero-State Architecture', meta: 'Data Pipelines · Vector Infra · Compliance', active: true },
+                  { tag: 'MONTHS 3–4', title: 'Production Build & Hardening', meta: 'Enterprise MVP · Load Testing · Security', active: true },
+                  { tag: 'MONTHS 5–6', title: 'Enterprise GTM & Capital', meta: `Seed Syndicate · Buyer Pilots · ${country.symbol}500K`, active: false },
+                ].map((m, i, arr) => (
+                  <div key={i} className="kinetic-milestone">
+                    <div className="kinetic-milestone-dot-col">
+                      <div className={`kinetic-milestone-dot${m.active ? '' : ' dim'}`} />
+                      {i < arr.length - 1 && <div className="kinetic-milestone-line" />}
+                    </div>
+                    <div className="kinetic-milestone-body">
+                      <div className="kinetic-milestone-tag">{m.tag}</div>
+                      <div className="kinetic-milestone-title">{m.title}</div>
+                      <div className="kinetic-milestone-meta">{m.meta}</div>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <span className="hero-gauge-label">Engagement Horizon</span>
-              <div className="hero-gauge-status">
-                <CheckCircle2 size={16} className="neon-icon" /> Systems Fully Operational
+              <div className="proto-visual-stats">
+                <div className="proto-stat-item">
+                  <div className="proto-stat-val">6</div>
+                  <div className="proto-stat-lbl">Month Horizon</div>
+                </div>
+                <div className="proto-stat-item">
+                  <div className="proto-stat-val">{country.symbol}500K</div>
+                  <div className="proto-stat-lbl">Co-Investment</div>
+                </div>
+                <div className="proto-stat-item">
+                  <div className="proto-stat-val">15–25%</div>
+                  <div className="proto-stat-lbl">Equity Alignment</div>
+                </div>
               </div>
             </div>
           </div>

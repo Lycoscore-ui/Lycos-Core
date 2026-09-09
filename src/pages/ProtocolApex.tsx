@@ -1,6 +1,6 @@
 import { submitContactForm } from '../services/contactService';
 import { useState } from 'react';
-import { CheckCircle2, BarChart3, FileCheck, Coins, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { BarChart3, FileCheck, Coins, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { useRegion } from '../context/RegionContext';
 import LinkedInConnect from '../components/LinkedInConnect';
 
@@ -163,21 +163,57 @@ export default function ProtocolApex() {
             </div>
           </div>
 
-          <div className="hero-gauge-wrapper">
-            <div className="baseline-card hero-gauge-card">
-              <span className="hero-gauge-tag">// PATHWAY 02 // SCALE & CAPTURE</span>
-              <div className="hero-gauge-svg-container">
-                <svg width="100%" height="100%" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="8" />
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="#8CFF32" strokeWidth="8" strokeDasharray="251.2" strokeDashoffset="0" strokeLinecap="round" />
+          <div className="proto-hero-visual">
+            <div className="proto-visual-card">
+              <div className="proto-visual-eyebrow">// APEX // REVENUE ACCELERATION TRAJECTORY</div>
+              <div className="apex-chart-area">
+                <div className="apex-chart-label-row">
+                  <div>
+                    <div className="apex-chart-main-val">{country.symbol}2.4M</div>
+                    <div className="apex-chart-sub">ARR Target at Exit</div>
+                  </div>
+                  <div className="apex-chart-trend">↑ +340% ARR Growth</div>
+                </div>
+                <svg viewBox="0 0 340 80" style={{ width: '100%', height: '80px' }} preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="apex-arr-grad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#8ce63f" stopOpacity="0.25" />
+                      <stop offset="100%" stopColor="#8ce63f" stopOpacity="0.02" />
+                    </linearGradient>
+                  </defs>
+                  <path d="M0,75 C50,70 100,60 140,50 C180,38 240,20 300,8 L340,3 L340,80 L0,80 Z" fill="url(#apex-arr-grad)" />
+                  <path d="M0,75 C50,70 100,60 140,50 C180,38 240,20 300,8 L340,3" fill="none" stroke="#8ce63f" strokeWidth="2" />
+                  <circle cx="0" cy="75" r="3.5" fill="#8ce63f" />
+                  <circle cx="140" cy="50" r="3.5" fill="#8ce63f" />
+                  <circle cx="340" cy="3" r="3.5" fill="#8ce63f" />
                 </svg>
-                <div className="hero-gauge-number-wrap">
-                  <span className="stat-metric">9mo</span>
+                <div className="apex-milestones">
+                  {[
+                    { label: 'Entry: First Enterprise Contract', val: `${country.symbol}250K ARR` },
+                    { label: 'Midpoint: Series A Readiness', val: `${country.symbol}900K ARR` },
+                    { label: 'Exit: Institutional Placement', val: `${country.symbol}2.4M ARR` },
+                  ].map((m, i) => (
+                    <div key={i} className="apex-milestone-row">
+                      <div className="apex-milestone-dot" />
+                      <span className="apex-milestone-label">{m.label}</span>
+                      <span className="apex-milestone-val">{m.val}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
-              <span className="hero-gauge-label">Engagement Horizon</span>
-              <div className="hero-gauge-status">
-                <CheckCircle2 size={16} className="neon-icon" /> Systems Fully Operational
+              <div className="proto-visual-stats">
+                <div className="proto-stat-item">
+                  <div className="proto-stat-val">9</div>
+                  <div className="proto-stat-lbl">Month Horizon</div>
+                </div>
+                <div className="proto-stat-item">
+                  <div className="proto-stat-val">8–15%</div>
+                  <div className="proto-stat-lbl">Equity Alignment</div>
+                </div>
+                <div className="proto-stat-item">
+                  <div className="proto-stat-val">340%</div>
+                  <div className="proto-stat-lbl">ARR Growth Target</div>
+                </div>
               </div>
             </div>
           </div>

@@ -1527,32 +1527,65 @@ export default function App() {
                 ))}
               </div>
 
-              <div className="lycos-chart-box home-pillars-chart-box">
-                <div className="chart-header home-chart-header">
-                  <span className="home-chart-title">Operational Efficiency Trend</span>
-                  <span className="home-chart-gain">+40% Average Gain</span>
+              {/* Enterprise Data Pipeline Telemetry Block */}
+              <div className="pillars-telemetry-block">
+                <div className="glass-panel throughput-monitor-card pillars-throughput-card">
+                  <div className="throughput-card-header">
+                    <div>
+                      <span className="throughput-tag">TELEMETRY STREAM // PIPELINE THROUGHPUT</span>
+                      <h3 className="throughput-title">Ingestion & Token Vectorization</h3>
+                    </div>
+                    <div className="throughput-latency-pill">
+                      <Activity size={14} className="neon-icon" />
+                      <span>7.8ms Avg Latency</span>
+                    </div>
+                  </div>
+                  <div className="throughput-stats-row">
+                    <div className="throughput-stat-item">
+                      <div className="throughput-stat-label">Stream Ingestion</div>
+                      <div className="throughput-stat-value accent-highlight">14.8 GB/s</div>
+                      <div className="throughput-stat-sub">+34% Peak Capacity</div>
+                    </div>
+                    <div className="throughput-stat-item">
+                      <div className="throughput-stat-label">Vector Tokens</div>
+                      <div className="throughput-stat-value">1.85M /s</div>
+                      <div className="throughput-stat-sub">Zero Ingestion Loss</div>
+                    </div>
+                    <div className="throughput-stat-item">
+                      <div className="throughput-stat-label">Stream Integrity</div>
+                      <div className="throughput-stat-value">99.999%</div>
+                      <div className="throughput-stat-sub">Zero Context Drift</div>
+                    </div>
+                  </div>
+                  <div className="throughput-graph-wrapper">
+                    <svg viewBox="0 0 540 80" className="throughput-svg" preserveAspectRatio="none">
+                      <defs>
+                        <linearGradient id="pillars-throughput-grad" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.3" />
+                          <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
+                        </linearGradient>
+                      </defs>
+                      <line x1="0" y1="20" x2="540" y2="20" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 6" />
+                      <line x1="0" y1="40" x2="540" y2="40" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 6" />
+                      <line x1="0" y1="60" x2="540" y2="60" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 6" />
+                      <path d="M 0,65 C 60,50 110,35 170,48 C 230,60 290,20 360,28 C 430,36 480,12 540,5 L 540,80 L 0,80 Z" fill="url(#pillars-throughput-grad)" />
+                      <path d="M 0,65 C 60,50 110,35 170,48 C 230,60 290,20 360,28 C 430,36 480,12 540,5" fill="none" stroke="var(--accent)" strokeWidth="2" className="chart-glow-path" />
+                    </svg>
+                  </div>
                 </div>
-                <div className="chart-wrapper">
-                  <svg viewBox="0 0 500 80" preserveAspectRatio="none" className="line-chart">
-                    <defs>
-                      <linearGradient id="pillars-chart-glow" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.25" />
-                        <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
-                      </linearGradient>
-                      <clipPath id="pillars-clip">
-                        <rect x="0" y="0" width="0" height="80" ref={pillarsClipRectRef} />
-                      </clipPath>
-                    </defs>
-                    <path d="M0,70 C50,45 100,55 150,30 C200,5 250,25 300,15 C350,5 400,2 500,2 L500,80 L0,80 Z" 
-                          fill="url(#pillars-chart-glow)" 
-                          clipPath="url(#pillars-clip)" />
-                    <path d="M0,70 C50,45 100,55 150,30 C200,5 250,25 300,15 C350,5 400,2 500,2" 
-                          fill="none" 
-                          stroke="var(--accent)" 
-                          strokeWidth="2.5" 
-                          className="chart-glow-path"
-                          clipPath="url(#pillars-clip)" />
-                  </svg>
+                <div className="pillars-yield-grid">
+                  {[
+                    { label: 'Data Fidelity', value: '99.9%', sub: 'Ingestion Accuracy' },
+                    { label: 'Latency SLA', value: '<8ms', sub: 'P99 Response' },
+                    { label: 'Throughput', value: '14.8', sub: 'GB/s Peak' },
+                    { label: 'Uptime', value: '99.99%', sub: 'Zero Drift SLA' },
+                  ].map((item, i) => (
+                    <div key={i} className="glass-panel pillars-yield-card">
+                      <div className="pillars-yield-label">{item.label}</div>
+                      <div className="pillars-yield-value accent-highlight">{item.value}</div>
+                      <div className="pillars-yield-sub">{item.sub}</div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -1606,19 +1639,6 @@ export default function App() {
           {/* Section 4: Performance */}
           <section className="section home-section-performance">
             <div className="home-performance-shell">
-              <div className="performance-header-row">
-                <div>
-                  <span className="eyebrow-tagline-green">// REAL-TIME DATA TELEMETRY & YIELD</span>
-                  <h2 className="home-perf-main-title">
-                    Enterprise Data Pipeline Telemetry<span className="brand-dot">.</span>
-                  </h2>
-                </div>
-                <div className="perf-header-badge">
-                  <span className="live-stream-dot"></span>
-                  <span>LIVE INGESTION STREAM</span>
-                </div>
-              </div>
-
               <div className="performance-split-grid">
                 {/* Left Panel: Enterprise Data Pipeline Throughput Monitor */}
                 <div className="glass-panel throughput-monitor-card">
