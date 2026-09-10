@@ -263,6 +263,7 @@ export async function fetchCandidatesFromN8n(
         dateFilter: `after:${weekInfo.startDate} before:${weekInfo.endDate}`,
         prompt: `Search and return 15 verified technology news and AI architecture developments published specifically between ${weekInfo.startDate} and ${weekInfo.endDate} (${weekInfo.label}, ${weekInfo.range}). Ensure every article's publishedDate is between ${weekInfo.startDate} and ${weekInfo.endDate}. Do not return recent news from other weeks.`,
         genre: genre,
+        topic: genre === 'All' ? 'Agentic Systems' : genre,
         targetCount: 15,
         pipeline: 'ai-rewrite-search',
         timestamp: new Date().toISOString()
@@ -404,6 +405,7 @@ export async function fetchIndustryCandidatesFromN8n(
         dateFilter: `after:${weekInfo.startDate} before:${weekInfo.endDate}`,
         prompt: `Discover 15 relevant industry news and market intelligence articles published specifically between ${weekInfo.startDate} and ${weekInfo.endDate} (${weekInfo.label}, ${weekInfo.range}). Ensure every article's publishedDate is between ${weekInfo.startDate} and ${weekInfo.endDate}. Do not return recent news from other weeks.`,
         genre,
+        topic: genre === 'All' ? 'Agentic Systems' : genre,
         limit: 15,
         pipeline: 'industry-search',
         timestamp: new Date().toISOString()
