@@ -1,1976 +1,4093 @@
 import React, { useEffect, useRef, useState } from 'react'
+
 import { gsap } from 'gsap'
+
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
+
 import { useGSAP } from '@gsap/react'
+
 import { 
+
   ArrowRight, 
+
   Cpu, 
+
   Layers, 
+
   Activity, 
+
   TrendingUp, 
+
   CheckCircle, 
+
   Search,
+
   Menu,
+
   X,
+
   ChevronDown,
+
   ChevronRight
+
 } from 'lucide-react'
+
 import AIProductsSection from './components/AIProductsSection'
+
 import TechServicesSection from './components/TechServicesSection'
+
 import IncubationHubSection from './components/IncubationHubSection'
+
 import WhoWeAreSection from './components/WhoWeAreSection'
+
 import HowWeOperateSection from './components/HowWeOperateSection'
+
 import GovernanceSection from './components/GovernanceSection'
+
 import WorldMap from './components/WorldMap'
+
 import CaseStudiesSection from './components/CaseStudiesSection'
+
 import InsightsSection from './components/InsightsSection'
+
 import ArticlesSection from './components/ArticlesSection'
+
 import ProtocolKinetic from './pages/ProtocolKinetic'
+
 import ProtocolApex from './pages/ProtocolApex'
+
 import ProtocolCitadel from './pages/ProtocolCitadel'
+
 import MasterFAQPage from './pages/MasterFAQPage'
+
 import { TermsOfUsePage, PrivacyPolicyPage, ResponsibleAIPage, CookiePolicyPage } from './pages/LegalPages'
+
 import CipherWidget from './components/CipherWidget'
+
 import AttestationModal from './components/AttestationModal'
+
 import RegionSelector from './components/RegionSelector'
+
 import CommandPalette from './components/CommandPalette'
+
 import NavigationHUD from './components/NavigationHUD'
+
 import LinkedInConnect from './components/LinkedInConnect'
+
 import SplashPage from './pages/SplashPage'
+
 import AdminPage from './pages/AdminPage'
+
 import { submitContactForm } from './services/contactService'
 
+import { useRegion } from './context/RegionContext'
+
+import { mockCaseStudies } from './data/mockCmsData'
+
+
+
 // Register GSAP Plugins
+
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
+
+
 
 let isProgrammaticScroll = false;
 
+
+
 // Fallback content for the Home page
+
 const FALLBACK_HOME = {
+
   hero: {
+
     tagline: '// COGNITIVE ENGINEERING. APEX INTELLIGENCE',
-    title: 'Precision AI Systems.',
+
+    title: 'Precision AI Systems',
+
     subtitle: 'Engineered with Instinct.',
+
     exploreBtnText: 'DEPLOY SOLUTIONS',
+
     partnerBtnText: 'ENTER INCUBATION',
+
   },
+
   pillars: {
+
     title: 'Our Core Protocols',
+
     items: [
+
       {
+
         title: 'Cognitive Advisory',
+
         description: 'Strategic advisory for AI implementation and technology transformation.',
+
       },
+
       {
+
         title: 'System Synthesis',
+
         description: 'End-to-End development of custom AI tools and platform integrations.',
+
       },
+
       {
+
         title: 'Incubation Den',
+
         description: 'Accelerating early-stage AI ventures from concept to product market fit.',
+
       },
+
       {
+
         title: 'Autonomous Suites',
+
         description: 'Developed AI software and service suites for diverse business challenges.',
+
       },
+
     ],
+
   },
+
   useCase: {
+
     badge: 'FEATURED USE CASE',
+
     title: 'AI agents that transform your customer service',
+
     description: 'We customize agent infrastructures to act as a seamless front-line support tier, resolving highly complex enterprise inquiries instantly while retaining deep core operational security.',
+
     metrics: [
+
       { value: '92%', label: 'Resolution accuracy rate' },
+
       { value: '90%', label: 'Reduced operational overhead' },
+
       { value: 'R3.2M', label: 'Annual financial optimization' },
+
     ],
+
     insightTitle: 'Matured Insight: Future of Incubation Hub',
+
     insightSummary: 'Executive summary exploring emergent validation metrics in secure generative data pipelines.',
+
     insightLink: 'Read the full case study',
+
   },
+
   performance: {
+
     title: 'Enterprise Data Pipeline Telemetry',
+
     subtitle: 'Real-Time Ingestion Throughput and Token Vectorization',
+
     throughputMetrics: [
+
       { label: 'Stream Ingestion Rate', value: '14.8 GB/s', change: '+34% Peak Capacity' },
+
       { label: 'Vector Token Pipeline', value: '1.85M/s', change: 'Sub-8ms Latency' },
+
       { label: 'Stream Uptime & Integrity', value: '99.999%', change: 'Zero Context Drift' },
+
     ],
+
     yieldMetrics: [
+
       {
+
         tag: '01 // OPEX COMPRESSION',
+
         value: '42% – 68%',
+
         label: 'Operational Overhead Compression',
+
         context: 'Direct reduction in repetitive analytical workflows, manual data auditing & support tier overhead within 90 days.'
+
       },
+
       {
+
         tag: '02 // VELOCITY YIELD',
+
         value: '85% Faster',
+
         label: 'Decision & Cycle Acceleration',
+
         context: 'Compression of multi-department contract audits, underwriting, and compliance validation from 14 days down to < 4 hours.'
+
       },
+
       {
+
         tag: '03 // ADOPTION STANDARD',
+
         value: '94.6%',
+
         label: 'Enterprise Operator Retention',
+
         context: 'Sustained daily active adoption across internal operational units, bypassing typical 80% AI pilot abandonment.'
+
       },
+
       {
+
         tag: '04 // CAPITAL RETURN',
+
         value: '< 4.5 Months',
+
         label: 'Capital Payback Horizon',
+
         context: 'Average timeline to achieve 100% breakeven on custom engineering, foundation model integration & runtime deployment.'
+
       }
+
     ]
+
   },
+
 }
 
+
+
 // Fallback content in case CMS is not running or has empty layouts for subpages
+
 const FALLBACK_PAGES: Record<string, any> = {
+
   'ai-consulting': {
+
     title: 'AI Consulting',
+
     slug: 'ai-consulting',
+
     layout: [
+
       {
+
         blockType: 'hero',
+
         tagline: '// ENTERPRISE INTELLIGENCE ARCHITECTURE',
+
         title: 'Transformative AI Consulting.',
+
         subtitle: 'Precision-Engineered. Grounded Governance. Enterprise Scale.',
+
         bodyCopy: 'Integrate with Lycos Core to architect, govern, and deploy high-yield AI systems. We bridge the gap between complex model architectures and measurable enterprise performance—transforming raw algorithmic capability into secure, operational advantage.',
+
         exploreBtnText: 'INITIALIZE CONSULTATION',
+
         partnerBtnText: 'EXPLORE MISSION DOSSIERS',
+
       },
+
       {
+
         blockType: 'metrics',
+
         metrics: [
+
           { value: '100+', label: 'Enterprise Audits Completed' },
+
           { value: '99.9%', label: 'System Uptime Architecture' },
+
           { value: '40%', label: 'Average Latency Reduction' },
+
           { value: 'SOC2', label: 'Zero-Trust and Compliance Aligned' },
+
         ]
+
       },
+
       {
+
         blockType: 'pillars',
+
         title: 'Core Services',
+
         description: 'Architectural capabilities engineered to transition enterprise operations from legacy inertia to high-yield intelligence.',
+
         items: [
+
           {
+
             title: 'AI Strategy and Infrastructure Audit',
+
             description: 'Rigorous enterprise evaluation to map high-impact model deployments, construct long-range execution roadmaps, and quantify underlying data pipeline readiness.',
+
           },
+
           {
+
             title: 'AI Governance and Compliance Protocols',
+
             description: 'Institutional framework design ensuring algorithmic auditability, bias mitigation, and total compliance with evolving global standards like the EU AI Act.',
+
           },
+
           {
+
             title: 'Technical Enablement and Upskilling',
+
             description: 'Targeted technical protocols engineered to bridge internal execution gaps—equipping engineering units and aligning executive leadership around modern AI workflows.',
+
           },
+
           {
+
             title: 'Deployment Orchestration and Delivery',
+
             description: 'End-to-end tactical execution from initial discovery to active production deployment—leveraging hardened engineering methodologies to mitigate operational risk.',
+
           },
+
         ]
+
       },
+
       {
+
         blockType: 'framework',
+
         title: 'Execution Protocol',
+
         steps: [
+
           {
+
             title: '01: Discovery and Architectural Alignment',
+
             focus: 'Establishing baseline infrastructure readiness and defining high-yield strategic vectors.',
+
             deliverables: [
+
               'Executive alignment and strategic vector calibration.',
+
               'Data infrastructure and pipeline maturity audits.',
+
               'Identification of operational bottlenecks and isolated data silos.'
+
             ]
+
           },
+
           {
+
             title: '02: Vector and ROI Mapping',
+
             focus: 'Rigorous prioritization of technical deployments based on technical feasibility and enterprise ROI.',
+
             deliverables: [
+
               'Quantitative algorithmic feasibility and latency studies.',
+
               'Financial yield modeling and compute cost projections.',
+
               'Comprehensive risk mitigation and resource allocation blueprints.'
+
             ]
+
           },
+
           {
+
             title: '03: Deployment and Governance',
+
             focus: 'Transitioning architectural designs into hardened, production-grade enterprise systems.',
+
             deliverables: [
+
               'Cross-functional, agile engineering deployment.',
+
               'Zero-trust data privacy, bias detection, and compliance guardrails.',
+
               'Automated pipeline validation and rigorous load testing.'
+
             ]
+
           },
+
           {
+
             title: '04: Telemetry and Continuous Optimization',
+
             focus: 'Real-time telemetry monitoring, performance benchmarking, and system scaling.',
+
             deliverables: [
+
               'Post-deployment telemetry dashboards and yield tracking.',
+
               'Continuous monitoring of latency, compute overhead, and model drift.',
+
               'Iterative model tuning, context refactoring, and runtime optimization.'
+
             ]
+
           }
+
         ]
+
       },
+
       {
+
         blockType: 'deepDive',
+
         title: 'Architectural Deep Dive',
+
         subtitle: 'In-depth operational breakdown of our core engineering and governance capabilities.',
+
         panels: [
+
           {
+
             title: 'AI Strategy and Infrastructure Audit',
+
             overview: 'High-yield AI initiatives do not begin with raw code; they begin with rigorous architecture. Our deep-dive assessment analyzes your data stack, compute infrastructure, and operational bottlenecks to construct an unassailable deployment roadmap.',
+
             focusAreas: [
+
               'Comprehensive data audits and automated quality profiling.',
+
               'Total Cost of Ownership (TCO) and compute architecture sizing.',
+
               'Target Operating Model (TOM) design for internal AI units.',
+
               'Multi-year execution timelines with defined technical milestones.'
+
             ]
+
           },
+
           {
+
             title: 'AI Governance and Compliance Protocols',
+
             overview: 'As global regulatory environments tighten, deployment security demands zero-trust compliance. We engineer the structural guardrails, audit trails, and execution frameworks required to keep your models safe, compliant, and fully explainable.',
+
             focusAreas: [
+
               'EU AI Act, FTC directives, and GDPR compliance mapping.',
+
               'Algorithmic fairness testing and bias-mitigation pipelines.',
+
               'Explainable AI (XAI) frameworks for stakeholder auditability.',
+
               'Continuous, automated security and vulnerability monitoring systems.'
+
             ]
+
           },
+
           {
+
             title: 'Technical Enablement and Workforce Calibration',
+
             overview: 'Autonomous software is only as effective as the engineering force directing it. We deploy specialized enablement pipelines that upgrade your existing talent and operational teams into high-capacity AI operators.',
+
             focusAreas: [
+
               'Technical skills gap analysis for software and data engineering units.',
+
               'Applied protocols for prompt engineering, agentic orchestration, and LLM fine-tuning.',
+
               'Operational workflows for continuous integration and model monitoring (MLOps).',
+
               'Executive briefings focusing on AI risk mitigation and ROI optimization.'
+
             ]
+
           },
+
           {
+
             title: 'Deployment Orchestration and Delivery',
+
             overview: 'Complex model deployments collapse without structured, domain-specific engineering oversight. We deliver elite technical leadership to transition your assets out of sandbox environments and into production with absolute stability.',
+
             focusAreas: [
+
               'Cross-functional engineering leadership (Data, MLOps, and System Architects).',
+
               'Agile sprint management optimized specifically for non-deterministic AI development.',
+
               'Rigorous QA engineering, automated test harnesses, and performance validation.',
+
               'Production migration strategies with built-in zero-downtime rollback contingencies.'
+
             ]
+
           }
+
         ]
+
       },
+
       {
+
         blockType: 'useCase',
+
         title: 'Featured Use Case: Streamlining Operations with AI',
+
         badge: 'FEATURED USE CASE',
+
         clientContext: 'A leading global manufacturer experiencing costly, unpredictable equipment downtime across multiple automated facilities, looking to replace reactive repairs with an intelligent, preventative maintenance system.',
+
         problem: 'Unplanned maintenance events caused severe production bottlenecks and massive financial losses. Existing manual sensory checks were highly inefficient, prone to human error, and incapable of detecting microscopic performance variations.',
+
         solution: 'Lycos Core engineered and deployed a custom, edge-integrated predictive maintenance model. The system ingests real-time IoT multi-sensor streams, executes advanced time-series anomaly analysis, and pushes automated failure-prediction alerts to operations dashboards 72 hours before a breakdown occurs.',
+
         resultsList: [
+
           '32% reduction in total factory downtime.',
+
           '20% operational cost savings via optimized maintenance scheduling.',
+
           'Significant improvement in long-term asset utilization and machinery lifespan.'
+
         ],
+
         ctaText: 'Read Full Use Case'
+
       }
+
     ]
+
   }
+
 }
+
+
+
 
 
 export default function App() {
+
   const containerRef = useRef<HTMLDivElement>(null)
+
   const rootRef = useRef<HTMLDivElement>(null)
+
   const gsapContextRef = useRef<gsap.Context | null>(null)
+
   const [activeSection, setActiveSection] = useState(0)
+
   const [pendingScrollIndex, setPendingScrollIndex] = useState<number | null>(null)
+
   const [scrolled, setScrolled] = useState(false)
+
   
+
   // Single Page Client-side Routing state
+
   const [slug, setSlug] = useState(() => {
+
     let path = window.location.pathname.replace(/^\//, '').replace(/\/$/, '')
+
     if (path === 'incubation-kinetic' || path === 'protocol-kinetic') path = 'incubation/kinetic'
+
     if (path === 'incubation-apex' || path === 'protocol-apex') path = 'incubation/apex'
+
     if (path === 'incubation-citadel' || path === 'protocol-citadel') path = 'incubation/citadel'
+
     return path || 'home'
+
   })
+
+
 
   // Mobile Hamburger Menu State
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
   const [mobileExpandedDropdown, setMobileExpandedDropdown] = useState<string | null>(null)
 
+
+
   // Handle header background on scroll
+
   useEffect(() => {
+
     const handleScroll = () => {
+
       if (window.scrollY > 10) {
+
         setScrolled(true)
+
       } else {
+
         setScrolled(false)
+
       }
+
     }
+
     window.addEventListener('scroll', handleScroll, { passive: true })
+
     handleScroll()
+
     return () => window.removeEventListener('scroll', handleScroll)
+
   }, [slug])
+
+
 
   // Lock body scrolling when mobile drawer is open
+
   useEffect(() => {
+
     if (isMobileMenuOpen) {
+
       document.body.style.overflow = 'hidden'
+
     } else {
+
       document.body.style.overflow = ''
+
     }
+
     return () => {
+
       document.body.style.overflow = ''
+
     }
+
   }, [isMobileMenuOpen])
 
+
+
   const [pageData, setPageData] = useState<any>(() => {
+
     return slug === 'home' ? FALLBACK_HOME : (FALLBACK_PAGES[slug] || FALLBACK_PAGES['ai-consulting'])
+
   })
+
   
+
   // SVG clip path refs
+
   const pillarsClipRectRef = useRef<SVGRectElement>(null)
+
   const performanceClipRectRef = useRef<SVGRectElement>(null)
 
+
+
+  const { country, convertFromUSD } = useRegion()
+
+  const [latestCaseStudy, setLatestCaseStudy] = useState<any>(mockCaseStudies[0])
+
+
+
   // Tracking section animations state
+
   const [hasLandedOnPillars, setHasLandedOnPillars] = useState(false)
+
   const [hasLandedOnUseCase, setHasLandedOnUseCase] = useState(false)
+
   const [hasLandedOnPerformance, setHasLandedOnPerformance] = useState(false)
 
+
+
   // Count up animated values
+
   const [displayedUseCaseMetrics, setDisplayedUseCaseMetrics] = useState<string[]>([])
+
   
+
   // Modal state
+
   const [modalOpen, setModalOpen] = useState(false)
+
   const [modalTitle, setModalTitle] = useState('')
+
   const [modalType, setModalType] = useState('')
+
   
+
   // Contact Form state
+
   const [contactName, setContactName] = useState('')
+
   const [contactEmail, setContactEmail] = useState('')
+
   const [contactMsg, setContactMsg] = useState('')
+
   const [contactSubmitted, setContactSubmitted] = useState(false)
+
   const [contactLoading, setContactLoading] = useState(false)
+
   const [contactError, setContactError] = useState<string | null>(null)
 
+
+
   // Cipher AI Chatbot Hero Morphing and Controlled Open State
+
   const [isCipherOpen, setIsCipherOpen] = useState(false)
+
   const isSplash = slug === 'coming-soon' || slug === 'splash'
+
   const isAdmin = slug === 'admin' || (typeof window !== 'undefined' && window.location.hostname.startsWith('admin.'))
+
   const isHeroState = (slug === 'home' || slug === 'portal' || slug === 'wip' || !slug) && activeSection === 0
 
+
+
   // Command Palette State
+
   const [isCmdPaletteOpen, setIsCmdPaletteOpen] = useState(false)
 
+
+
   // Global Command Palette Key Listener (Cmd+K / Ctrl+K)
+
   useEffect(() => {
+
     const handleKeyDown = (e: KeyboardEvent) => {
+
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+
         e.preventDefault();
+
         setIsCmdPaletteOpen((prev) => !prev);
+
       }
+
     };
+
     window.addEventListener('keydown', handleKeyDown);
+
     return () => window.removeEventListener('keydown', handleKeyDown);
+
   }, []);
 
+
+
   // Global Mouse Coordinate Tracking for Interactive Radial Card Glow
+
   useEffect(() => {
+
     const handleMouseMove = (e: MouseEvent) => {
+
       const cards = document.querySelectorAll('.glass-panel, .baseline-card, .protocol-card, .roi-card, .case-sidebar-item');
+
       cards.forEach((card) => {
+
         const rect = (card as HTMLElement).getBoundingClientRect();
+
         const x = e.clientX - rect.left;
+
         const y = e.clientY - rect.top;
+
         (card as HTMLElement).style.setProperty('--mouse-x', `${x}px`);
+
         (card as HTMLElement).style.setProperty('--mouse-y', `${y}px`);
+
       });
+
     };
+
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
+
     return () => window.removeEventListener('mousemove', handleMouseMove);
+
   }, [slug]);
 
+
+
   // Client Navigation helper
+
   const navigateTo = (newSlug: string) => {
+
     // Revert active GSAP Context synchronously before unmounting elements
+
     if (gsapContextRef.current) {
+
       gsapContextRef.current.revert()
+
       gsapContextRef.current = null
+
     }
+
+
 
     // Kill and revert any remaining global ScrollTriggers
+
     ScrollTrigger.getAll().forEach(t => t.kill(true))
+
     
+
     // Scroll window back to top immediately
+
     window.scrollTo(0, 0)
 
+
+
     // Defer React state update to next animation frame to allow ScrollTrigger DOM reversion to paint/settle
+
     requestAnimationFrame(() => {
+
       window.history.pushState(null, '', `/${newSlug === 'home' ? '' : newSlug}`)
+
       setSlug(newSlug)
+
       setPageData(newSlug === 'home' ? FALLBACK_HOME : (FALLBACK_PAGES[newSlug] || FALLBACK_PAGES['ai-consulting']))
+
       setHasLandedOnPillars(false)
+
       setHasLandedOnUseCase(false)
+
       setHasLandedOnPerformance(false)
+
       setActiveSection(0)
+
       
+
       // Reset indicators/clips immediately
+
       if (pillarsClipRectRef.current) pillarsClipRectRef.current.setAttribute('width', '0')
+
       if (performanceClipRectRef.current) performanceClipRectRef.current.setAttribute('width', '0')
+
     })
+
   }
+
+
 
   // Handle browser back/forward buttons
+
   useEffect(() => {
+
     const handlePopState = () => {
+
       const path = window.location.pathname.replace(/^\//, '')
+
       const newSlug = path || 'home'
+
       
+
       // Revert active GSAP Context synchronously
+
       if (gsapContextRef.current) {
+
         gsapContextRef.current.revert()
+
         gsapContextRef.current = null
+
       }
+
+
 
       // Kill and revert any remaining global ScrollTriggers
+
       ScrollTrigger.getAll().forEach(t => t.kill(true))
+
       window.scrollTo(0, 0)
 
+
+
       // Defer React state update to next animation frame
+
       requestAnimationFrame(() => {
+
         setSlug(newSlug)
+
         setPageData(newSlug === 'home' ? FALLBACK_HOME : (FALLBACK_PAGES[newSlug] || FALLBACK_PAGES['ai-consulting']))
+
         setHasLandedOnPillars(false)
+
         setHasLandedOnUseCase(false)
+
         setHasLandedOnPerformance(false)
+
         setActiveSection(0)
+
       })
+
     }
+
     window.addEventListener('popstate', handlePopState)
+
     return () => window.removeEventListener('popstate', handlePopState)
+
   }, [])
+
+
 
   // Fetch page data from Payload CMS (Local dev only)
+
   useEffect(() => {
+
     const isLocalDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
     const cmsBaseUrl = import.meta.env.VITE_CMS_URL || (isLocalDev ? 'http://localhost:3000' : null);
 
+
+
     if (!cmsBaseUrl) {
+
       setPageData(slug === 'home' ? FALLBACK_HOME : (FALLBACK_PAGES[slug] || FALLBACK_PAGES['ai-consulting']));
+
       return;
+
     }
+
+
 
     const activeSlug = slug === 'home' ? 'home' : slug;
+
     fetch(`${cmsBaseUrl}/api/pages?where[slug][equals]=${activeSlug}`)
+
       .then((res) => {
+
         if (!res.ok) throw new Error('API failed')
+
         return res.json()
+
       })
+
       .then((data) => {
+
         if (data.docs && data.docs.length > 0) {
+
           const doc = data.docs[0]
+
           if (slug === 'home') {
+
             const layout = doc.layout || []
+
             const hero = layout.find((l: any) => l.blockType === 'hero')
+
             const pillars = layout.find((l: any) => l.blockType === 'pillars')
+
             const useCase = layout.find((l: any) => l.blockType === 'useCase')
+
             const performance = layout.find((l: any) => l.blockType === 'performance')
+
             setPageData({
+
               hero: hero || FALLBACK_HOME.hero,
+
               pillars: pillars || FALLBACK_HOME.pillars,
+
               useCase: useCase || FALLBACK_HOME.useCase,
+
               performance: performance || FALLBACK_HOME.performance,
+
             })
+
           } else {
+
             setPageData(doc)
+
           }
+
         } else {
+
           setPageData(slug === 'home' ? FALLBACK_HOME : (FALLBACK_PAGES[slug] || FALLBACK_PAGES['ai-consulting']))
+
         }
+
       })
+
       .catch(() => {
+
         setPageData(slug === 'home' ? FALLBACK_HOME : (FALLBACK_PAGES[slug] || FALLBACK_PAGES['ai-consulting']))
+
       })
+
+
+
+    // Fetch latest case study for featured section
+
+    fetch(`${cmsBaseUrl}/api/case-studies?limit=1&sort=-createdAt`)
+
+      .then((res) => (res.ok ? res.json() : null))
+
+      .then((data) => {
+
+        if (data?.docs && data.docs.length > 0) {
+
+          setLatestCaseStudy(data.docs[0])
+
+        }
+
+      })
+
+      .catch(() => {})
+
   }, [slug])
 
+
+
   // Dynamically load and initialize mesh.js script once for global canvas portal
+
   useEffect(() => {
+
     let script = document.querySelector('script[src*="mesh.js"]') as HTMLScriptElement
 
+
+
     const handleScriptLoad = () => {
+
       if (typeof (window as any).initMesh === 'function') {
+
         if (typeof (window as any).meshCleanup === 'function') {
+
           (window as any).meshCleanup()
+
         }
+
         (window as any).meshCleanup = (window as any).initMesh()
+
       }
+
     }
+
+
 
     if (!script) {
+
       script = document.createElement('script')
+
       script.src = './media/mesh.js'
+
       script.async = true
+
       script.onload = handleScriptLoad
+
       document.body.appendChild(script)
+
     } else {
+
       // Re-init if script is already loaded
+
       handleScriptLoad()
+
     }
+
   }, [])
 
-  // Initialize display strings to zeroed placeholders before animation triggers
-  useEffect(() => {
-    if (pageData.useCase?.metrics) {
-      setDisplayedUseCaseMetrics(pageData.useCase.metrics.map((m: any) => {
-        if (m.value.includes('%')) return '0%'
-        if (m.value.includes('R') || m.value.includes('M')) return 'R0.0M'
-        return '0'
-      }))
+
+
+  // Compute dynamic regional monetary value with 1 decimal place and correct currency symbol
+
+  const getRegionalMonetaryValue = (baseAmountUsd: number = 175342.47) => {
+
+    const converted = convertFromUSD(baseAmountUsd)
+
+    const sym = country?.symbol || '$'
+
+    if (converted >= 1000000) {
+
+      const val = (converted / 1000000).toFixed(1)
+
+      return {
+
+        numeric: parseFloat(val),
+
+        prefix: sym,
+
+        suffix: 'M',
+
+        formatted: `${sym}${val}M`
+
+      }
+
+    } else if (converted >= 1000) {
+
+      const val = (converted / 1000).toFixed(1)
+
+      return {
+
+        numeric: parseFloat(val),
+
+        prefix: sym,
+
+        suffix: 'K',
+
+        formatted: `${sym}${val}K`
+
+      }
+
+    } else {
+
+      const val = converted.toFixed(1)
+
+      return {
+
+        numeric: parseFloat(val),
+
+        prefix: sym,
+
+        suffix: '',
+
+        formatted: `${sym}${val}`
+
+      }
+
     }
-  }, [pageData])
+
+  }
+
+
 
   // Helper to parse metric value details
+
   const parseMetric = (valStr: string) => {
+
     const match = valStr.match(/^([^0-9.]*)([0-9.,]+)([^0-9.]*)$/)
+
     if (!match) return { prefix: '', value: 0, suffix: valStr }
+
     const prefix = match[1]
+
     const numStr = match[2].replace(/,/g, '')
+
     const suffix = match[3]
+
     const value = parseFloat(numStr)
+
     return { prefix, value, suffix }
+
   }
+
+
+
+  // Initialize and update display strings when pageData or region changes
+
+  useEffect(() => {
+
+    if (pageData.useCase?.metrics) {
+
+      const regionalMetric = getRegionalMonetaryValue(175342.47)
+
+      if (hasLandedOnUseCase) {
+
+        setDisplayedUseCaseMetrics(pageData.useCase.metrics.map((m: any, idx: number) => {
+
+          if (idx === 2) return regionalMetric.formatted
+
+          return m.value
+
+        }))
+
+      } else {
+
+        setDisplayedUseCaseMetrics(pageData.useCase.metrics.map((m: any, idx: number) => {
+
+          if (idx === 2) return `${regionalMetric.prefix}0.0${regionalMetric.suffix}`
+
+          if (m.value.includes('%')) return '0%'
+
+          return '0'
+
+        }))
+
+      }
+
+    }
+
+  }, [pageData, country, convertFromUSD, hasLandedOnUseCase])
+
+
 
   // Animation triggers based on activeSection (Horizontal home page metrics)
+
   useEffect(() => {
+
     if (slug !== 'home') return
+
+
 
     if (activeSection === 1 && !hasLandedOnPillars) {
+
       setHasLandedOnPillars(true)
+
       if (pillarsClipRectRef.current) {
+
         gsap.to(pillarsClipRectRef.current, {
+
           width: 500,
+
           duration: 2,
+
           ease: 'power1.inOut'
+
         })
+
       }
+
     }
+
+
 
     if (activeSection === 2 && !hasLandedOnUseCase) {
+
       setHasLandedOnUseCase(true)
+
       if (pageData.useCase?.metrics) {
-        const parsed = pageData.useCase.metrics.map((m: any) => parseMetric(m.value))
-        const obj = { val0: 0, val1: 0, val2: 0 }
-        gsap.to(obj, {
-          val0: parsed[0]?.value || 0,
-          val1: parsed[1]?.value || 0,
-          val2: parsed[2]?.value || 0,
-          duration: 2,
-          ease: 'power1.out',
-          onUpdate: () => {
-            const displayValues = pageData.useCase.metrics.map((m: any, idx: number) => {
-              const item = parsed[idx]
-              if (!item) return m.value
-              const animatedVal = obj[`val${idx}` as keyof typeof obj]
-              if (idx === 2) {
-                const steppedVal = Math.round(animatedVal * 10) / 10
-                return `${item.prefix}${steppedVal.toFixed(1)}${item.suffix}`
-              } else {
-                return `${item.prefix}${Math.round(animatedVal)}${item.suffix}`
-              }
-            })
-            setDisplayedUseCaseMetrics(displayValues)
+
+        const regionalMetric = getRegionalMonetaryValue(175342.47)
+
+        const parsed = pageData.useCase.metrics.map((m: any, idx: number) => {
+
+          if (idx === 2) {
+
+            return { prefix: regionalMetric.prefix, value: regionalMetric.numeric, suffix: regionalMetric.suffix }
+
           }
+
+          return parseMetric(m.value)
+
         })
+
+        const obj = { val0: 0, val1: 0, val2: 0 }
+
+        gsap.to(obj, {
+
+          val0: parsed[0]?.value || 0,
+
+          val1: parsed[1]?.value || 0,
+
+          val2: parsed[2]?.value || 0,
+
+          duration: 2,
+
+          ease: 'power1.out',
+
+          onUpdate: () => {
+
+            const displayValues = pageData.useCase.metrics.map((m: any, idx: number) => {
+
+              const item = parsed[idx]
+
+              if (!item) return m.value
+
+              const animatedVal = obj[`val${idx}` as keyof typeof obj]
+
+              if (idx === 2) {
+
+                const steppedVal = Math.round(animatedVal * 10) / 10
+
+                return `${item.prefix}${steppedVal.toFixed(1)}${item.suffix}`
+
+              } else {
+
+                return `${item.prefix}${Math.round(animatedVal)}${item.suffix}`
+
+              }
+
+            })
+
+            setDisplayedUseCaseMetrics(displayValues)
+
+          }
+
+        })
+
       }
+
     }
+
+
 
     if (activeSection === 3 && !hasLandedOnPerformance) {
+
       setHasLandedOnPerformance(true)
+
       if (performanceClipRectRef.current) {
+
         gsap.to(performanceClipRectRef.current, {
+
           width: 500,
+
           duration: 2,
+
           ease: 'power1.inOut'
+
         })
+
       }
+
     }
-  }, [activeSection, hasLandedOnPillars, hasLandedOnUseCase, hasLandedOnPerformance, pageData, slug])
+
+  }, [activeSection, hasLandedOnPillars, hasLandedOnUseCase, hasLandedOnPerformance, pageData, slug, country, convertFromUSD])
+
+
 
   // Smooth scroll to anchored section index or offset
+
   const scrollToSection = (index: number) => {
+
     if (slug === 'home') {
+
       if (window.innerWidth <= 900) {
+
         const sections = document.querySelectorAll('.section')
+
         if (sections[index]) {
+
           sections[index].scrollIntoView({ behavior: 'smooth' })
+
           setActiveSection(index)
+
           return
+
         }
+
       }
 
+
+
       // Force ScrollTrigger refresh to ensure container.scrollWidth is fully computed and accurate
+
       ScrollTrigger.refresh()
+
       
+
       const container = containerRef.current
+
       if (!container) return
+
       const totalSections = 5
+
       const scrollTotal = container.scrollWidth - window.innerWidth
+
       const targetScrollY = (index / (totalSections - 1)) * scrollTotal
 
+
+
       // Smooth scroll the window directly. Snap bypass ensures it won't fight snapping.
+
       isProgrammaticScroll = true;
+
       gsap.to(window, {
+
         scrollTo: { y: targetScrollY },
+
         duration: 0.75,
+
         ease: 'power2.inOut',
+
         overwrite: 'auto',
+
         onComplete: () => {
+
           setTimeout(() => {
+
             isProgrammaticScroll = false;
+
           }, 80);
+
         }
+
       })
+
       setActiveSection(index)
+
     } else {
+
       // Subpage navigation back to home section
+
       setPendingScrollIndex(index)
+
       navigateTo('home')
+
     }
+
   }
 
+
+
   // Handle pending scroll index after navigating back to home
+
   useEffect(() => {
+
     if (slug === 'home' && pendingScrollIndex !== null) {
+
       const timer = setTimeout(() => {
+
         scrollToSection(pendingScrollIndex)
+
         setPendingScrollIndex(null)
+
       }, 200) // 200ms delay to ensure DOM and GSAP are fully ready
+
       return () => clearTimeout(timer)
+
     }
+
   }, [slug, pendingScrollIndex])
 
+
+
   // GSAP Horizontal Scroll Setup (Home Page only)
+
   useGSAP((self) => {
+
     if (slug !== 'home') return
+
     gsapContextRef.current = self
 
+
+
     const container = containerRef.current
+
     if (!container) return
+
+
 
     const mm = gsap.matchMedia()
 
+
+
     // Desktop: Horizontal Scroll Pin & Parallax
+
     mm.add("(min-width: 901px)", () => {
+
       const sections = gsap.utils.toArray('.section')
+
       const totalSections = sections.length
 
-      // Create a single timeline for all horizontal animations
+
+
+      // Create a single timeline for all horizontal animations with momentum dynamic
+
       const tl = gsap.timeline({
+
         scrollTrigger: {
+
           id: 'home-scroll-trigger',
+
           trigger: container,
+
           pin: true,
-          scrub: true,
+
+          scrub: 1.2,
+
           start: 'top top',
+
           end: () => '+=' + (container.scrollWidth - window.innerWidth),
+
           invalidateOnRefresh: true,
+
           snap: {
+
             snapTo: (value: number) => {
+
               if (isProgrammaticScroll) return value; // bypass snapping during menu clicks
+
               const step = 1 / (totalSections - 1);
+
               return Math.round(value / step) * step;
+
             },
-            duration: { min: 0.15, max: 0.35 },
-            delay: 0.12,
-            ease: 'power1.inOut'
+
+            duration: { min: 0.25, max: 0.55 },
+
+            delay: 0.15,
+
+            ease: 'power2.out'
+
           },
+
           onUpdate: (self) => {
+
             // Track active section based on progress
+
             const progress = self.progress
+
             const sectionIndex = Math.round(progress * (totalSections - 1))
+
             setActiveSection(sectionIndex)
+
           }
+
         }
+
       })
+
+
 
       // 1. Slide the content wrapper horizontally
+
       tl.to(container, {
+
         x: () => -(container.scrollWidth - window.innerWidth),
+
         ease: 'none'
+
       }, 0)
+
+
 
       // 2. Parallax layer 1: background (slower)
+
       tl.to('.parallax-bg', {
+
         xPercent: -40,
+
         ease: 'none'
+
       }, 0)
+
+
 
       // 3. Parallax layer 2: grid pattern (medium)
+
       tl.to('.parallax-grid', {
+
         xPercent: -60,
+
         ease: 'none'
+
       }, 0)
 
+
+
       return () => {
+
         tl.scrollTrigger?.kill(true)
+
         tl.kill()
+
       }
+
     })
+
+
 
     // Mobile: Vertical Section Tracking (No horizontal pin, static background)
+
     mm.add("(max-width: 900px)", () => {
+
       const sections = gsap.utils.toArray('.section') as HTMLElement[]
+
       const triggers: any[] = []
 
+
+
       sections.forEach((sec, idx) => {
+
         const trigger = ScrollTrigger.create({
+
           trigger: sec,
+
           start: 'top center',
+
           end: 'bottom center',
+
           onToggle: (self) => {
+
             if (self.isActive) {
+
               setActiveSection(idx)
+
             }
+
           }
+
         })
+
         triggers.push(trigger)
+
       })
+
+
 
       return () => {
+
         triggers.forEach(t => t.kill())
+
       }
+
     })
 
+
+
     return () => {
+
       mm.revert()
+
     }
+
   }, [pageData, slug])
+
+
 
   // GSAP Vertical Scroll Section Tracker (Subpages only)
+
   useGSAP((self) => {
+
     if (slug === 'home') return
+
     gsapContextRef.current = self
 
+
+
     const sections = gsap.utils.toArray('.section') as HTMLElement[]
+
     const triggers: any[] = []
 
+
+
     sections.forEach((sec, idx) => {
+
       const trigger = ScrollTrigger.create({
+
         trigger: sec,
+
         start: 'top center',
+
         end: 'bottom center',
+
         onToggle: (self) => {
+
           if (self.isActive) {
+
             setActiveSection(idx)
+
           }
+
         }
+
       })
+
       triggers.push(trigger)
+
     })
+
+
 
     // GSAP ScrollTrigger vertical count-up animations
+
     const countUpTriggers: any[] = []
+
     gsap.utils.toArray('.count-up-trigger').forEach((el: any) => {
+
       const targetVal = parseFloat(el.getAttribute('data-target') || '0')
+
       const isPercentage = el.getAttribute('data-percent') === 'true'
+
       const obj = { val: 0 }
+
       const hasDecimals = targetVal % 1 !== 0
+
       const trigger = ScrollTrigger.create({
+
         trigger: el,
+
         start: 'top 90%',
+
         onEnter: () => {
+
           obj.val = 0
+
           gsap.to(obj, {
+
             val: targetVal,
+
             duration: 1.6,
+
             ease: 'power2.out',
+
             onUpdate: () => {
+
               el.innerText = `${hasDecimals ? obj.val.toFixed(1) : Math.round(obj.val)}${isPercentage ? '%' : ''}`
+
             }
+
           })
+
         },
+
         onEnterBack: () => {
+
           obj.val = 0
+
           gsap.to(obj, {
+
             val: targetVal,
+
             duration: 1.6,
+
             ease: 'power2.out',
+
             onUpdate: () => {
+
               el.innerText = `${hasDecimals ? obj.val.toFixed(1) : Math.round(obj.val)}${isPercentage ? '%' : ''}`
+
             }
+
           })
+
         }
+
       })
+
       countUpTriggers.push(trigger)
+
     })
 
+
+
     return () => {
+
       triggers.forEach(t => t.kill())
+
       countUpTriggers.forEach(t => t.kill())
+
     }
+
   }, [pageData, slug])
 
+
+
   // Dynamic Block Renderers for subpages
+
   const renderHeroBlock = (block: any, idx: number) => {
+
     let taglines = ['Strategic', 'Ethical', 'Scalable']
+
     let bodyCopy = block.bodyCopy || ''
+
     if (block.subtitle) {
+
       const parts = block.subtitle.split('\n\n')
+
       if (parts.length > 1) {
+
         taglines = parts[0].split('.').map((s: string) => s.trim()).filter(Boolean)
+
         bodyCopy = parts[1]
+
       } else {
+
         taglines = block.subtitle.split('.').map((s: string) => s.trim()).filter(Boolean)
+
       }
+
     }
 
+
+
     return (
+
       <section key={idx} id="block-hero" className="section hero-fullscreen-section subpage-hero-section">
+
         <div className="subpage-hero-grid hero-two-column-grid">
+
           <div>
+
             {/* Standardized Green Eyebrow Tagline */}
+
             <div className="eyebrow-tagline-green">
+
               {block.tagline || '// ENTERPRISE INTELLIGENCE ARCHITECTURE'}
+
             </div>
+
             
+
             <h1 className="hero-heading subpage-hero-title">
+
               {block.title ? (
+
                 <>{block.title.replace(/\.$/, '')}<span className="accent-period">.</span></>
+
               ) : (
+
                 <>Transformative AI Consulting<span className="accent-period">.</span></>
+
               )}
+
             </h1>
+
             
+
             <div className="hero-tags-row subpage-tags-row">
+
               {taglines.map((tag: string, tIdx: number) => (
+
                 <span key={tIdx} className="hero-pill-badge">{tag}</span>
+
               ))}
+
             </div>
+
+
 
             <p className="hero-body-copy">
+
               {bodyCopy}
+
             </p>
 
+
+
             <div className="subpage-hero-cta-row hero-cta-group">
+
               <button className="cta-primary" onClick={() => scrollToSection(4)}>
+
                 {(block.exploreBtnText || 'INITIALIZE CONSULTATION').toUpperCase()}
+
               </button>
+
               <button className="cta-secondary" onClick={() => {
+
                 const el = document.getElementById('block-useCase');
+
                 if (el) el.scrollIntoView({ behavior: 'smooth' });
+
               }}>
+
                 {(block.partnerBtnText || 'EXPLORE MISSION DOSSIERS').toUpperCase()}
+
               </button>
+
             </div>
+
           </div>
+
+
 
           {/* Visual Bespoke Card: Tiered Architecture Stack */}
+
           <div className="hero-gauge-wrapper">
+
             <div className="baseline-card hero-gauge-card">
+
               <span className="hero-gauge-tag">// COGNITIVE STRATEGY MATRIX</span>
+
               
+
               <div className="hero-visual-centerpiece">
+
                 <div className="matrix-stack-container">
+
                   <div className="matrix-scan-beam" />
+
                   
+
                   {/* Layer 1: Strategy and Governance */}
+
                   <div className="matrix-tier-row active-tier">
+
                     <div className="matrix-tier-label-wrap">
+
                       <span className="matrix-tier-tag tier-1">L1</span>
+
                       <span className="matrix-tier-title">Strategy & Governance</span>
+
                     </div>
+
                     <div className="matrix-tier-indicator">
+
                       <div className="matrix-pulse-dot" />
+
                       <span>READY</span>
+
                     </div>
+
                   </div>
+
+
 
                   {/* Layer 2: Neural Model Architecture */}
+
                   <div className="matrix-tier-row">
+
                     <div className="matrix-tier-label-wrap">
+
                       <span className="matrix-tier-tag tier-2">L2</span>
+
                       <span className="matrix-tier-title">Data & Pipeline Stack</span>
+
                     </div>
+
                     <div className="matrix-tier-indicator matrix-purple-indicator">
+
                       <span>-42ms</span>
+
                     </div>
+
                   </div>
+
+
 
                   {/* Layer 3: Enterprise Scale */}
+
                   <div className="matrix-tier-row">
+
                     <div className="matrix-tier-label-wrap">
+
                       <span className="matrix-tier-tag tier-3">L3</span>
+
                       <span className="matrix-tier-title">Enterprise Ops & Edge</span>
+
                     </div>
+
                     <div className="matrix-tier-indicator matrix-cyan-indicator">
+
                       <span>100% SCALE</span>
+
                     </div>
+
                   </div>
+
                 </div>
+
               </div>
+
+
 
               {/* Operational Alignment label */}
+
               <span className="hero-gauge-label">Enterprise Cognitive Alignment</span>
 
+
+
               <div className="hero-gauge-status">
+
                 <CheckCircle size={16} className="neon-icon" /> Strategic Roadmaps Validated
+
               </div>
+
             </div>
+
           </div>
+
         </div>
+
       </section>
+
     )
+
   }
+
+
 
   const renderMetricsBlock = (block: any, idx: number) => {
+
     return (
+
       <section key={idx} id="block-metrics" className="section">
+
         <div className="outcome-stats-grid subpage-block-container">
+
           {block.metrics.map((m: any, mIdx: number) => (
+
             <div key={mIdx} className="baseline-card outcome-stat-card">
+
               <div className="count-up-trigger stat-metric" data-target={m.value.replace(/[^0-9.]/g, '')} data-percent={m.value.includes('%')}>
+
                 {m.value}
+
               </div>
+
               <div className="stat-label">{m.label}</div>
+
             </div>
+
           ))}
+
         </div>
+
       </section>
+
     )
+
   }
+
+
 
   const renderPillarsBlock = (block: any, idx: number) => {
+
     return (
+
       <section key={idx} id="block-pillars" className="section">
+
         <div className="subpage-block-header">
+
           <h2 className="subpage-block-title">
+
             Our Core <span className="brand-dot">Protocols</span>
+
           </h2>
+
           <p className="subpage-block-desc">
+
             Lycos Core orchestrates a complete AI lifecycle through foundational protocols designed for strategic transformation, end-to-end systems, venture growth, and specialized business solutions.
+
           </p>
+
         </div>
+
+
 
         <div className="services-grid subpage-block-container">
+
           {block.items.map((item: any, cIdx: number) => (
-            <div key={cIdx} className="glass-panel purple-glow-card service-panel-card">
+
+            <div key={cIdx} className="baseline-card service-panel-card">
+
               <div>
+
                 <div className="service-icon-wrap">
+
                   <div className="icon-badge">
+
                     {cIdx === 0 && <Cpu size={32} className="neon-icon" />}
+
                     {cIdx === 1 && <Layers size={32} className="neon-icon" />}
+
                     {cIdx === 2 && <Activity size={32} className="neon-icon" />}
+
                     {cIdx === 3 && <TrendingUp size={32} className="neon-icon" />}
+
                   </div>
+
                 </div>
+
                 <h3 className="service-card-title">{item.title}</h3>
+
                 <p className="service-card-desc">{item.description}</p>
+
               </div>
+
               <button 
+
                 className="btn-link service-card-link" 
+
                 onClick={() => {
+
                   const el = document.getElementById('block-deepDive');
+
                   if (el) {
+
                     gsap.to(window, {
+
                       scrollTo: { y: el.offsetTop - 80, autoKill: false },
+
                       duration: 0.75,
+
                       ease: 'power2.inOut'
+
                     });
+
                   }
+
                 }} 
+
               >
-                INSPECT PROTOCOL andgt;
+
+                INSPECT PROTOCOL &gt;
+
               </button>
+
             </div>
+
           ))}
+
         </div>
+
       </section>
+
     )
+
   }
+
+
 
   const renderFrameworkBlock = (block: any, idx: number) => {
+
     return (
+
       <section key={idx} id="block-framework" className="section">
+
         <div className="subpage-block-header">
+
           <h2 className="subpage-block-title">
+
             Our Strategic <span className="brand-dot">Framework</span>
+
           </h2>
+
           <p className="subpage-block-desc">
+
             A systematic four-phase methodology that transforms enterprise AI concepts into measurable financial yield through precise engineering, zero-trust governance, and real-time telemetry.
+
           </p>
+
         </div>
+
+
 
         {/* 4 Horizontal Glass Cards Layout */}
+
         <div className="subpage-framework-grid">
+
           {block.steps.map((step: any, sIdx: number) => (
+
             <div key={sIdx} className="baseline-card subpage-framework-card">
+
               <span className="subpage-framework-step-num">0{sIdx + 1}</span>
+
               <h3 className="subpage-framework-step-title">{step.title.split(': ')[1] || step.title}</h3>
+
               <p className="subpage-framework-focus">
+
                 <strong className="accent-dot">Focus:</strong> {step.focus}
+
               </p>
+
               <ul className="subpage-framework-deliverables-list">
+
                 {(Array.isArray(step.deliverables) ? step.deliverables : (typeof step.deliverables === 'string' ? step.deliverables.split('\n').map((d: string) => d.trim()).filter(Boolean) : [])).map((d: string, dIdx: number) => (
+
                   <li key={dIdx} className="subpage-framework-deliverable-item">
+
                     <span className="accent-dot">•</span> {d}
+
                   </li>
+
                 ))}
+
               </ul>
+
             </div>
+
           ))}
+
         </div>
+
       </section>
+
     )
+
   }
+
+
 
   const renderDeepDiveBlock = (block: any, idx: number) => {
+
     const eyebrows = [
+
       '// ARCHITECTURAL ASSESSMENT',
+
       '// ZERO-TRUST GUARDRAILS',
+
       '// HUMAN CAPITAL UPGRADES',
+
       '// PRODUCTION INTEGRATION'
+
     ];
 
+
+
     return (
+
       <section key={idx} id="block-deepDive" className="section">
+
         <div className="subpage-block-header">
+
           <h2 className="subpage-block-title">
+
             Core Services <span className="brand-dot">Deep Dive</span>
+
           </h2>
+
           <p className="subpage-block-desc">{block.subtitle}</p>
+
         </div>
+
+
 
         <div className="deep-dive-grid">
+
           {block.panels.map((panel: any, pIdx: number) => (
+
             <div key={pIdx} className="deep-dive-panel">
+
               <span className="eyebrow-tagline-green">
+
                 {eyebrows[pIdx % eyebrows.length]}
+
               </span>
+
               <h3 className="service-heading">{panel.title}</h3>
+
               <p className="service-desc">{panel.overview}</p>
+
               
+
               <ul className="deep-dive-bullets">
+
                 {(Array.isArray(panel.focusAreas) ? panel.focusAreas : (typeof panel.focusAreas === 'string' ? panel.focusAreas.split('\n').map((fa: string) => fa.trim()).filter(Boolean) : [])).map((fa: string, faIdx: number) => (
+
                   <li key={faIdx}>
+
                     <CheckCircle size={15} className="neon-icon" /> {fa}
+
                   </li>
+
                 ))}
+
               </ul>
+
             </div>
+
           ))}
+
         </div>
+
       </section>
+
     )
+
   }
+
+
 
   const renderUseCaseBlock = (block: any, idx: number) => {
+
     // Dynamically map CMS usecase fields to frontend layout fields
+
     const clientContext = block.clientContext || block.description || ''
+
     
+
     let problem = block.problem || ''
+
     let solution = block.solution || ''
+
     if (!problem && block.insightSummary) {
+
       const parts = block.insightSummary.split('\n\n')
+
       const probPart = parts.find((p: string) => p.startsWith('Problem:'))
+
       const solPart = parts.find((p: string) => p.startsWith('Solution:'))
+
       problem = probPart ? probPart.replace('Problem:', '').trim() : ''
+
       solution = solPart ? solPart.replace('Solution:', '').trim() : (parts.length > 1 ? parts[1] : block.insightSummary)
+
     }
 
+
+
     const rawResults = block.resultsList || (block.metrics ? block.metrics.map((m: any) => `${m.value} ${m.label}`) : [])
+
     const resultsList = Array.isArray(rawResults) ? rawResults : (typeof rawResults === 'string' ? rawResults.split('\n').map((r: string) => r.trim()).filter(Boolean) : [])
 
+
+
     return (
+
       <section key={idx} id="block-useCase" className="section">
+
         <div className="subpage-block-header">
+
           <h2 className="subpage-block-title">
+
             Featured <span className="brand-dot">Use Case</span>
+
           </h2>
+
           <p className="subpage-block-desc">
+
             Discover how Lycos Core deployed edge-integrated predictive maintenance to eliminate factory downtime and deliver immediate, measurable ROI for a global manufacturing leader.
+
           </p>
+
         </div>
+
+
 
         <div className="subpage-usecase-wrapper">
+
           <div className="glass-panel subpage-usecase-main">
+
             <span className="subpage-usecase-badge">{block.badge}</span>
+
             <h3 className="subpage-usecase-title">{block.title}</h3>
+
             
-            <div className="subpage-usecase-row">
-              <strong className="subpage-usecase-row-label">Client Context:</strong>
-              <p className="subpage-usecase-row-text">{clientContext}</p>
-            </div>
 
             <div className="subpage-usecase-row">
-              <strong className="subpage-usecase-row-label">Problem:</strong>
-              <p className="subpage-usecase-row-text">{problem}</p>
+
+              <strong className="subpage-usecase-row-label">Client Context:</strong>
+
+              <p className="subpage-usecase-row-text">{clientContext}</p>
+
             </div>
+
+
+
+            <div className="subpage-usecase-row">
+
+              <strong className="subpage-usecase-row-label">Problem:</strong>
+
+              <p className="subpage-usecase-row-text">{problem}</p>
+
+            </div>
+
+
 
             <div>
+
               <strong className="subpage-usecase-row-label">Solution:</strong>
+
               <p className="subpage-usecase-row-text">{solution}</p>
+
             </div>
+
           </div>
+
+
 
           <div className="subpage-usecase-side-col">
+
             <div className="glass-panel subpage-usecase-side-panel">
+
               <h4 className="subpage-usecase-side-heading">Results and Achievements</h4>
+
               <ul className="subpage-usecase-results-list">
+
                 {resultsList.map((res: string, rIdx: number) => {
+
                   const match = res.match(/^(\d+%|\w+)\s+(.*)$/)
+
                   const numVal = match ? parseFloat(match[1]) : 0
+
                   const hasNum = !isNaN(numVal) && numVal > 0
+
                   const label = match ? match[2] : res
 
+
+
                   return (
+
                     <li key={rIdx} className="subpage-usecase-result-item">
+
                       {hasNum ? (
+
                         <div className="count-up-trigger subpage-usecase-metric-num" data-target={numVal} data-percent={res.includes('%')}>0</div>
+
                       ) : (
+
                         <CheckCircle size={18} className="neon-icon" />
+
                       )}
+
                       <div>{label}</div>
+
                     </li>
+
                   )
+
                 })}
+
               </ul>
+
             </div>
 
+
+
             <button className="cta-primary" onClick={() => scrollToSection(4)}>
+
               {block.ctaText || block.insightLink || 'Read Full Use Case'}
+
             </button>
+
           </div>
+
         </div>
+
       </section>
+
     )
+
   }
+
+
+
 
 
   // Trigger Modal
+
   const openInfoModal = (type: string, title: string) => {
+
     setModalType(type)
+
     setModalTitle(title)
+
     setModalOpen(true)
+
   }
+
   void openInfoModal;
 
+
+
   // Contact Submit
+
   const handleContactSubmit = async (e: React.FormEvent) => {
+
     e.preventDefault()
+
     if (!contactName.trim() || !contactEmail.trim() || !contactMsg.trim()) return
+
     setContactLoading(true)
+
     setContactError(null)
 
+
+
     const res = await submitContactForm({
+
       name: contactName.trim(),
+
       email: contactEmail.trim(),
+
       message: contactMsg.trim(),
+
       serviceContext: pageData?.hero?.title || pageData?.title || 'Home - Global Operational Footprint'
+
     })
 
+
+
     setContactLoading(false)
+
     if (res.success) {
+
       setContactSubmitted(true)
+
       setTimeout(() => {
+
         setContactSubmitted(false)
+
         setContactName('')
+
         setContactEmail('')
+
         setContactMsg('')
+
       }, 6000)
+
     } else {
+
       setContactError(res.error || 'Failed to submit engagement request.')
+
     }
+
   }
+
+
 
   const menuConfig = [
+
     {
+
       label: '// CORE',
+
       type: 'scroll',
+
       target: 0
+
     },
+
     {
+
       label: '// PROTOCOLS',
+
       type: 'dropdown',
+
       items: [
+
         { label: 'Cognitive Advisory', slug: 'ai-consulting' },
+
         { label: 'System Synthesis', slug: 'tech-services' },
+
         { label: 'Incubation Den', slug: 'incubation-hub' },
+
         { label: 'Autonomous Suites', slug: 'ai-products' }
+
       ]
+
     },
+
     {
+
       label: '// INTEL',
+
       type: 'dropdown',
+
       items: [
+
         { label: 'Case Studies Explorer', slug: 'case-studies' },
+
         { label: 'Owned Industry Insights', slug: 'insights' },
+
         { label: 'Curated Tech News', slug: 'articles' }
+
       ]
+
     },
+
     {
+
       label: '// THE COLLECTIVE',
+
       type: 'dropdown',
+
       items: [
+
         { label: 'Who We Are', slug: 'who-we-are' },
+
         { label: 'How We Operate', slug: 'how-we-operate' },
+
         { label: 'Governance and Security', slug: 'governance-security' }
+
       ]
+
     }
+
   ]
 
+
+
   const isItemActive = (item: any) => {
+
     if (item.type === 'scroll') {
+
       return slug === 'home' && activeSection === item.target;
+
     }
+
     if (item.label === '// PROTOCOLS' && slug === 'home' && activeSection === 1) {
+
       return true;
+
     }
+
     if (item.label === '// INTEL' && slug === 'home' && activeSection === 2) {
+
       return true;
+
     }
+
     if (item.items) {
+
       return item.items.some((sub: any) => {
+
         if (sub.type === 'scroll') {
+
           return slug === 'home' && activeSection === sub.target;
+
         }
+
         return slug === sub.slug;
+
       });
+
     }
+
     return false;
+
   };
 
+
+
   if (isAdmin) {
+
     return <AdminPage />;
+
   }
 
+
+
   return (
+
     <div ref={rootRef} className={`app-root-container ${slug === 'home' ? 'horizontal-layout' : 'vertical-layout'}`}>
+
       {/* Film grain subtle cinematic overlay */}
+
       <div className="film-grain-overlay" />
 
+
+
       {/* Global Command Palette (Cmd + K / Ctrl + K) */}
+
       <CommandPalette 
+
         isOpen={isCmdPaletteOpen} 
+
         onClose={() => setIsCmdPaletteOpen(false)} 
+
         onNavigate={navigateTo} 
+
       />
 
+
+
       {/* First-time landing regional compliance & currency attestation */}
+
       <AttestationModal />
 
+
+
       {/* Background elements */}
+
       <div className="parallax-bg" />
+
       <div className="parallax-grid" />
+
       <div className="particles-bg" />
 
+
+
       {/* Floating Header */}
+
       {!isSplash && (
+
         <header className={`floating-header ${scrolled ? 'scrolled' : ''}`}>
+
           <a href="#" className="header-logo" onClick={(e) => { e.preventDefault(); navigateTo('home'); setIsMobileMenuOpen(false); }}>
+
             <img src="./media/LYCOS-CORE-lOGOTYPE-300x100.png" alt="Lycos Core Logo" className="header-logo-img" />
+
           </a>
+
           <nav className="header-nav">
+
             <ul>
+
               {menuConfig.map((item, idx) => (
+
                 <li key={idx} className={item.items ? 'dropdown-container' : ''}>
+
                   {item.type === 'scroll' ? (
+
                     <a 
+
                       href="#" 
+
                       className={isItemActive(item) ? 'active' : ''} 
+
                       onClick={(e) => { e.preventDefault(); if (item.target !== undefined) scrollToSection(item.target); }}
+
                     >
+
                       {item.label}
+
                     </a>
+
                   ) : (
+
                     <>
+
                       <a 
+
                         href="#" 
+
                         className={isItemActive(item) ? 'active' : ''}
+
                         onClick={(e) => {
+
                           e.preventDefault();
+
                           if (item.label === '// PROTOCOLS') {
+
                             scrollToSection(1);
+
                           } else if (item.label === '// INTEL') {
+
                             scrollToSection(2);
+
                           }
+
                         }}
+
                       >
+
                         {item.label} <span className="dropdown-arrow">▼</span>
+
                       </a>
+
                       <ul className="dropdown-menu">
+
                         {item.items?.map((subItem: any, sIdx: number) => (
+
                           <li key={sIdx}>
+
                             {subItem.type === 'scroll' ? (
+
                               <a 
+
                                 href="#"
+
                                 onClick={(e) => { 
+
                                   e.preventDefault(); 
+
                                   if (subItem.target !== undefined) {
+
                                     scrollToSection(subItem.target); 
+
                                   }
+
                                 }}
+
                               >
+
                                 {subItem.label}
+
                               </a>
+
                             ) : (
+
                               <a 
+
                                 href="#" 
+
                                 onClick={(e) => { 
+
                                   e.preventDefault(); 
+
                                   navigateTo(subItem.slug); 
+
                                 }}
+
                               >
+
                                 {subItem.label}
+
                               </a>
+
                             )}
+
                           </li>
+
                         ))}
+
                       </ul>
+
                     </>
+
                   )}
+
                 </li>
+
               ))}
+
             </ul>
+
           </nav>
+
           <div className="header-actions">
+
             <button 
+
               className="cmd-palette-trigger-btn"
+
               onClick={() => setIsCmdPaletteOpen(true)}
+
               title="Quick Search"
+
             >
+
               <Search size={13} className="neon-icon" />
+
               <span>SEARCH</span>
+
             </button>
+
             <button className="btn-solid header-cta-btn" onClick={() => scrollToSection(4)}>
+
               INITIATE CONNECTION
+
             </button>
+
           </div>
+
+
 
           {/* Mobile Hamburger Toggle Button */}
+
           <button 
+
             className="mobile-hamburger-btn"
+
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+
             aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+
           >
+
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+
           </button>
+
         </header>
+
       )}
+
+
 
       {/* Mobile Navigation Drawer Overlay */}
+
       {!isSplash && (
+
         <div className={`mobile-nav-drawer ${isMobileMenuOpen ? 'open' : ''}`}>
+
           <div className="mobile-nav-backdrop" onClick={() => setIsMobileMenuOpen(false)} />
+
           <div className="mobile-nav-content">
+
             <div className="mobile-nav-header">
+
               <span className="mobile-nav-tagline">// NAVIGATION MATRIX</span>
+
               <button 
+
                 className="mobile-nav-close-btn"
+
                 onClick={() => setIsMobileMenuOpen(false)}
+
                 aria-label="Close menu"
+
               >
+
                 <X size={20} />
+
               </button>
+
             </div>
+
+
 
             <div className="mobile-nav-links">
+
               {menuConfig.map((item, idx) => (
+
                 <div key={idx} className="mobile-nav-group">
+
                   {item.type === 'scroll' ? (
+
                     <a
+
                       href="#"
+
                       className={`mobile-nav-link ${isItemActive(item) ? 'active' : ''}`}
+
                       onClick={(e) => {
+
                         e.preventDefault();
+
                         setIsMobileMenuOpen(false);
+
                         if (item.target !== undefined) scrollToSection(item.target);
+
                       }}
+
                     >
+
                       <span className="mobile-link-text">{item.label}</span>
+
                       <ChevronRight size={16} className="mobile-link-arrow" />
+
                     </a>
+
                   ) : (
+
                     <div className="mobile-accordion-wrapper">
+
                       <div
+
                         className={`mobile-nav-accordion-header ${mobileExpandedDropdown === item.label ? 'expanded' : ''} ${isItemActive(item) ? 'active' : ''}`}
+
                         onClick={() => setMobileExpandedDropdown(mobileExpandedDropdown === item.label ? null : item.label)}
+
                       >
+
                         <span className="mobile-link-text">{item.label}</span>
+
                         <ChevronDown size={16} className={`accordion-chevron ${mobileExpandedDropdown === item.label ? 'rotated' : ''}`} />
+
                       </div>
+
                       <div className={`mobile-nav-sublinks ${mobileExpandedDropdown === item.label ? 'open' : ''}`}>
+
                         {item.items?.map((subItem: any, sIdx: number) => (
+
                           <a
+
                             key={sIdx}
+
                             href="#"
+
                             className={`mobile-sublink ${slug === subItem.slug ? 'active' : ''}`}
+
                             onClick={(e) => {
+
                               e.preventDefault();
+
                               setIsMobileMenuOpen(false);
+
                               if (subItem.type === 'scroll' && subItem.target !== undefined) {
+
                                 scrollToSection(subItem.target);
+
                               } else {
+
                                 navigateTo(subItem.slug);
+
                               }
+
                             }}
+
                           >
+
                             <span className="sublink-bullet">›</span>
+
                             <span>{subItem.label}</span>
+
                           </a>
+
                         ))}
+
                       </div>
+
                     </div>
+
                   )}
+
                 </div>
+
               ))}
+
             </div>
+
+
 
             <div className="mobile-nav-footer">
+
               <button 
+
                 className="mobile-search-btn"
+
                 onClick={() => {
+
                   setIsMobileMenuOpen(false);
+
                   setIsCmdPaletteOpen(true);
+
                 }}
+
               >
+
                 <Search size={14} className="neon-icon" />
+
                 <span>SEARCH PROTOCOLS & INTEL</span>
+
               </button>
+
               <button 
+
                 className="btn-solid mobile-cta-btn"
+
                 onClick={() => {
+
                   setIsMobileMenuOpen(false);
+
                   scrollToSection(4);
+
                 }}
+
               >
+
                 INITIATE CONNECTION
+
               </button>
+
             </div>
+
           </div>
+
         </div>
+
       )}
+
+
 
       {(slug === 'home' || slug === 'portal' || slug === 'wip' || !slug) ? (
+
         /* Horizontal Sections Wrapper (Full Platform / Main Website) */
+
         <div key="home-wrapper" className="scroll-wrapper" ref={containerRef}>
+
           
+
           {/* Section 1: Hero */}
+
           <section className="section home-hero-section hero-fullscreen-section">
+
             <div className="hero-grid">
+
               <div>
+
                 <span className="eyebrow-tagline-green">
+
                   {pageData.hero.tagline}
+
                 </span>
+
                 <h1 className="hero-heading">
-                  Precision AI Systems<span className="brand-dot">.</span><br />
-                  <span className="text-secondary">Engineered with Instinct<span className="accent-dot">.</span></span>
+
+                  Precision AI Systems<br />
+
+                  <span className="hero-heading-secondary">Engineered with Instinct<span className="accent-dot">.</span></span>
+
                 </h1>
+
                 <div className="hero-tags-row">
+
                   {['Cognitive Advisory', 'System Synthesis', 'Incubation Den'].map((tag: string, tIdx: number) => (
+
                     <span key={tIdx} className="hero-pill-badge">{tag}</span>
+
                   ))}
+
                 </div>
+
                 <p className="hero-body-copy">
+
                   We architect bespoke AI products, orchestrate enterprise-scale cognitive strategy, and run a high-velocity incubation hub to trial next-generation solutions. Systemic machine intelligence, built to navigate market complexity.
+
                 </p>
+
                 <div className="subpage-hero-cta-row hero-cta-group">
+
                   <button className="cta-primary" onClick={() => scrollToSection(1)}>
+
                     {pageData.hero.exploreBtnText}
+
                   </button>
+
                   <button className="cta-secondary" onClick={() => scrollToSection(4)}>
+
                     {pageData.hero.partnerBtnText}
+
                   </button>
+
                 </div>
+
               </div>
+
+
 
 {/* Layout Spacer for Section 1 Right Column (Global Canvas is mounted globally) */}
+
               <div className="hero-right-spacer" />
+
             </div>
+
           </section>
+
+
 
           {/* Section 2: Core Protocols */}
+
           <section className="section home-section-pillars">
+
             <div className="home-section-pillars-inner">
+
               <h2 className="home-pillars-title">
+
                 {pageData.pillars.title.split(' ')[0]} <span className="home-pillar-title-accent">{pageData.pillars.title.split(' ').slice(1).join(' ')}<span className="accent-dot">.</span></span>
+
               </h2>
+
               <div className="pillars-grid home-pillars-grid">
+
                 {pageData.pillars.items.map((item: any, idx: number) => (
+
                   <div key={idx} className="protocol-card home-protocol-card glass-panel purple-glow-card">
+
                     <div>
+
                       <div className="home-protocol-icon-wrap">
+
                         <div className="icon-badge">
+
                           {idx === 0 && <Cpu size={28} className="neon-icon" />}
+
                           {idx === 1 && <Layers size={28} className="neon-icon" />}
+
                           {idx === 2 && <Activity size={28} className="neon-icon" />}
+
                           {idx === 3 && <TrendingUp size={28} className="neon-icon" />}
+
                         </div>
+
                       </div>
+
                       <h3 className="home-protocol-card-title">{item.title}</h3>
+
                       <p className="home-protocol-card-desc">{item.description}</p>
+
                     </div>
+
                     <button 
+
                       className="btn-link home-protocol-btn" 
+
                       onClick={() => {
+
                         const slugs = ['ai-consulting', 'tech-services', 'incubation-hub', 'ai-products'];
+
                         navigateTo(slugs[idx]);
+
                       }} 
+
                     >
+
                       INSPECT PROTOCOL &gt;
+
                     </button>
+
                   </div>
+
                 ))}
+
               </div>
+
+
 
               {/* Enterprise Data Pipeline Telemetry Block (Throughput Monitor Standalone) */}
+
               <div className="pillars-telemetry-block pillars-telemetry-fullwidth">
+
                 <div className="glass-panel throughput-monitor-card pillars-throughput-card">
+
                   <div className="throughput-card-header">
+
                     <div>
+
                       <span className="throughput-tag">TELEMETRY STREAM // PIPELINE THROUGHPUT</span>
+
                       <h3 className="throughput-title">Ingestion and Token Vectorization</h3>
+
                     </div>
+
                     <div className="throughput-latency-pill">
+
                       <Activity size={14} className="neon-icon" />
+
                       <span>7.8ms Avg Latency</span>
+
                     </div>
+
                   </div>
+
                   <div className="throughput-stats-row">
+
                     <div className="throughput-stat-item">
+
                       <div className="throughput-stat-label">STREAM INGESTION</div>
+
                       <div className="throughput-stat-value accent-highlight">14.8 GB/s</div>
+
                       <div className="throughput-stat-sub">+34% Peak Capacity</div>
+
                     </div>
+
                     <div className="throughput-stat-item">
+
                       <div className="throughput-stat-label">VECTOR TOKENS</div>
+
                       <div className="throughput-stat-value">1.85M /s</div>
+
                       <div className="throughput-stat-sub">Zero Ingestion Loss</div>
+
                     </div>
+
                     <div className="throughput-stat-item">
+
                       <div className="throughput-stat-label">STREAM INTEGRITY</div>
+
                       <div className="throughput-stat-value">99.999%</div>
+
                       <div className="throughput-stat-sub">Zero Context Drift</div>
+
                     </div>
+
                   </div>
+
                   <div className="throughput-graph-wrapper">
+
                     <svg viewBox="0 0 540 100" className="throughput-svg" preserveAspectRatio="none">
+
                       <defs>
+
                         <linearGradient id="pillars-throughput-grad" x1="0" y1="0" x2="0" y2="1">
+
                           <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.3" />
+
                           <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
+
                         </linearGradient>
+
                       </defs>
+
                       <line x1="0" y1="25" x2="540" y2="25" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 6" />
+
                       <line x1="0" y1="50" x2="540" y2="50" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 6" />
+
                       <line x1="0" y1="75" x2="540" y2="75" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 6" />
+
                       <path d="M 0,85 C 60,70 110,45 170,60 C 230,75 290,25 360,35 C 430,45 480,15 540,5 L 540,100 L 0,100 Z" fill="url(#pillars-throughput-grad)" />
+
                       <path d="M 0,85 C 60,70 110,45 170,60 C 230,75 290,25 360,35 C 430,45 480,15 540,5" fill="none" stroke="var(--accent)" strokeWidth="2.5" className="chart-glow-path" />
+
                     </svg>
+
                   </div>
+
                 </div>
+
               </div>
+
             </div>
+
           </section>
+
+
 
           {/* Section 3: Use Case / Case Study */}
+
           <section className="section home-section-usecase">
+
             <div className="use-case-grid">
+
               <div className="glass-panel use-case-card home-usecase-card">
+
                 <span className="home-usecase-badge">
+
                   {pageData.useCase.badge}
+
                 </span>
+
                 <h2 className="home-usecase-title">
+
                   {pageData.useCase.title}
+
                 </h2>
+
                 <p className="home-usecase-desc">
+
                   {pageData.useCase.description}
+
                 </p>
+
+
 
                 <div className="use-case-metrics-grid home-usecase-metrics-grid">
+
                   {pageData.useCase.metrics.map((m: any, idx: number) => (
+
                     <div key={idx}>
+
                       <div className={`home-usecase-metric-val ${idx === 0 ? 'accent-highlight' : ''}`}>
+
                         {displayedUseCaseMetrics[idx] || m.value}
+
                       </div>
+
                       <div className="home-usecase-metric-lbl">
+
                         {m.label}
+
                       </div>
+
                     </div>
+
                   ))}
+
                 </div>
+
               </div>
 
-              <div className="use-case-insight-panel home-usecase-insight-panel">
-                <span className="home-usecase-insight-badge">
-                  FEATURED CASE STUDY
-                </span>
-                <h3 className="home-usecase-insight-title">
-                  {pageData.useCase.insightTitle}
-                </h3>
-                <p className="home-usecase-insight-desc">
-                  {pageData.useCase.insightSummary}
-                </p>
-                <button className="btn-link" onClick={() => navigateTo('case-studies')}>
-                  {(pageData.useCase.insightLink || 'READ THE FULL CASE STUDY').toUpperCase()} <ArrowRight size={14} />
-                </button>
+
+
+              <div className="glass-panel use-case-insight-panel home-usecase-insight-panel">
+
+                <div>
+
+                  <span className="home-usecase-insight-badge">
+
+                    FEATURED CASE STUDY
+
+                  </span>
+
+                  <h3 className="home-usecase-insight-title">
+
+                    {latestCaseStudy?.title || pageData.useCase.insightTitle}
+
+                  </h3>
+
+                  <p className="home-usecase-insight-desc">
+
+                    {latestCaseStudy?.problem 
+
+                      ? (latestCaseStudy.problem.length > 170 ? (latestCaseStudy.problem.slice(0, 170).trim() + '...') : latestCaseStudy.problem)
+
+                      : pageData.useCase.insightSummary}
+
+                  </p>
+
+                </div>
+
+                
+
+                <div className="home-usecase-insight-footer">
+
+                  <div className="home-usecase-case-meta">
+
+                    <span className="case-meta-client">{latestCaseStudy?.clientName || 'Lyra Logistics Group'}</span>
+
+                    <span className="case-meta-industry">{latestCaseStudy?.industry || 'Enterprise Deployment'}</span>
+
+                  </div>
+
+                  <button className="btn-link home-case-study-cta" onClick={() => navigateTo('case-studies')}>
+
+                    {(pageData.useCase.insightLink || 'READ THE FULL CASE STUDY').toUpperCase()} <ArrowRight size={14} />
+
+                  </button>
+
+                </div>
+
               </div>
+
             </div>
+
           </section>
+
+
 
           {/* Section 4: Performance */}
+
           <section className="section home-section-performance">
+
             <div className="home-performance-shell">
+
               <div className="performance-yield-only-grid">
+
                 {pageData.performance?.yieldMetrics?.map((m: any, idx: number) => (
+
                   <div key={idx} className="glass-panel yield-metric-card">
+
                     <div className="yield-card-top">
+
                       <span className="yield-metric-tag">{m.tag}</span>
+
                       <div className="yield-metric-value accent-highlight">{m.value}</div>
+
                     </div>
+
                     <h4 className="yield-metric-label">{m.label}</h4>
+
                     <p className="yield-metric-context">{m.context}</p>
+
                   </div>
+
                 ))}
+
               </div>
+
             </div>
+
           </section>
+
+
 
           {/* Section 5: Calculator and Contact */}
+
           <section className="section home-section-contact">
+
             <div className="contact-grid">
+
               <div className="glass-panel home-contact-wrapper">
+
                 <h3 className="home-contact-title">
+
                   Global Operational Footprint
+
                 </h3>
+
                 <WorldMap />
+
               </div>
+
+
 
               {/* Simple Contact Form */}
+
               <div className="glass-panel home-contact-form-panel">
+
                 <h3 className="home-contact-form-title">
+
                   Initiate Engagement
+
                 </h3>
+
                 
+
                 {contactSubmitted ? (
+
                   <div className="home-contact-success">
+
                     <CheckCircle size={48} />
+
                     <h4 className="home-contact-success-title">Submission Received</h4>
+
                     <p className="home-contact-success-text">Thank you. One of our operational leads will contact you shortly.</p>
+
                   </div>
+
                 ) : (
+
                   <form onSubmit={handleContactSubmit} className="home-contact-form">
-                    <div className="home-contact-form-group">
-                      <label className="home-contact-label">Full Name</label>
-                      <input 
-                        type="text" 
-                        required 
-                        value={contactName} 
-                        onChange={(e) => setContactName(e.target.value)} 
-                        className="home-contact-input"
-                      />
-                    </div>
 
                     <div className="home-contact-form-group">
-                      <label className="home-contact-label">Email Address</label>
+
+                      <label className="home-contact-label">Full Name</label>
+
                       <input 
-                        type="email" 
+
+                        type="text" 
+
                         required 
-                        value={contactEmail} 
-                        onChange={(e) => setContactEmail(e.target.value)} 
+
+                        value={contactName} 
+
+                        onChange={(e) => setContactName(e.target.value)} 
+
                         className="home-contact-input"
+
                       />
+
                     </div>
+
+
+
+                    <div className="home-contact-form-group">
+
+                      <label className="home-contact-label">Email Address</label>
+
+                      <input 
+
+                        type="email" 
+
+                        required 
+
+                        value={contactEmail} 
+
+                        onChange={(e) => setContactEmail(e.target.value)} 
+
+                        className="home-contact-input"
+
+                      />
+
+                    </div>
+
+
 
                     <div className="home-contact-form-group-grow">
+
                       <label className="home-contact-label">Brief Description of operational bottlenecks</label>
+
                       <textarea 
+
                         required 
+
                         value={contactMsg} 
+
                         onChange={(e) => setContactMsg(e.target.value)} 
+
                         className="home-contact-textarea"
+
                       />
+
                     </div>
 
+
+
                     {contactError && (
+
                       <div style={{ color: '#ef4444', fontSize: '0.85rem', marginBottom: '0.75rem', fontFamily: 'monospace' }}>
+
                         {contactError}
+
                       </div>
+
                     )}
+
+
 
                     <button type="submit" className="btn-solid home-contact-submit" disabled={contactLoading}>
+
                       {contactLoading ? 'TRANSMITTING...' : 'INITIALIZE PROTOCOL'}
+
                     </button>
+
                   </form>
+
                 )}
+
               </div>
+
             </div>
+
+
 
             {/* Horizontal Links Row Underneath the 2 Cards */}
+
             <div className="home-links-row">
+
               <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('knowledge-base'); }} className="home-link-item">Master Knowledge Base</a>
+
               <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('terms-of-use'); }} className="home-link-item">Terms of Use</a>
+
               <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('privacy-policy'); }} className="home-link-item">Privacy Policy</a>
+
               <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('responsible-ai-policy'); }} className="home-link-item">Responsible AI Policy</a>
+
               <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('cookie-policy'); }} className="home-link-item">Cookie Policy</a>
+
             </div>
+
           </section>
 
+
+
         </div>
+
       ) : (
+
         /* Standalone Component Pages */
+
         <>
+
           {slug === 'ai-products' && (
+
             <div id="subpage-wrapper" className="vertical-scroll-wrapper" ref={containerRef}>
+
               <AIProductsSection />
+
             </div>
+
           )}
+
           {slug === 'tech-services' && (
+
             <div id="subpage-wrapper" className="vertical-scroll-wrapper" ref={containerRef}>
+
               <TechServicesSection />
+
             </div>
+
           )}
+
           {slug === 'incubation-hub' && (
+
             <div id="subpage-wrapper" className="vertical-scroll-wrapper" ref={containerRef}>
+
               <IncubationHubSection />
+
             </div>
+
           )}
+
           {slug === 'who-we-are' && (
+
             <div id="subpage-wrapper" className="vertical-scroll-wrapper" ref={containerRef}>
+
               <WhoWeAreSection />
+
             </div>
+
           )}
+
           {slug === 'how-we-operate' && (
+
             <div id="subpage-wrapper" className="vertical-scroll-wrapper" ref={containerRef}>
+
               <HowWeOperateSection />
+
             </div>
+
           )}
+
           {slug === 'governance-security' && (
+
             <div id="subpage-wrapper" className="vertical-scroll-wrapper" ref={containerRef}>
+
               <GovernanceSection />
+
             </div>
+
           )}
+
           {slug === 'case-studies' && (
+
             <div id="subpage-wrapper" className="vertical-scroll-wrapper" ref={containerRef}>
+
               <CaseStudiesSection />
+
             </div>
+
           )}
+
           {slug === 'insights' && (
+
             <div id="subpage-wrapper" className="vertical-scroll-wrapper" ref={containerRef}>
+
               <InsightsSection />
+
             </div>
+
           )}
+
           {slug === 'articles' && (
+
             <div id="subpage-wrapper" className="vertical-scroll-wrapper" ref={containerRef}>
+
               <ArticlesSection />
+
             </div>
+
           )}
+
           {slug === 'incubation/kinetic' && <div id="subpage-wrapper" className="vertical-scroll-wrapper"><ProtocolKinetic /></div>}
+
           {slug === 'incubation/apex' && <div id="subpage-wrapper" className="vertical-scroll-wrapper"><ProtocolApex /></div>}
+
           {slug === 'incubation/citadel' && <div id="subpage-wrapper" className="vertical-scroll-wrapper"><ProtocolCitadel /></div>}
+
           {(slug === 'knowledge-base' || slug === 'faqs') && (
+
             <div id="subpage-wrapper" className="vertical-scroll-wrapper" ref={containerRef}>
+
               <MasterFAQPage />
+
             </div>
+
           )}
+
           {slug === 'terms-of-use' && (
+
             <div id="subpage-wrapper" className="vertical-scroll-wrapper" ref={containerRef}>
+
               <TermsOfUsePage />
+
             </div>
+
           )}
+
           {slug === 'privacy-policy' && (
+
             <div id="subpage-wrapper" className="vertical-scroll-wrapper" ref={containerRef}>
+
               <PrivacyPolicyPage />
+
             </div>
+
           )}
+
           {slug === 'responsible-ai-policy' && (
+
             <div id="subpage-wrapper" className="vertical-scroll-wrapper" ref={containerRef}>
+
               <ResponsibleAIPage />
+
             </div>
+
           )}
+
           {slug === 'cookie-policy' && (
+
             <div id="subpage-wrapper" className="vertical-scroll-wrapper" ref={containerRef}>
+
               <CookiePolicyPage />
+
             </div>
+
           )}
+
           {isSplash && (
+
             <SplashPage />
+
           )}
+
           {!isSplash && !['portal','wip','ai-products','tech-services','incubation-hub','who-we-are','how-we-operate','governance-security','case-studies','insights','articles','incubation/kinetic','incubation/apex','incubation/citadel','knowledge-base','faqs','terms-of-use','privacy-policy','responsible-ai-policy','cookie-policy'].includes(slug) && (
+
             /* Vertical Sections Wrapper (Subpages like ai-consulting) */
+
             <div key="subpage-wrapper" id="subpage-wrapper" className="vertical-scroll-wrapper" ref={containerRef}>
+
           {pageData.layout ? pageData.layout.map((block: any, idx: number) => {
+
             if (block.blockType === 'hero') return renderHeroBlock(block, idx)
+
             if (block.blockType === 'metrics') return renderMetricsBlock(block, idx)
+
             if (block.blockType === 'pillars') return renderPillarsBlock(block, idx)
+
             if (block.blockType === 'framework') return renderFrameworkBlock(block, idx)
+
             if (block.blockType === 'deepDive') return renderDeepDiveBlock(block, idx)
+
             if (block.blockType === 'useCase') return renderUseCaseBlock(block, idx)
+
             return null
+
           }) : null}
 
+
+
           {/* Contact Section at bottom of subpage */}
+
           <section id="block-contact" className="section hero-fullscreen-section">
+
             <div className="subpage-contact-grid contact-grid">
+
               <div className="glass-panel subpage-contact-card">
+
                 <h3 className="subpage-contact-heading">
+
                   Initiate Engagement
+
                 </h3>
+
                 
+
                 {contactSubmitted ? (
+
                   <div className="hero-gauge-status">
+
                     <CheckCircle size={48} className="neon-icon" />
+
                     <h4>Submission Received</h4>
+
                     <p>Thank you. One of our operational leads will contact you shortly.</p>
+
                   </div>
+
                 ) : (
+
                   <form onSubmit={handleContactSubmit} className="contact-form">
-                    <div>
-                      <label className="contact-label">Full Name</label>
-                      <input 
-                        type="text" 
-                        required 
-                        value={contactName} 
-                        onChange={(e) => setContactName(e.target.value)} 
-                        className="contact-input"
-                      />
-                    </div>
 
                     <div>
-                      <label className="contact-label">Email Address</label>
+
+                      <label className="contact-label">Full Name</label>
+
                       <input 
-                        type="email" 
+
+                        type="text" 
+
                         required 
-                        value={contactEmail} 
-                        onChange={(e) => setContactEmail(e.target.value)} 
+
+                        value={contactName} 
+
+                        onChange={(e) => setContactName(e.target.value)} 
+
                         className="contact-input"
+
                       />
+
                     </div>
+
+
+
+                    <div>
+
+                      <label className="contact-label">Email Address</label>
+
+                      <input 
+
+                        type="email" 
+
+                        required 
+
+                        value={contactEmail} 
+
+                        onChange={(e) => setContactEmail(e.target.value)} 
+
+                        className="contact-input"
+
+                      />
+
+                    </div>
+
+
 
                     <div className="contact-form">
+
                       <label className="contact-label">Brief Description of operational bottlenecks</label>
+
                       <textarea 
+
                         required 
+
                         value={contactMsg} 
+
                         onChange={(e) => setContactMsg(e.target.value)} 
+
                         className="contact-textarea"
+
                       />
+
                     </div>
 
+
+
                     {contactError && (
+
                       <div style={{ color: '#ef4444', fontSize: '0.85rem', marginBottom: '0.75rem', fontFamily: 'monospace' }}>
+
                         {contactError}
+
                       </div>
+
                     )}
 
+
+
                     <button type="submit" className="cta-primary contact-submit-btn" disabled={contactLoading}>
+
                       {contactLoading ? 'TRANSMITTING...' : 'INITIALIZE PROTOCOL'}
+
                     </button>
+
                   </form>
+
                 )}
+
               </div>
+
+
 
               <div className="hero-gauge-wrapper">
+
                 <div className="contact-card">
+
                   <h3 className="subpage-contact-sidebar-heading">Initialize System Engagement</h3>
+
                   <p className="subpage-contact-sidebar-desc">
+
                     Consult directly with our system architects. We analyze complex enterprise bottlenecks, establish quantitative viability vectors, and engineer precision deployment roadmaps.
+
                   </p>
+
                   {/* Official LinkedIn Social Link */}
+
                   <LinkedInConnect />
+
                 </div>
+
               </div>
+
             </div>
+
+
 
           </section>
+
             </div>
+
           )}
+
         </>
+
       )}
+
+
 
       {/* Append Global Footer to all non-home subpages */}
+
       {slug !== 'home' && slug !== 'portal' && slug !== 'wip' && slug !== '' && !isSplash && (
+
         <footer className="subpage-global-footer">
+
           <div className="subpage-global-footer-container">
+
             <div>© 2026 Lycos Core. All rights reserved.</div>
+
             <RegionSelector variant="footer" />
+
             <div className="subpage-global-footer-links">
+
               <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('knowledge-base'); }} className="subpage-global-footer-link">Master Knowledge Base</a>
+
               <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('terms-of-use'); }} className="subpage-global-footer-link">Terms of Use</a>
+
               <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('privacy-policy'); }} className="subpage-global-footer-link">Privacy Policy</a>
+
               <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('responsible-ai-policy'); }} className="subpage-global-footer-link">Responsible AI Policy</a>
+
               <a href="#" onClick={(e) => { e.preventDefault(); navigateTo('cookie-policy'); }} className="subpage-global-footer-link">Cookie Policy</a>
+
             </div>
+
           </div>
+
         </footer>
+
       )}
+
+
 
       {/* Navigation HUD (Horizontal page only) */}
+
       {(slug === 'home' || slug === 'portal' || slug === 'wip' || !slug) && (
+
         <NavigationHUD 
+
           currentSection={activeSection} 
+
           totalSections={5} 
+
           onSectionClick={scrollToSection} 
+
         />
+
       )}
+
+
 
       {/* Info Modal */}
+
       {modalOpen && (
+
         <div className="app-info-modal-backdrop">
+
           <div className="glass-panel app-info-modal-card">
+
             <h3 className="app-info-modal-title">{modalTitle}</h3>
+
             
+
             <div className="app-info-modal-body">
+
               {modalType === 'ai' && (
+
                 <div>
+
                   <p className="app-info-modal-p">Our central AI engine coordinates data classification, risk modeling, and natural language routing pipelines across standard REST endpoints.</p>
+
                   <p>In the headless setup, this coordinates dynamic queries via JSON API schemas, resolving complex data dependencies instantaneously without server-side rendering latency.</p>
+
                 </div>
+
               )}
+
               {modalType === 'pillar' && (
+
                 <div>
+
                   <p className="app-info-modal-p">This core operational pillar is fully represented in the Payload CMS backend.</p>
+
                   <p>Content managers can dynamically edit descriptions, add custom metrics, or link case studies, reflecting instantly on the horizontal-scroll React interface without codebase deployments.</p>
+
                 </div>
+
               )}
+
               {modalType === 'insight' && (
+
                 <div>
+
                   <p className="app-info-modal-p">Generative data pipelines demand extreme regulatory and security validation structures.</p>
+
                   <p>This matured insight studies model feedback vectors and how structured collections can secure user data contexts while accelerating validation runtimes.</p>
+
                 </div>
+
               )}
+
             </div>
 
+
+
             <button className="btn-solid" onClick={() => setModalOpen(false)}>
+
               Close Overview
+
             </button>
+
           </div>
+
         </div>
+
       )}
+
+
 
       {/* Global Fixed Particle Sphere Portal Canvas (Single Continuous Element) */}
+
       {!isSplash && (
+
         <>
+
           <div
+
             className={`global-sphere-container ${
+
               isHeroState ? 'sphere-hero' : 'sphere-docked'
+
             }`}
+
             onClick={() => setIsCipherOpen((prev) => !prev)}
+
             title="Interact with Cipher AI Representative"
+
           >
+
             <canvas id="network-canvas" width="500" height="500" />
+
           </div>
 
+
+
           {/* Cipher Persona AI Chat Widget (ALWAYS Bottom-Right Docked) */}
+
           <CipherWidget
+
             isOpenControlled={isCipherOpen}
+
             onToggleControlled={() => setIsCipherOpen((prev) => !prev)}
+
           />
+
         </>
+
       )}
+
     </div>
+
   )
+
 }

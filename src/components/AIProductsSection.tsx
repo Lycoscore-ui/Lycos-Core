@@ -356,7 +356,7 @@ export default function AIProductsSection() {
 
                 <div>
                   <div className="count-up-trigger stat-metric">
-                    andlt;90 Sec
+                    &lt; 90 Sec
                   </div>
                   <p className="service-desc">
                     average handling time to fully resolve complex multi-step workflows.
@@ -858,7 +858,7 @@ export default function AIProductsSection() {
 
                 <div>
                   <div className="count-up-trigger stat-metric">
-                    andlt; 10 ms
+                    &lt; 10 ms
                   </div>
                   <p className="service-desc">
                     zero-trust containment time of suspicious activity, preventing threat propagation instantly.
@@ -1090,7 +1090,7 @@ export default function AIProductsSection() {
               <div className="outcomes-metrics-grid-2">
                 <div>
                   <div className="count-up-trigger stat-metric">
-                    andlt; 1 Sec
+                    &lt; 1 Sec
                   </div>
                   <p className="service-desc">
                     average operational synchronization time across cross-departmental databases.
