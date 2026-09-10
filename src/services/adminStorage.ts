@@ -3,6 +3,53 @@ import type { CuratedArticle, Insight } from '../types/cms';
 import { mockArticles, mockInsights } from '../data/mockCmsData';
 import publishedContentData from '../data/publishedContent.json';
 
+// â”€â”€ Server-side CMS API â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Articles/insights are persisted in app/public/api/cms-data.json via PHP.
+// This is the canonical source of truth â€” readable by any browser, any tab.
+const CMS_API_URL = '/api/cms.php';
+
+async function cmsApiPost(body: Record<string, unknown>): Promise<{ success: boolean; updatedAt?: string; error?: string }> {
+  try {
+    const res = await fetch(CMS_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) return { success: false, error: `HTTP ${res.status}` };
+    return await res.json();
+  } catch (err: any) {
+    console.warn('[CMS API] POST failed â€” falling back to localStorage only:', err.message);
+    return { success: false, error: err.message };
+  }
+}
+
+export async function fetchCmsData(): Promise<{ articles: CuratedArticle[]; insights: Insight[] }> {
+  try {
+    const res = await fetch(`${CMS_API_URL}?t=${Date.now()}`, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const articles: CuratedArticle[] = Array.isArray(data.articles) ? data.articles : [];
+    const insights: Insight[] = Array.isArray(data.insights) ? data.insights : [];
+    const deletedIds: string[] = Array.isArray(data.deletedIds) ? data.deletedIds : [];
+
+    // Cache to localStorage for fast synchronous fallbacks
+    if (articles.length > 0) {
+      localStorage.setItem(STORAGE_KEYS.CUSTOM_ARTICLES, JSON.stringify(articles));
+    }
+    if (insights.length > 0) {
+      localStorage.setItem(STORAGE_KEYS.CUSTOM_INSIGHTS, JSON.stringify(insights));
+    }
+    if (deletedIds.length > 0) {
+      localStorage.setItem(STORAGE_KEYS.DELETED_IDS, JSON.stringify(deletedIds));
+    }
+
+    return { articles, insights };
+  } catch (err: any) {
+    console.warn('[CMS API] GET failed — serving static/localStorage fallback:', err.message);
+    return { articles: [], insights: [] };
+  }
+}
+
 const STORAGE_KEYS = {
   ADMIN_PASSWORD: 'lycos_admin_pwd_hash',
   ADMIN_SESSION: 'lycos_admin_session',
@@ -10,7 +57,7 @@ const STORAGE_KEYS = {
   CUSTOM_ARTICLES: 'lycos_custom_articles',
   CUSTOM_INSIGHTS: 'lycos_custom_insights',
   SAVED_DRAFTS: 'lycos_saved_drafts',
-  // IDs explicitly removed by the operator — prevents static base list re-surfacing them
+  // IDs explicitly removed by the operator â€” prevents static base list re-surfacing them
   DELETED_IDS: 'lycos_deleted_article_ids',
 };
 
@@ -178,8 +225,8 @@ export async function fetchCandidatesFromN8n(
 ): Promise<{ candidates: CandidateArticle[]; fromN8n: boolean; error?: string }> {
   try {
     const controller = new AbortController();
-    // Allow up to 120s (2 minutes) for local LM Studio / N8N LLM agents to execute
-    const timeout = setTimeout(() => controller.abort(), 120000);
+    // Allow up to 600s (10 minutes) for local LM Studio / N8N LLM agents to execute
+    const timeout = setTimeout(() => controller.abort(), 600000);
 
     const response = await fetch(config.searchWebhookUrl, {
       method: 'POST',
@@ -249,7 +296,7 @@ export async function fetchCandidatesFromN8n(
       candidates: [],
       fromN8n: false,
       error: err.name === 'AbortError' 
-        ? 'N8N search request timed out after 2 minutes. Please check your LM Studio execution in N8N.'
+        ? 'N8N search request timed out after 10 minutes. Please check your LM Studio execution in N8N.'
         : `N8N Connection Error: ${err.message || 'Failed to reach ' + config.searchWebhookUrl}`
     };
   }
@@ -305,7 +352,7 @@ export async function fetchIndustryCandidatesFromN8n(
 ): Promise<{ candidates: CandidateArticle[]; fromN8n: boolean; error?: string }> {
   try {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 120000);
+    const timeout = setTimeout(() => controller.abort(), 600000);
 
     const webhookUrl = config.industrySearchWebhookUrl || 'http://localhost:5678/webhook/lycos-industry-search';
 
@@ -377,7 +424,7 @@ export async function fetchIndustryCandidatesFromN8n(
       candidates: [],
       fromN8n: false,
       error: err.name === 'AbortError'
-        ? 'N8N Industry Search timed out after 2 minutes. Please check your LM Studio execution in N8N.'
+        ? 'N8N Industry Search timed out after 10 minutes. Please check your LM Studio execution in N8N.'
         : `N8N Industry Connection Error: ${err.message || 'Failed to reach ' + config.industrySearchWebhookUrl}`
     };
   }
@@ -390,7 +437,7 @@ export async function scrapeIndustryArticleWithN8n(
 ): Promise<{ draft: GeneratedArticleDraft | null; fromN8n: boolean; error?: string }> {
   try {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 120000);
+    const timeout = setTimeout(() => controller.abort(), 600000);
 
     const webhookUrl = config.industryScrapeWebhookUrl || 'http://localhost:5678/webhook/lycos-industry-scrape';
 
@@ -471,8 +518,8 @@ export async function scrapeIndustryArticleWithN8n(
           curator: data.curator || `Lycos Industry Desk (${candidate.sourceName})`,
           contentType: 'curated_news',
           linkedInPost: {
-            headline: data.linkedInHeadline || `📰 Industry Wire: ${candidate.title}`,
-            body: data.linkedInBody || `Major industry movement reported by ${candidate.sourceName}: ${candidate.title}.\n\nExplore how this impacts cognitive architecture and autonomous workflows.\n\n🔗 Full industry brief on Lycos Core.`,
+            headline: data.linkedInHeadline || `ðŸ“° Industry Wire: ${candidate.title}`,
+            body: data.linkedInBody || `Major industry movement reported by ${candidate.sourceName}: ${candidate.title}.\n\nExplore how this impacts cognitive architecture and autonomous workflows.\n\nðŸ”— Full industry brief on Lycos Core.`,
             hashtags: data.hashtags || ['#TechNews', '#IndustryAdvisory', '#EnterpriseAI', '#LycosCore'],
             status: 'draft'
           },
@@ -489,7 +536,7 @@ export async function scrapeIndustryArticleWithN8n(
       draft: null,
       fromN8n: false,
       error: err.name === 'AbortError'
-        ? 'N8N Industry Scrape timed out after 2 minutes. Check scraper response in N8N.'
+        ? 'N8N Industry Scrape timed out after 10 minutes. Check scraper response in N8N.'
         : `N8N Industry Scrape Error: ${err.message || 'Failed to reach ' + config.industryScrapeWebhookUrl}`
     };
   }
@@ -532,8 +579,8 @@ export async function synthesizeArticleWithN8n(
 ): Promise<{ draft: GeneratedArticleDraft | null; fromN8n: boolean; error?: string }> {
   try {
     const controller = new AbortController();
-    // Allow up to 120s (2 minutes) for local LM Studio / N8N LLM agents to write full article
-    const timeout = setTimeout(() => controller.abort(), 120000);
+    // Allow up to 600s (10 minutes) for local LM Studio / N8N LLM agents to write full article
+    const timeout = setTimeout(() => controller.abort(), 600000);
 
     const response = await fetch(config.generateWebhookUrl, {
       method: 'POST',
@@ -612,7 +659,7 @@ export async function synthesizeArticleWithN8n(
           curator: 'Lycos Core Intelligence Desk',
           contentType: 'owned_insight',
           linkedInPost: {
-            headline: data.linkedInHeadline || `⚡ Precision AI Brief: ${candidate.title}`,
+            headline: data.linkedInHeadline || `âš¡ Precision AI Brief: ${candidate.title}`,
             body: data.linkedInBody || `How is cognitive infrastructure evolving for enterprise scale? Our latest analysis breaks down the technical mechanisms behind ${candidate.title} and what it means for production deployment.\n\nRead the full strategic advisory on Lycos Core.`,
             hashtags: data.hashtags || ['#EnterpriseAI', '#CognitiveInfrastructure', '#AIAdvisory', '#LycosCore'],
             status: 'draft'
@@ -630,7 +677,7 @@ export async function synthesizeArticleWithN8n(
       draft: null,
       fromN8n: false,
       error: err.name === 'AbortError'
-        ? 'N8N synthesis timed out after 2 minutes. Check LM Studio / local LLM output.'
+        ? 'N8N synthesis timed out after 10 minutes. Check LM Studio / local LLM output.'
         : `N8N Synthesis Error: ${err.message || 'Failed to reach ' + config.generateWebhookUrl}`
     };
   }
@@ -786,7 +833,7 @@ export async function triggerGitHubDeployment(
         return {
           success: true,
           target,
-          message: `✓ Articles synchronized to GitHub & Actions pipeline triggered! Deploying to ${target.toUpperCase()} via branch '${branch}'.`,
+          message: `âœ“ Articles synchronized to GitHub & Actions pipeline triggered! Deploying to ${target.toUpperCase()} via branch '${branch}'.`,
           actionsUrl
         };
       } else {
@@ -830,7 +877,7 @@ export async function triggerGitHubDeployment(
       return {
         success: true,
         target,
-        message: `✓ N8N deployment webhook triggered for ${target.toUpperCase()}!`,
+        message: `âœ“ N8N deployment webhook triggered for ${target.toUpperCase()}!`,
         actionsUrl
       };
     }
@@ -936,7 +983,7 @@ export function publishArticleToSite(draft: GeneratedArticleDraft): CuratedArtic
     content: draft.content
   };
 
-  // 1. Save to Unified Repository (CUSTOM_ARTICLES)
+  // 1. Save to Unified Repository (CUSTOM_ARTICLES) â€” localStorage for admin UI reactivity
   const custom = localStorage.getItem(STORAGE_KEYS.CUSTOM_ARTICLES);
   let customList: CuratedArticle[] = [];
   if (custom) {
@@ -1001,7 +1048,13 @@ export function publishArticleToSite(draft: GeneratedArticleDraft): CuratedArtic
     }
     customInsightsList = [newInsight, ...customInsightsList.filter(i => i.id !== newInsight.id)];
     localStorage.setItem(STORAGE_KEYS.CUSTOM_INSIGHTS, JSON.stringify(customInsightsList));
+
+    // 3. Persist insight to server-side CMS file (readable by any browser tab)
+    cmsApiPost({ action: 'publish_insight', insight: newInsight }).catch(() => {});
   }
+
+  // 3. Persist article to server-side CMS file (readable by any browser tab)
+  cmsApiPost({ action: 'publish_article', article: newArticle }).catch(() => {});
 
   return newArticle;
 }
@@ -1029,7 +1082,7 @@ export function deletePublishedArticle(articleId: string): void {
     }
   }
 
-  // 3. Add to DELETED_IDS blocklist — prevents the static publishedContent.json base from
+  // 3. Add to DELETED_IDS blocklist â€” prevents the static publishedContent.json base from
   //    re-surfacing this article after the next getPublishedArticles() / getPublishedInsights() call.
   try {
     const existing = getDeletedIds();
@@ -1038,4 +1091,7 @@ export function deletePublishedArticle(articleId: string): void {
   } catch {
     // Ignored
   }
+
+  // 4. Delete from server-side CMS file so removal is visible across all browser tabs
+  cmsApiPost({ action: 'delete', id: articleId }).catch(() => {});
 }

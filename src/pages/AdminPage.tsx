@@ -40,6 +40,7 @@ import {
   dispatchLinkedInViaN8n, 
   triggerGitHubDeployment,
   getPublishedArticles, 
+  fetchCmsData,
   publishArticleToSite, 
   deletePublishedArticle,
   generateMockCandidates
@@ -150,8 +151,20 @@ export default function AdminPage() {
     }
   }, []);
 
-  const loadPublishedList = () => {
+  const loadPublishedList = async () => {
+    // Immediate read from cached storage
     setPublishedList(getPublishedArticles());
+    // Server fetch to ensure multi-browser / network synchronization
+    try {
+      const data = await fetchCmsData();
+      if (data.articles && data.articles.length > 0) {
+        setPublishedList(data.articles);
+      } else {
+        setPublishedList(getPublishedArticles());
+      }
+    } catch {
+      // Ignored
+    }
   };
 
   const handleLogout = () => {

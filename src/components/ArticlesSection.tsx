@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { submitContactForm } from '../services/contactService';
 import type { CuratedArticle } from '../types/cms';
-import { getPublishedArticles } from '../services/adminStorage';
+import { getPublishedArticles, fetchCmsData } from '../services/adminStorage';
 import { Search, ExternalLink, Calendar, MessageSquareQuote, Newspaper, AlertTriangle, CheckCircle2 } from 'lucide-react';
 import LinkedInConnect from './LinkedInConnect';
 
@@ -10,23 +10,33 @@ interface ArticlesSectionProps {
 }
 
 export default function ArticlesSection({ articlesList }: ArticlesSectionProps) {
-  // Reactive: re-read from localStorage whenever it changes
-  const [liveArticles, setLiveArticles] = useState<CuratedArticle[]>(() => getPublishedArticles());
+  // Server-side state: fetched from PHP CMS API (canonical, shared across all tabs)
+  const [serverArticles, setServerArticles] = useState<CuratedArticle[]>([]);
+  const [loaded, setLoaded] = useState(false);
+
+  const loadFromServer = async () => {
+    const data = await fetchCmsData();
+    if (data.articles.length > 0) {
+      setServerArticles(data.articles);
+    } else {
+      // Fall back to static/localStorage list if API returns nothing
+      setServerArticles(getPublishedArticles());
+    }
+    setLoaded(true);
+  };
 
   useEffect(() => {
-    if (articlesList) return; // Controlled externally — skip reactive sync
-    const refresh = () => setLiveArticles(getPublishedArticles());
-    // Standard cross-tab storage event
-    window.addEventListener('storage', refresh);
-    // Custom event fired by admin portal after publish/delete
+    if (articlesList) { setLoaded(true); return; }
+    loadFromServer();
+    // Re-fetch when admin publishes or deletes in the same tab
+    const refresh = () => loadFromServer();
     window.addEventListener('lycos-articles-updated', refresh);
-    return () => {
-      window.removeEventListener('storage', refresh);
-      window.removeEventListener('lycos-articles-updated', refresh);
-    };
+    return () => window.removeEventListener('lycos-articles-updated', refresh);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [articlesList]);
 
-  const effectiveArticles = articlesList ?? liveArticles;
+  const effectiveArticles = articlesList ?? serverArticles;
+
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedImportance, setSelectedImportance] = useState<string>('All');
 
@@ -39,15 +49,16 @@ export default function ArticlesSection({ articlesList }: ArticlesSectionProps) 
   const [contactError, setContactError] = useState<string | null>(null);
 
   const filteredArticles = useMemo(() => {
+    if (!loaded) return [];
     return effectiveArticles.filter((item) => {
-      const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                             item.customSummary.toLowerCase().includes(searchTerm.toLowerCase()) ||
                             item.sourceName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                             item.tags.some(t => t.toLowerCase().includes(searchTerm.toLowerCase()));
       const matchesImportance = selectedImportance === 'All' || item.importance === selectedImportance;
       return matchesSearch && matchesImportance;
     });
-  }, [effectiveArticles, searchTerm, selectedImportance]);
+  }, [effectiveArticles, searchTerm, selectedImportance, loaded]);
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

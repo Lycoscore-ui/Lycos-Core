@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { submitContactForm } from '../services/contactService';
 import type { Insight } from '../types/cms';
-import { getPublishedInsights } from '../services/adminStorage';
+import { getPublishedInsights, fetchCmsData } from '../services/adminStorage';
 import NewsletterCTA from './NewsletterCTA';
 import LinkedInConnect from './LinkedInConnect';
 import { Search, Clock, ArrowRight, X, Sparkles, CheckCircle2 } from 'lucide-react';
@@ -11,21 +11,30 @@ interface InsightsSectionProps {
 }
 
 export default function InsightsSection({ insightsList }: InsightsSectionProps) {
-  // Reactive: re-read from localStorage whenever it changes
-  const [liveInsights, setLiveInsights] = useState<Insight[]>(() => getPublishedInsights());
+  // Server-side state: fetched from PHP CMS API (canonical, shared across all tabs)
+  const [serverInsights, setServerInsights] = useState<Insight[]>([]);
+  const [loaded, setLoaded] = useState(false);
+
+  const loadFromServer = async () => {
+    const data = await fetchCmsData();
+    if (data.insights.length > 0) {
+      setServerInsights(data.insights);
+    } else {
+      setServerInsights(getPublishedInsights());
+    }
+    setLoaded(true);
+  };
 
   useEffect(() => {
-    if (insightsList) return; // Controlled externally — skip reactive sync
-    const refresh = () => setLiveInsights(getPublishedInsights());
-    window.addEventListener('storage', refresh);
+    if (insightsList) { setLoaded(true); return; }
+    loadFromServer();
+    const refresh = () => loadFromServer();
     window.addEventListener('lycos-insights-updated', refresh);
-    return () => {
-      window.removeEventListener('storage', refresh);
-      window.removeEventListener('lycos-insights-updated', refresh);
-    };
+    return () => window.removeEventListener('lycos-insights-updated', refresh);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [insightsList]);
 
-  const effectiveInsights = insightsList ?? liveInsights;
+  const effectiveInsights = insightsList ?? serverInsights;
 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
@@ -57,6 +66,7 @@ export default function InsightsSection({ insightsList }: InsightsSectionProps) 
   }, []);
 
   const filteredInsights = useMemo(() => {
+    if (!loaded) return [];
     return effectiveInsights.filter((item) => {
       const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                             item.summary.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -64,7 +74,7 @@ export default function InsightsSection({ insightsList }: InsightsSectionProps) 
       const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory;
       return matchesSearch && matchesCategory && item.status === 'Published';
     });
-  }, [effectiveInsights, searchTerm, selectedCategory]);
+  }, [effectiveInsights, searchTerm, selectedCategory, loaded]);
 
   const featuredInsight = useMemo(() => filteredInsights[0] || null, [filteredInsights]);
 
