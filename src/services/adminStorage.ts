@@ -10,6 +10,8 @@ const STORAGE_KEYS = {
   CUSTOM_ARTICLES: 'lycos_custom_articles',
   CUSTOM_INSIGHTS: 'lycos_custom_insights',
   SAVED_DRAFTS: 'lycos_saved_drafts',
+  // IDs explicitly removed by the operator — prevents static base list re-surfacing them
+  DELETED_IDS: 'lycos_deleted_article_ids',
 };
 
 const DEFAULT_N8N_CONFIG: N8nWebhookConfig = {
@@ -844,45 +846,69 @@ export async function triggerGitHubDeployment(
   };
 }
 
+// Helper: get the set of operator-deleted IDs (blocklist)
+function getDeletedIds(): Set<string> {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.DELETED_IDS);
+    return new Set(raw ? JSON.parse(raw) : []);
+  } catch {
+    return new Set();
+  }
+}
+
 // 8. Articles & Insights Local Storage Management
 export function getPublishedArticles(): CuratedArticle[] {
+  const deletedIds = getDeletedIds();
+
   const custom = localStorage.getItem(STORAGE_KEYS.CUSTOM_ARTICLES);
   let customList: CuratedArticle[] = [];
   if (custom) {
     try {
-      customList = JSON.parse(custom);
+      customList = (JSON.parse(custom) as CuratedArticle[]).filter(a => !deletedIds.has(a.id));
     } catch {
       customList = [];
     }
   }
 
-  const baseList: CuratedArticle[] = (publishedContentData && Array.isArray((publishedContentData as any).articles) && (publishedContentData as any).articles.length > 0)
+  const baseList: CuratedArticle[] = (
+    publishedContentData &&
+    Array.isArray((publishedContentData as any).articles) &&
+    (publishedContentData as any).articles.length > 0
+  )
     ? (publishedContentData as any).articles
     : mockArticles;
 
+  // Merge: base first, then custom overrides. Deleted IDs are excluded from both.
   const map = new Map<string, CuratedArticle>();
-  baseList.forEach(a => map.set(a.id, a));
+  baseList.filter(a => !deletedIds.has(a.id)).forEach(a => map.set(a.id, a));
   customList.forEach(a => map.set(a.id, a));
   return Array.from(map.values()).reverse();
 }
 
 export function getPublishedInsights(): Insight[] {
+  const deletedIds = getDeletedIds();
+
   const custom = localStorage.getItem(STORAGE_KEYS.CUSTOM_INSIGHTS);
   let customList: Insight[] = [];
   if (custom) {
     try {
-      customList = JSON.parse(custom);
+      customList = (JSON.parse(custom) as Insight[]).filter(i => !deletedIds.has(i.id));
     } catch {
       customList = [];
     }
   }
 
-  const baseList: Insight[] = (publishedContentData && Array.isArray((publishedContentData as any).insights) && (publishedContentData as any).insights.length > 0)
+  const baseList: Insight[] = (
+    publishedContentData &&
+    Array.isArray((publishedContentData as any).insights) &&
+    (publishedContentData as any).insights.length > 0
+  )
     ? (publishedContentData as any).insights
     : mockInsights;
 
+  // Merge: base first, then custom overrides. Deleted IDs are excluded from both.
   const map = new Map<string, Insight>();
-  baseList.forEach(i => map.set(i.id, i));
+  baseList.filter(i => !deletedIds.has(i.id)).forEach(i => map.set(i.id, i));
   customList.forEach(i => map.set(i.id, i));
   return Array.from(map.values()).reverse();
 }
@@ -922,6 +948,17 @@ export function publishArticleToSite(draft: GeneratedArticleDraft): CuratedArtic
   }
   customList = [newArticle, ...customList.filter(a => a.id !== newArticle.id)];
   localStorage.setItem(STORAGE_KEYS.CUSTOM_ARTICLES, JSON.stringify(customList));
+
+  // 1b. Remove from DELETED_IDS if re-publishing a previously deleted article
+  try {
+    const deletedIds = getDeletedIds();
+    if (deletedIds.has(newArticle.id)) {
+      deletedIds.delete(newArticle.id);
+      localStorage.setItem(STORAGE_KEYS.DELETED_IDS, JSON.stringify(Array.from(deletedIds)));
+    }
+  } catch {
+    // Ignored
+  }
 
   // 2. If Owned Industry Insight, also sync directly to Owned Insights Repository (CUSTOM_INSIGHTS)
   if (contentType === 'owned_insight') {
@@ -970,25 +1007,35 @@ export function publishArticleToSite(draft: GeneratedArticleDraft): CuratedArtic
 }
 
 export function deletePublishedArticle(articleId: string): void {
+  // 1. Remove from CUSTOM_ARTICLES
   const custom = localStorage.getItem(STORAGE_KEYS.CUSTOM_ARTICLES);
   if (custom) {
     try {
       const customList: CuratedArticle[] = JSON.parse(custom);
-      const filtered = customList.filter(a => a.id !== articleId);
-      localStorage.setItem(STORAGE_KEYS.CUSTOM_ARTICLES, JSON.stringify(filtered));
+      localStorage.setItem(STORAGE_KEYS.CUSTOM_ARTICLES, JSON.stringify(customList.filter(a => a.id !== articleId)));
     } catch {
       // Ignored
     }
   }
 
+  // 2. Remove from CUSTOM_INSIGHTS
   const customInsightsRaw = localStorage.getItem(STORAGE_KEYS.CUSTOM_INSIGHTS);
   if (customInsightsRaw) {
     try {
       const customInsightsList: Insight[] = JSON.parse(customInsightsRaw);
-      const filtered = customInsightsList.filter(i => i.id !== articleId);
-      localStorage.setItem(STORAGE_KEYS.CUSTOM_INSIGHTS, JSON.stringify(filtered));
+      localStorage.setItem(STORAGE_KEYS.CUSTOM_INSIGHTS, JSON.stringify(customInsightsList.filter(i => i.id !== articleId)));
     } catch {
       // Ignored
     }
+  }
+
+  // 3. Add to DELETED_IDS blocklist — prevents the static publishedContent.json base from
+  //    re-surfacing this article after the next getPublishedArticles() / getPublishedInsights() call.
+  try {
+    const existing = getDeletedIds();
+    existing.add(articleId);
+    localStorage.setItem(STORAGE_KEYS.DELETED_IDS, JSON.stringify(Array.from(existing)));
+  } catch {
+    // Ignored
   }
 }
