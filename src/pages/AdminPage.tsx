@@ -23,7 +23,8 @@ import {
   Zap,
   Key,
   Globe,
-  Newspaper
+  Newspaper,
+  AlertTriangle
 } from 'lucide-react';
 import type { CandidateArticle, GeneratedArticleDraft, N8nWebhookConfig } from '../types/admin';
 import type { CuratedArticle } from '../types/cms';
@@ -43,7 +44,8 @@ import {
   fetchCmsData,
   publishArticleToSite, 
   deletePublishedArticle,
-  generateMockCandidates
+  generateMockCandidates,
+  isDateInWeek
 } from '../services/adminStorage';
 import AdminLoginModal from '../components/AdminLoginModal';
 
@@ -962,7 +964,16 @@ export default function AdminPage() {
                         <div className="admin-cand-meta">
                           <span>{cand.sourceName}</span>
                           <span>•</span>
-                          <span>{cand.publishedDate}</span>
+                          {isDateInWeek(cand.publishedDate, weekInfo.startDate, weekInfo.endDate) ? (
+                            <span>{cand.publishedDate}</span>
+                          ) : (
+                            <span 
+                              style={{ color: '#f59e0b', display: 'inline-flex', alignItems: 'center', gap: '0.25rem', fontWeight: 600 }}
+                              title={`Published on ${cand.publishedDate}, which is outside ${weekInfo.label} (${weekInfo.range})`}
+                            >
+                              <AlertTriangle size={12} /> {cand.publishedDate} (Out of range)
+                            </span>
+                          )}
                         </div>
 
                         <p className="admin-cand-snippet">{cand.snippet}</p>
@@ -1453,7 +1464,16 @@ export default function AdminPage() {
                         <div className="admin-cand-meta">
                           <span>{cand.sourceName}</span>
                           <span>•</span>
-                          <span>{cand.publishedDate}</span>
+                          {isDateInWeek(cand.publishedDate, weekInfo.startDate, weekInfo.endDate) ? (
+                            <span>{cand.publishedDate}</span>
+                          ) : (
+                            <span 
+                              style={{ color: '#f59e0b', display: 'inline-flex', alignItems: 'center', gap: '0.25rem', fontWeight: 600 }}
+                              title={`Published on ${cand.publishedDate}, which is outside ${weekInfo.label} (${weekInfo.range})`}
+                            >
+                              <AlertTriangle size={12} /> {cand.publishedDate} (Out of range)
+                            </span>
+                          )}
                         </div>
 
                         <p className="admin-cand-snippet">{cand.snippet}</p>

@@ -211,25 +211,24 @@ export function generateMockCandidates(weekLabel: string, genre: string, startDa
   return candidates;
 }
 
-// Helper: Enforce that an article's published date falls strictly within the requested calendar week
-export function enforceDateInWeek(dateStr: string | undefined, startDateStr: string, endDateStr?: string, indexOffset = 0): string {
-  if (!startDateStr) return dateStr || new Date().toISOString().split('T')[0];
+// Helper: Parse and standardize any date string to YYYY-MM-DD
+export function parseArticleDate(rawDate: string | undefined): string {
+  if (!rawDate) return '';
+  const parsed = new Date(rawDate);
+  if (!isNaN(parsed.getTime())) {
+    return parsed.toISOString().split('T')[0];
+  }
+  return rawDate;
+}
 
+// Helper: Check whether a date falls strictly within a calendar week
+export function isDateInWeek(dateStr: string | undefined, startDateStr: string, endDateStr?: string): boolean {
+  if (!dateStr || !startDateStr) return true;
+  const target = new Date(dateStr);
   const start = new Date(startDateStr);
   const end = new Date(endDateStr || startDateStr);
   end.setHours(23, 59, 59, 999);
-
-  if (dateStr) {
-    const candidateDate = new Date(dateStr);
-    if (!isNaN(candidateDate.getTime()) && candidateDate >= start && candidateDate <= end) {
-      return candidateDate.toISOString().split('T')[0];
-    }
-  }
-
-  // If missing or outside selected week, spread evenly across the 7 days of that week
-  const spreadDate = new Date(start);
-  spreadDate.setDate(start.getDate() + (indexOffset % 7));
-  return spreadDate.toISOString().split('T')[0];
+  return !isNaN(target.getTime()) && target >= start && target <= end;
 }
 
 // 4. Fetch Candidates via N8N Webhook (Waits for full N8N / LM Studio execution)
@@ -257,10 +256,12 @@ export async function fetchCandidatesFromN8n(
         endDate: weekInfo.endDate,
         publishedAfter: weekInfo.startDate,
         publishedBefore: weekInfo.endDate,
+        query: `"${genre === 'All' ? 'enterprise artificial intelligence' : genre}" after:${weekInfo.startDate} before:${weekInfo.endDate}`,
+        searchQuery: `"${genre === 'All' ? 'enterprise artificial intelligence' : genre}" after:${weekInfo.startDate} before:${weekInfo.endDate}`,
+        googleQuery: `"${genre === 'All' ? 'enterprise artificial intelligence' : genre}" after:${weekInfo.startDate} before:${weekInfo.endDate}`,
         timeframe: `${weekInfo.startDate} to ${weekInfo.endDate}`,
         dateFilter: `after:${weekInfo.startDate} before:${weekInfo.endDate}`,
-        searchQuery: `${genre === 'All' ? 'enterprise artificial intelligence' : genre} news ${weekInfo.range}`,
-        prompt: `Search and return 15 verified technology news and AI architecture developments published specifically between ${weekInfo.startDate} and ${weekInfo.endDate} (${weekInfo.label}, ${weekInfo.range}). All articles must have publishedDate within ${weekInfo.startDate} and ${weekInfo.endDate}.`,
+        prompt: `Search and return 15 verified technology news and AI architecture developments published specifically between ${weekInfo.startDate} and ${weekInfo.endDate} (${weekInfo.label}, ${weekInfo.range}). Ensure every article's publishedDate is between ${weekInfo.startDate} and ${weekInfo.endDate}. Do not return recent news from other weeks.`,
         genre: genre,
         targetCount: 15,
         pipeline: 'ai-rewrite-search',
@@ -296,17 +297,21 @@ export async function fetchCandidatesFromN8n(
     }
 
     if (rawList.length > 0) {
-      const formattedCandidates: CandidateArticle[] = rawList.map((item, idx) => ({
-        id: item.id || `n8n-${Date.now()}-${idx}`,
-        title: item.title || item.headline || `Article #${idx + 1}`,
-        sourceName: item.sourceName || item.source || item.publisher || 'AI Intel Source',
-        url: item.url || item.link || item.sourceUrl || '#',
-        publishedDate: enforceDateInWeek(item.publishedDate || item.date, weekInfo.startDate, weekInfo.endDate, idx),
-        snippet: item.snippet || item.summary || item.description || '',
-        category: (item.category || (genre === 'All' ? 'Tech Trends' : genre)) as any,
-        matchScore: item.matchScore || item.score || Math.floor(92 + (Math.random() * 7.5)),
-        tags: Array.isArray(item.tags) ? item.tags : [genre, 'Enterprise AI']
-      }));
+      const formattedCandidates: CandidateArticle[] = rawList.map((item, idx) => {
+        const rawDate = item.publishedDate || item.date || item.pubDate || item.published || item.time || '';
+        const parsedDate = parseArticleDate(rawDate);
+        return {
+          id: item.id || `n8n-${Date.now()}-${idx}`,
+          title: item.title || item.headline || `Article #${idx + 1}`,
+          sourceName: item.sourceName || item.source || item.publisher || 'AI Intel Source',
+          url: item.url || item.link || item.sourceUrl || '#',
+          publishedDate: parsedDate || weekInfo.startDate,
+          snippet: item.snippet || item.summary || item.description || '',
+          category: (item.category || (genre === 'All' ? 'Tech Trends' : genre)) as any,
+          matchScore: item.matchScore || item.score || Math.floor(92 + (Math.random() * 7.5)),
+          tags: Array.isArray(item.tags) ? item.tags : [genre, 'Enterprise AI']
+        };
+      });
 
       return { candidates: formattedCandidates, fromN8n: true };
     } else {
@@ -392,10 +397,12 @@ export async function fetchIndustryCandidatesFromN8n(
         endDate: weekInfo.endDate,
         publishedAfter: weekInfo.startDate,
         publishedBefore: weekInfo.endDate,
+        query: `technology industry news ${genre === 'All' ? 'enterprise AI' : genre} after:${weekInfo.startDate} before:${weekInfo.endDate}`,
+        searchQuery: `technology industry news ${genre === 'All' ? 'enterprise AI' : genre} after:${weekInfo.startDate} before:${weekInfo.endDate}`,
+        googleQuery: `technology industry news ${genre === 'All' ? 'enterprise AI' : genre} after:${weekInfo.startDate} before:${weekInfo.endDate}`,
         timeframe: `${weekInfo.startDate} to ${weekInfo.endDate}`,
         dateFilter: `after:${weekInfo.startDate} before:${weekInfo.endDate}`,
-        searchQuery: `technology industry news ${genre === 'All' ? 'enterprise AI cloud infrastructure' : genre} ${weekInfo.range}`,
-        prompt: `Discover 15 relevant industry news and market intelligence articles published specifically between ${weekInfo.startDate} and ${weekInfo.endDate} (${weekInfo.label}, ${weekInfo.range}). Ensure every article's publishedDate is between ${weekInfo.startDate} and ${weekInfo.endDate}.`,
+        prompt: `Discover 15 relevant industry news and market intelligence articles published specifically between ${weekInfo.startDate} and ${weekInfo.endDate} (${weekInfo.label}, ${weekInfo.range}). Ensure every article's publishedDate is between ${weekInfo.startDate} and ${weekInfo.endDate}. Do not return recent news from other weeks.`,
         genre,
         limit: 15,
         pipeline: 'industry-search',
@@ -430,17 +437,21 @@ export async function fetchIndustryCandidatesFromN8n(
     }
 
     if (rawList.length > 0) {
-      const formattedCandidates: CandidateArticle[] = rawList.map((item, idx) => ({
-        id: item.id || `ind-n8n-${Date.now()}-${idx}`,
-        title: item.title || item.headline || `Industry News #${idx + 1}`,
-        sourceName: item.sourceName || item.source || item.publisher || 'Tech News Wire',
-        url: item.url || item.link || item.sourceUrl || '#',
-        publishedDate: enforceDateInWeek(item.publishedDate || item.date, weekInfo.startDate, weekInfo.endDate, idx),
-        snippet: item.snippet || item.summary || item.description || '',
-        category: (item.category || (genre === 'All' ? 'Tech Trends' : genre)) as any,
-        matchScore: item.matchScore || item.score || Math.floor(93 + (Math.random() * 6)),
-        tags: Array.isArray(item.tags) ? item.tags : [genre, 'Industry Intel']
-      }));
+      const formattedCandidates: CandidateArticle[] = rawList.map((item, idx) => {
+        const rawDate = item.publishedDate || item.date || item.pubDate || item.published || item.time || '';
+        const parsedDate = parseArticleDate(rawDate);
+        return {
+          id: item.id || `ind-n8n-${Date.now()}-${idx}`,
+          title: item.title || item.headline || `Industry News #${idx + 1}`,
+          sourceName: item.sourceName || item.source || item.publisher || 'Tech News Wire',
+          url: item.url || item.link || item.sourceUrl || '#',
+          publishedDate: parsedDate || weekInfo.startDate,
+          snippet: item.snippet || item.summary || item.description || '',
+          category: (item.category || (genre === 'All' ? 'Tech Trends' : genre)) as any,
+          matchScore: item.matchScore || item.score || Math.floor(93 + (Math.random() * 6)),
+          tags: Array.isArray(item.tags) ? item.tags : [genre, 'Industry Intel']
+        };
+      });
 
       return { candidates: formattedCandidates, fromN8n: true };
     } else {
