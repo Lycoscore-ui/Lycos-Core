@@ -3,15 +3,30 @@ import { submitContactForm } from '../services/contactService';
 import type { Insight } from '../types/cms';
 import { getPublishedInsights } from '../services/adminStorage';
 import NewsletterCTA from './NewsletterCTA';
-import { Search, Clock, ArrowRight, X, Sparkles, CheckCircle2 } from 'lucide-react';
 import LinkedInConnect from './LinkedInConnect';
+import { Search, Clock, ArrowRight, X, Sparkles, CheckCircle2 } from 'lucide-react';
 
 interface InsightsSectionProps {
   insightsList?: Insight[];
 }
 
 export default function InsightsSection({ insightsList }: InsightsSectionProps) {
-  const effectiveInsights = insightsList || getPublishedInsights();
+  // Reactive: re-read from localStorage whenever it changes
+  const [liveInsights, setLiveInsights] = useState<Insight[]>(() => getPublishedInsights());
+
+  useEffect(() => {
+    if (insightsList) return; // Controlled externally — skip reactive sync
+    const refresh = () => setLiveInsights(getPublishedInsights());
+    window.addEventListener('storage', refresh);
+    window.addEventListener('lycos-insights-updated', refresh);
+    return () => {
+      window.removeEventListener('storage', refresh);
+      window.removeEventListener('lycos-insights-updated', refresh);
+    };
+  }, [insightsList]);
+
+  const effectiveInsights = insightsList ?? liveInsights;
+
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [activeInsight, setActiveInsight] = useState<Insight | null>(null);
@@ -43,7 +58,7 @@ export default function InsightsSection({ insightsList }: InsightsSectionProps) 
 
   const filteredInsights = useMemo(() => {
     return effectiveInsights.filter((item) => {
-      const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                             item.summary.toLowerCase().includes(searchTerm.toLowerCase()) ||
                             item.tags.some(t => t.toLowerCase().includes(searchTerm.toLowerCase()));
       const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory;
@@ -51,9 +66,7 @@ export default function InsightsSection({ insightsList }: InsightsSectionProps) 
     });
   }, [effectiveInsights, searchTerm, selectedCategory]);
 
-  const featuredInsight = useMemo(() => {
-    return filteredInsights[0] || null;
-  }, [filteredInsights]);
+  const featuredInsight = useMemo(() => filteredInsights[0] || null, [filteredInsights]);
 
   const secondaryInsights = useMemo(() => {
     return filteredInsights.slice(1);

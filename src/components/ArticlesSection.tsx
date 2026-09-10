@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { submitContactForm } from '../services/contactService';
 import type { CuratedArticle } from '../types/cms';
 import { getPublishedArticles } from '../services/adminStorage';
@@ -10,7 +10,23 @@ interface ArticlesSectionProps {
 }
 
 export default function ArticlesSection({ articlesList }: ArticlesSectionProps) {
-  const effectiveArticles = articlesList || getPublishedArticles();
+  // Reactive: re-read from localStorage whenever it changes
+  const [liveArticles, setLiveArticles] = useState<CuratedArticle[]>(() => getPublishedArticles());
+
+  useEffect(() => {
+    if (articlesList) return; // Controlled externally — skip reactive sync
+    const refresh = () => setLiveArticles(getPublishedArticles());
+    // Standard cross-tab storage event
+    window.addEventListener('storage', refresh);
+    // Custom event fired by admin portal after publish/delete
+    window.addEventListener('lycos-articles-updated', refresh);
+    return () => {
+      window.removeEventListener('storage', refresh);
+      window.removeEventListener('lycos-articles-updated', refresh);
+    };
+  }, [articlesList]);
+
+  const effectiveArticles = articlesList ?? liveArticles;
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedImportance, setSelectedImportance] = useState<string>('All');
 

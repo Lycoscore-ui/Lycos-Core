@@ -261,6 +261,9 @@ export default function AdminPage() {
 
     publishArticleToSite(activeDraft);
     loadPublishedList();
+    // Notify public-facing section components so they re-read localStorage immediately
+    window.dispatchEvent(new Event('lycos-articles-updated'));
+    window.dispatchEvent(new Event('lycos-insights-updated'));
     setActionSuccess(`Article "${activeDraft.title}" successfully published to the live website!`);
     setActiveDraft(prev => prev ? { ...prev, status: 'published' } : null);
   };
@@ -271,6 +274,9 @@ export default function AdminPage() {
 
     publishArticleToSite(activeIndustryDraft);
     loadPublishedList();
+    // Notify public-facing section components so they re-read localStorage immediately
+    window.dispatchEvent(new Event('lycos-articles-updated'));
+    window.dispatchEvent(new Event('lycos-insights-updated'));
     setActionSuccess(`Industry article "${activeIndustryDraft.title}" successfully published to the live website!`);
     setActiveIndustryDraft(prev => prev ? { ...prev, status: 'published' } : null);
   };
@@ -354,6 +360,9 @@ export default function AdminPage() {
   const handleDeleteArticle = (id: string) => {
     deletePublishedArticle(id);
     loadPublishedList();
+    // Notify public-facing section components so they re-read localStorage immediately
+    window.dispatchEvent(new Event('lycos-articles-updated'));
+    window.dispatchEvent(new Event('lycos-insights-updated'));
     setActionSuccess('Article removed from website repository.');
   };
 
