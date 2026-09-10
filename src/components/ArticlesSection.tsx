@@ -15,11 +15,11 @@ export default function ArticlesSection({ articlesList }: ArticlesSectionProps) 
   const [loaded, setLoaded] = useState(false);
 
   const loadFromServer = async () => {
-    const data = await fetchCmsData();
-    if (data.articles.length > 0) {
-      setServerArticles(data.articles);
+    const res = await fetchCmsData();
+    if (res.success) {
+      setServerArticles(res.articles);
     } else {
-      // Fall back to static/localStorage list if API returns nothing
+      // Fall back to static/localStorage list if API request fails
       setServerArticles(getPublishedArticles());
     }
     setLoaded(true);

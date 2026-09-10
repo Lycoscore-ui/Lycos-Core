@@ -23,7 +23,7 @@ async function cmsApiPost(body: Record<string, unknown>): Promise<{ success: boo
   }
 }
 
-export async function fetchCmsData(): Promise<{ articles: CuratedArticle[]; insights: Insight[] }> {
+export async function fetchCmsData(): Promise<{ success: boolean; articles: CuratedArticle[]; insights: Insight[] }> {
   try {
     const res = await fetch(`${CMS_API_URL}?t=${Date.now()}`, { cache: 'no-store' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -32,21 +32,15 @@ export async function fetchCmsData(): Promise<{ articles: CuratedArticle[]; insi
     const insights: Insight[] = Array.isArray(data.insights) ? data.insights : [];
     const deletedIds: string[] = Array.isArray(data.deletedIds) ? data.deletedIds : [];
 
-    // Cache to localStorage for fast synchronous fallbacks
-    if (articles.length > 0) {
-      localStorage.setItem(STORAGE_KEYS.CUSTOM_ARTICLES, JSON.stringify(articles));
-    }
-    if (insights.length > 0) {
-      localStorage.setItem(STORAGE_KEYS.CUSTOM_INSIGHTS, JSON.stringify(insights));
-    }
-    if (deletedIds.length > 0) {
-      localStorage.setItem(STORAGE_KEYS.DELETED_IDS, JSON.stringify(deletedIds));
-    }
+    // Cache to localStorage for fast synchronous fallbacks (including empty lists)
+    localStorage.setItem(STORAGE_KEYS.CUSTOM_ARTICLES, JSON.stringify(articles));
+    localStorage.setItem(STORAGE_KEYS.CUSTOM_INSIGHTS, JSON.stringify(insights));
+    localStorage.setItem(STORAGE_KEYS.DELETED_IDS, JSON.stringify(deletedIds));
 
-    return { articles, insights };
+    return { success: true, articles, insights };
   } catch (err: any) {
     console.warn('[CMS API] GET failed — serving static/localStorage fallback:', err.message);
-    return { articles: [], insights: [] };
+    return { success: false, articles: [], insights: [] };
   }
 }
 
@@ -908,12 +902,11 @@ export function getPublishedArticles(): CuratedArticle[] {
   const deletedIds = getDeletedIds();
 
   const custom = localStorage.getItem(STORAGE_KEYS.CUSTOM_ARTICLES);
-  let customList: CuratedArticle[] = [];
-  if (custom) {
+  if (custom !== null) {
     try {
-      customList = (JSON.parse(custom) as CuratedArticle[]).filter(a => !deletedIds.has(a.id));
+      return (JSON.parse(custom) as CuratedArticle[]).filter(a => !deletedIds.has(a.id));
     } catch {
-      customList = [];
+      return [];
     }
   }
 
@@ -925,23 +918,18 @@ export function getPublishedArticles(): CuratedArticle[] {
     ? (publishedContentData as any).articles
     : mockArticles;
 
-  // Merge: base first, then custom overrides. Deleted IDs are excluded from both.
-  const map = new Map<string, CuratedArticle>();
-  baseList.filter(a => !deletedIds.has(a.id)).forEach(a => map.set(a.id, a));
-  customList.forEach(a => map.set(a.id, a));
-  return Array.from(map.values()).reverse();
+  return baseList.filter(a => !deletedIds.has(a.id)).reverse();
 }
 
 export function getPublishedInsights(): Insight[] {
   const deletedIds = getDeletedIds();
 
   const custom = localStorage.getItem(STORAGE_KEYS.CUSTOM_INSIGHTS);
-  let customList: Insight[] = [];
-  if (custom) {
+  if (custom !== null) {
     try {
-      customList = (JSON.parse(custom) as Insight[]).filter(i => !deletedIds.has(i.id));
+      return (JSON.parse(custom) as Insight[]).filter(i => !deletedIds.has(i.id));
     } catch {
-      customList = [];
+      return [];
     }
   }
 
@@ -953,11 +941,7 @@ export function getPublishedInsights(): Insight[] {
     ? (publishedContentData as any).insights
     : mockInsights;
 
-  // Merge: base first, then custom overrides. Deleted IDs are excluded from both.
-  const map = new Map<string, Insight>();
-  baseList.filter(i => !deletedIds.has(i.id)).forEach(i => map.set(i.id, i));
-  customList.forEach(i => map.set(i.id, i));
-  return Array.from(map.values()).reverse();
+  return baseList.filter(i => !deletedIds.has(i.id)).reverse();
 }
 
 export function publishArticleToSite(draft: GeneratedArticleDraft): CuratedArticle {

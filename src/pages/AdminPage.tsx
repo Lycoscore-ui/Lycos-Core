@@ -156,11 +156,9 @@ export default function AdminPage() {
     setPublishedList(getPublishedArticles());
     // Server fetch to ensure multi-browser / network synchronization
     try {
-      const data = await fetchCmsData();
-      if (data.articles && data.articles.length > 0) {
-        setPublishedList(data.articles);
-      } else {
-        setPublishedList(getPublishedArticles());
+      const res = await fetchCmsData();
+      if (res.success) {
+        setPublishedList(res.articles);
       }
     } catch {
       // Ignored

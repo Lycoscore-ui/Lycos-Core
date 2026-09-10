@@ -16,10 +16,11 @@ export default function InsightsSection({ insightsList }: InsightsSectionProps) 
   const [loaded, setLoaded] = useState(false);
 
   const loadFromServer = async () => {
-    const data = await fetchCmsData();
-    if (data.insights.length > 0) {
-      setServerInsights(data.insights);
+    const res = await fetchCmsData();
+    if (res.success) {
+      setServerInsights(res.insights);
     } else {
+      // Fall back to static/localStorage list if API request fails
       setServerInsights(getPublishedInsights());
     }
     setLoaded(true);
