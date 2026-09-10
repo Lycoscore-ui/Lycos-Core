@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Lycos Core CMS API
  * Server-side article/insight persistence for the admin editorial pipeline.
