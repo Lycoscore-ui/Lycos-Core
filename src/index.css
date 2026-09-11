@@ -12862,3 +12862,50 @@ h6 {
   flex-wrap: wrap;
   gap: 8px;
 }
+
+.leadership-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: rgba(140, 255, 50, 0.1);
+  border: 1px solid rgba(140, 255, 50, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: monospace;
+  font-weight: 700;
+  color: #8cff32;
+  flex-shrink: 0;
+}
+
+.leadership-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.leadership-actions-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 1rem;
+}
+
+.leadership-portfolio-link {
+  font-family: monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #8cff32;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.leadership-portfolio-link:hover {
+  color: #fff;
+  transform: translateX(2px);
+}

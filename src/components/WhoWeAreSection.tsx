@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { submitContactForm } from '../services/contactService';
 import { CheckCircle, CheckCircle2, Cpu, Settings, Layers, Terminal, ClipboardList, Target, Shield, TrendingUp, ChevronDown } from 'lucide-react';
 import LinkedInConnect from './LinkedInConnect';
+import akiraPhoto from '../assets/akira-wolf.jpg';
+import rudiPhoto from '../assets/rudi-pottas.jpg';
 
 const disciplines = [
   {
@@ -67,14 +69,17 @@ const leadershipTeam = [
     role: 'Founder & Chief Systems Architect',
     bio: 'Pioneered zero-trust cognitive architectures and high-throughput vector pipelines for multinational financial institutions and tier-1 intelligence infrastructures.',
     linkedin: 'https://www.linkedin.com/in/akira-wolf-5284a4435/',
-    avatar: 'AW'
+    avatar: 'AW',
+    image: akiraPhoto
   },
   {
-    name: 'Marcus Reid',
-    role: 'Head of Autonomous Engineering',
-    bio: 'Former principal ML engineer leading large-scale autonomous agent deployments, model calibration frameworks, and mission-critical production pipelines.',
-    linkedin: 'https://www.linkedin.com/company/lycos-core',
-    avatar: 'MR'
+    name: 'Rudi Pottas',
+    role: 'Lead AI Architect & Founder',
+    bio: 'Spearheads neural systems architecture, cognitive calibration, and autonomous workflows with 15+ years of enterprise delivery and technical operations pedigree.',
+    linkedin: 'https://www.linkedin.com/in/rudi-pottas-59895192/',
+    portfolioUrl: '/rudi.pottas',
+    avatar: 'RP',
+    image: rudiPhoto
   },
   {
     name: 'Elena Rostov',
@@ -194,7 +199,18 @@ export const WhoWeAreSection: React.FC = () => {
                 <div>
                   <div className="leadership-header">
                     <div className="leadership-avatar">
-                      {leader.avatar}
+                      {leader.image ? (
+                        <img 
+                          src={leader.image} 
+                          alt={leader.name} 
+                          className="leadership-avatar-img"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).style.display = 'none';
+                          }} 
+                        />
+                      ) : (
+                        <span>{leader.avatar}</span>
+                      )}
                     </div>
                     <div>
                       <h4 className="leadership-name">{leader.name}</h4>
@@ -206,17 +222,27 @@ export const WhoWeAreSection: React.FC = () => {
                   </p>
                 </div>
 
-                <a 
-                  href={leader.linkedin} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="leadership-link"
-                >
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                    <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.74a1.62 1.62 0 1 0 0 3.24 1.62 1.62 0 0 0 0-3.24z"/>
-                  </svg>
-                  CONNECT ON LINKEDIN &rarr;
-                </a>
+                <div className="leadership-actions-row">
+                  <a 
+                    href={leader.linkedin} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="leadership-link"
+                  >
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                      <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.74a1.62 1.62 0 1 0 0 3.24 1.62 1.62 0 0 0 0-3.24z"/>
+                    </svg>
+                    CONNECT ON LINKEDIN &rarr;
+                  </a>
+                  {leader.portfolioUrl && (
+                    <a 
+                      href={leader.portfolioUrl} 
+                      className="leadership-portfolio-link"
+                    >
+                      EXECUTIVE PROFILE &rarr;
+                    </a>
+                  )}
+                </div>
               </div>
             ))}
           </div>
