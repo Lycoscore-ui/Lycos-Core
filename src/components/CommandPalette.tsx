@@ -154,6 +154,15 @@ const SEARCH_DATABASE: SearchItem[] = [
     tags: ['governance', 'security', 'compliance', 'eu ai act', 'nist', 'hipaa', 'soc2']
   },
   {
+    id: 'portfolio-rudi',
+    title: 'Rudi Pottas // Senior Product & Project Leader Portfolio',
+    category: 'The Collective',
+    description: 'Executive portfolio, AI workflows, strategic planning, business analysis & 15+ years enterprise delivery.',
+    slug: 'rudi.pottas',
+    iconName: 'Briefcase',
+    tags: ['rudi', 'pottas', 'portfolio', 'cv', 'resume', 'product lead', 'project manager', 'ai workflows', 'operations', 'rudi.pottas']
+  },
+  {
     id: 'intel-case-studies',
     title: 'Case Studies // Verified Enterprise Results',
     category: 'Intelligence and Research',

@@ -11705,13 +11705,1160 @@ h6 {
   grid-template-columns: 1fr !important;
   display: block !important;
   width: 100% !important;
-  max-width: 100% !important;
-  margin: 0.35rem 0 0 0 !important;
-  box-sizing: border-box !important;
-}
-
-.pillars-telemetry-fullwidth .pillars-throughput-card {
-  width: 100% !important;
-  box-sizing: border-box !important;
-}
-
+}
+
+.service-icon-wrap .icon-badge {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 12px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 0 15px rgba(140, 255, 50, 0.1);
+}
+
+.service-card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.75rem;
+  font-family: var(--font-title);
+  line-height: 1.3;
+}
+
+.service-card-desc {
+  color: var(--text-gray);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+  flex-grow: 1;
+}
+
+.service-card-link {
+  color: #8ce63f;
+  font-family: monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: color 0.2s ease, transform 0.2s ease;
+  margin-top: auto;
+}
+
+.service-card-link:hover {
+  color: #fff;
+  transform: translateX(3px);
+}
+
+.service-icon-wrap .icon-badge {
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 16px;
+  background: #0a192fb3;
+  border: 1px solid #a3ff3340;
+  box-shadow: 0 0 15px #a3ff331f, inset 0 0 10px #a3ff330d;
+}
+
+.protocol-card-tag {
+  font-family: monospace;
+  font-size: 0.72rem;
+  color: #8ce63f;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  line-height: 1.4;
+  display: block;
+}
+
+/* Home Section 2: Core Protocols + Fullwidth Telemetry Stream */
+.home-section-pillars {
+  padding-top: 5.5rem !important;
+  padding-bottom: 1.5rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+}
+
+.home-section-pillars-inner {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.home-pillars-title {
+  font-size: 2.2rem;
+  text-transform: none;
+  font-family: var(--font-title);
+  margin: 0 0 0.15rem 0;
+  text-wrap: balance;
+  line-height: 1.2;
+}
+
+.home-pillars-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 1.25rem !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 1100px) {
+  .home-pillars-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .home-pillars-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.home-protocol-card {
+  padding: 1.35rem 1.25rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  border-radius: 16px !important;
+}
+
+.home-protocol-icon-wrap {
+  margin-bottom: 0.75rem;
+}
+
+.home-protocol-icon-wrap .icon-badge {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 12px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 0 15px rgba(140, 255, 50, 0.1);
+}
+
+.home-protocol-card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.35rem;
+  font-family: var(--font-title);
+  line-height: 1.3;
+}
+
+.home-protocol-card-desc {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  line-height: 1.45;
+  margin-bottom: 0.75rem;
+}
+
+.home-protocol-btn {
+  color: #8ce63f;
+  font-family: monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.home-protocol-btn:hover {
+  color: #fff;
+  transform: translateX(3px);
+}
+
+.pillars-telemetry-fullwidth {
+  grid-template-columns: 1fr !important;
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0.35rem 0 0 0 !important;
+  box-sizing: border-box !important;
+}
+
+.pillars-telemetry-fullwidth .pillars-throughput-card {
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* ==========================================================================
+   RUDI POTTAS EXECUTIVE PORTFOLIO - LYCOS CORE STANDARD
+   ========================================================================== */
+
+.rudi-portfolio-page {
+  padding-bottom: 5rem;
+}
+
+.rudi-hero-section {
+  padding-top: 6.5rem;
+  padding-bottom: 3rem;
+  min-height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rudi-hero-container {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 3rem;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .rudi-hero-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* Portrait Column & Cyber Frame */
+.rudi-portrait-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.rudi-portrait-wrapper {
+  position: relative;
+  padding: 1.25rem;
+  border-radius: 16px;
+  background: var(--color-card-bg);
+  border: 1px solid rgba(140, 255, 50, 0.2);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5), 0 0 25px rgba(140, 255, 50, 0.08);
+}
+
+.rudi-image-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #050d1a;
+}
+
+.rudi-portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.rudi-portrait-wrapper:hover .rudi-portrait-img {
+  transform: scale(1.02);
+}
+
+.rudi-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 15, 29, 0) 60%, rgba(10, 15, 29, 0.8) 100%);
+  pointer-events: none;
+}
+
+.rudi-status-badge-floating {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  padding: 6px 12px;
+  background: rgba(10, 25, 47, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(140, 255, 50, 0.35);
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.live-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #8cff32;
+  box-shadow: 0 0 10px #8cff32;
+  animation: pulse-dot 2s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+/* Quick Links Card Under Portrait */
+.rudi-quick-links-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-top: 1.25rem;
+}
+
+.rudi-social-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: rgba(10, 25, 47, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  font-size: 0.84rem;
+  font-family: var(--font-body);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.rudi-social-chip:hover {
+  background: rgba(140, 255, 50, 0.08);
+  border-color: rgba(140, 255, 50, 0.4);
+  color: #fff;
+  transform: translateX(3px);
+}
+
+.rudi-social-chip.linkedin:hover {
+  background: rgba(10, 102, 194, 0.15);
+  border-color: rgba(10, 102, 194, 0.6);
+  color: #38bdf8;
+}
+
+.rudi-social-chip .chip-arrow {
+  margin-left: auto;
+  opacity: 0.6;
+  transition: transform 0.2s ease;
+}
+
+.rudi-social-chip:hover .chip-arrow {
+  opacity: 1;
+  transform: translateX(2px);
+}
+
+/* Bio Column */
+.rudi-bio-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.rudi-hero-name {
+  font-size: 3rem;
+  font-weight: 800;
+  font-family: var(--font-title);
+  color: #fff;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .rudi-hero-name {
+    font-size: 2.25rem;
+  }
+}
+
+.rudi-hero-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  font-family: var(--font-title);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.4;
+}
+
+.rudi-title-separator {
+  color: #8cff32;
+  font-weight: 700;
+}
+
+.rudi-badges-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 0.25rem;
+}
+
+.rudi-summary-panel {
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
+  margin-top: 0.5rem;
+}
+
+.rudi-summary-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.85rem;
+  font-family: var(--font-title);
+}
+
+.rudi-summary-text {
+  font-size: 0.93rem;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin-bottom: 0.85rem;
+}
+
+.rudi-summary-text:last-child {
+  margin-bottom: 0;
+}
+
+.rudi-summary-text strong {
+  color: #f1f5f9;
+}
+
+.rudi-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.rudi-linkedin-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #38bdf8;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: rgba(10, 102, 194, 0.1);
+  border: 1px solid rgba(10, 102, 194, 0.3);
+  transition: all 0.2s ease;
+}
+
+.rudi-linkedin-cta:hover {
+  background: rgba(10, 102, 194, 0.25);
+  border-color: rgba(10, 102, 194, 0.6);
+  color: #7dd3fc;
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   STATS & TELEMETRY SECTION
+   ========================================================================== */
+.rudi-stats-section {
+  padding: 3rem 0;
+}
+
+.rudi-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .rudi-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 540px) {
+  .rudi-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rudi-stat-card {
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
+  transition: all 0.3s ease;
+}
+
+.rudi-stat-card:hover {
+  border-color: rgba(140, 255, 50, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(140, 255, 50, 0.1);
+}
+
+.rudi-stat-value {
+  font-size: 2.25rem;
+  font-weight: 800;
+  font-family: var(--font-title);
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 0.35rem;
+}
+
+.rudi-stat-value.accent-highlight {
+  color: #8cff32;
+  text-shadow: 0 0 20px rgba(140, 255, 50, 0.3);
+}
+
+.rudi-stat-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  font-family: var(--font-title);
+  margin-bottom: 0.25rem;
+}
+
+.rudi-stat-sub {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  line-height: 1.35;
+}
+
+/* ==========================================================================
+   CORE COMPETENCIES & SPECIALIZATIONS
+   ========================================================================== */
+.rudi-competencies-section {
+  padding: 3rem 0;
+}
+
+.rudi-competencies-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  max-width: 1240px;
+  margin: 0 auto 2rem auto;
+}
+
+@media (max-width: 840px) {
+  .rudi-competencies-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rudi-competency-card {
+  padding: 1.75rem;
+  border-radius: 14px;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+.rudi-competency-card:hover {
+  border-color: rgba(140, 255, 50, 0.35);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(140, 255, 50, 0.08);
+}
+
+.rudi-comp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.rudi-comp-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(140, 255, 50, 0.1);
+  border: 1px solid rgba(140, 255, 50, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rudi-comp-tag {
+  font-family: monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #8cff32;
+  background: rgba(140, 255, 50, 0.08);
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(140, 255, 50, 0.15);
+}
+
+.rudi-comp-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  font-family: var(--font-title);
+  margin-bottom: 0.65rem;
+  line-height: 1.3;
+}
+
+.rudi-comp-desc {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  line-height: 1.55;
+  margin-bottom: 1.25rem;
+  flex-grow: 1;
+}
+
+.rudi-comp-skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.rudi-skill-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  font-size: 0.78rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.rudi-skill-pill:hover {
+  background: rgba(140, 255, 50, 0.08);
+  border-color: rgba(140, 255, 50, 0.3);
+  color: #fff;
+}
+
+/* Tools Arsenal */
+.rudi-tools-wrapper {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 1.75rem;
+  border-radius: 14px;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
+}
+
+.rudi-tools-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.rudi-tools-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+  font-family: var(--font-title);
+  margin: 0;
+}
+
+.rudi-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 860px) {
+  .rudi-tools-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .rudi-tools-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rudi-tool-item {
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.2s ease;
+}
+
+.rudi-tool-item:hover {
+  background: rgba(140, 255, 50, 0.06);
+  border-color: rgba(140, 255, 50, 0.25);
+  transform: translateY(-2px);
+}
+
+.rudi-tool-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  margin-bottom: 2px;
+}
+
+.rudi-tool-type {
+  font-size: 0.74rem;
+  color: #94a3b8;
+  font-family: monospace;
+}
+
+/* ==========================================================================
+   CAREER TRAJECTORY & EXPERIENCE
+   ========================================================================== */
+.rudi-experience-section {
+  padding: 3rem 0;
+}
+
+.rudi-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.rudi-timeline-node {
+  padding: 2rem;
+  border-radius: 14px;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
+  transition: all 0.3s ease;
+}
+
+.rudi-timeline-node:hover {
+  border-color: rgba(140, 255, 50, 0.35);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(140, 255, 50, 0.06);
+}
+
+.rudi-timeline-header {
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.rudi-timeline-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 0.5rem;
+}
+
+.rudi-timeline-period {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #8cff32;
+  letter-spacing: 0.08em;
+}
+
+.rudi-timeline-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.rudi-timeline-badge {
+  font-family: monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(140, 255, 50, 0.12);
+  color: #8cff32;
+  border: 1px solid rgba(140, 255, 50, 0.3);
+  margin-left: auto;
+}
+
+@media (max-width: 600px) {
+  .rudi-timeline-badge {
+    margin-left: 0;
+  }
+}
+
+.rudi-timeline-role {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #fff;
+  font-family: var(--font-title);
+  margin: 0.25rem 0;
+}
+
+.rudi-timeline-company {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.rudi-company-type {
+  color: #94a3b8;
+  font-weight: 400;
+  font-size: 0.85rem;
+}
+
+.rudi-timeline-body {
+  margin-bottom: 1.25rem;
+}
+
+.rudi-timeline-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.rudi-timeline-bullet-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: #94a3b8;
+  line-height: 1.6;
+}
+
+.rudi-timeline-bullet-item .bullet-icon {
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.rudi-bullet-prefix {
+  color: #f1f5f9;
+  margin-right: 4px;
+}
+
+.rudi-timeline-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 0.75rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.06);
+}
+
+.rudi-role-tag {
+  font-family: monospace;
+  font-size: 0.72rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+}
+
+/* ==========================================================================
+   EDUCATION & QUALIFICATIONS
+   ========================================================================== */
+.rudi-education-section {
+  padding: 3rem 0;
+}
+
+.rudi-education-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .rudi-education-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rudi-edu-card {
+  padding: 1.75rem;
+  border-radius: 14px;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
+  transition: all 0.3s ease;
+}
+
+.rudi-edu-card:hover {
+  border-color: rgba(140, 255, 50, 0.35);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(140, 255, 50, 0.08);
+}
+
+.rudi-edu-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.rudi-edu-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(140, 255, 50, 0.1);
+  border: 1px solid rgba(140, 255, 50, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rudi-edu-badge {
+  font-family: monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: rgba(140, 255, 50, 0.08);
+  color: #8cff32;
+  border: 1px solid rgba(140, 255, 50, 0.2);
+}
+
+.rudi-edu-degree {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  font-family: var(--font-title);
+  margin-bottom: 0.35rem;
+}
+
+.rudi-edu-institution {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 0.75rem;
+}
+
+.rudi-edu-year {
+  color: #8cff32;
+  font-family: monospace;
+  font-size: 0.85rem;
+}
+
+.rudi-edu-focus {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ==========================================================================
+   DIRECT ENGAGEMENT / CONTACT SECTION
+   ========================================================================== */
+.rudi-contact-section {
+  padding: 3rem 0 2rem 0;
+}
+
+.rudi-contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+@media (max-width: 860px) {
+  .rudi-contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rudi-contact-info-panel,
+.rudi-contact-form-panel {
+  padding: 2rem;
+  border-radius: 14px;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
+}
+
+.rudi-contact-info-title,
+.rudi-form-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fff;
+  font-family: var(--font-title);
+  margin-bottom: 0.75rem;
+}
+
+.rudi-contact-info-desc {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  line-height: 1.55;
+  margin-bottom: 1.5rem;
+}
+
+.rudi-direct-channels {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.rudi-channel-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
+}
+
+.rudi-channel-row:hover {
+  background: rgba(140, 255, 50, 0.06);
+  border-color: rgba(140, 255, 50, 0.3);
+  transform: translateX(4px);
+}
+
+.rudi-channel-row.linkedin-row:hover {
+  background: rgba(10, 102, 194, 0.15);
+  border-color: rgba(10, 102, 194, 0.5);
+}
+
+.rudi-channel-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: rgba(140, 255, 50, 0.1);
+  border: 1px solid rgba(140, 255, 50, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rudi-channel-icon.linkedin-bg {
+  background: rgba(10, 102, 194, 0.2);
+  border-color: rgba(10, 102, 194, 0.4);
+  color: #38bdf8;
+}
+
+.rudi-channel-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.rudi-channel-label {
+  font-family: monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
+}
+
+.rudi-channel-value {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.channel-ext-arrow {
+  color: #94a3b8;
+  opacity: 0.6;
+}
+
+.rudi-contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.rudi-form-submit-btn {
+  width: 100%;
+  padding: 14px;
+  margin-top: 0.5rem;
+  font-family: monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.rudi-timeline-summary-text {
+  font-size: 0.92rem;
+  color: #cbd5e1;
+  line-height: 1.65;
+  margin-bottom: 1.25rem;
+}
+
+.rudi-timeline-skills-section {
+  background: rgba(10, 25, 47, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.rudi-timeline-skills-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #f1f5f9;
+  font-family: var(--font-title);
+  margin-bottom: 0.75rem;
+}
+
+.rudi-timeline-skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}

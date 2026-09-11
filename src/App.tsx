@@ -80,6 +80,8 @@ import SplashPage from './pages/SplashPage'
 
 import AdminPage from './pages/AdminPage'
 
+import RudiPottasPage from './pages/RudiPottasPage'
+
 import { submitContactForm } from './services/contactService'
 
 import { useRegion } from './context/RegionContext'
@@ -595,6 +597,8 @@ export default function App() {
     if (path === 'incubation-apex' || path === 'protocol-apex') path = 'incubation/apex'
 
     if (path === 'incubation-citadel' || path === 'protocol-citadel') path = 'incubation/citadel'
+
+    if (path === 'rudi-pottas') path = 'rudi.pottas'
 
     return path || 'home'
 
@@ -3736,13 +3740,23 @@ export default function App() {
 
           )}
 
+          {(slug === 'rudi.pottas' || slug === 'rudi-pottas') && (
+
+            <div id="subpage-wrapper" className="vertical-scroll-wrapper" ref={containerRef}>
+
+              <RudiPottasPage />
+
+            </div>
+
+          )}
+
           {isSplash && (
 
             <SplashPage />
 
           )}
 
-          {!isSplash && !['portal','wip','ai-products','tech-services','incubation-hub','who-we-are','how-we-operate','governance-security','case-studies','insights','articles','incubation/kinetic','incubation/apex','incubation/citadel','knowledge-base','faqs','terms-of-use','privacy-policy','responsible-ai-policy','cookie-policy'].includes(slug) && (
+          {!isSplash && !['portal','wip','ai-products','tech-services','incubation-hub','who-we-are','how-we-operate','governance-security','case-studies','insights','articles','incubation/kinetic','incubation/apex','incubation/citadel','knowledge-base','faqs','terms-of-use','privacy-policy','responsible-ai-policy','cookie-policy','rudi.pottas','rudi-pottas'].includes(slug) && (
 
             /* Vertical Sections Wrapper (Subpages like ai-consulting) */
 
