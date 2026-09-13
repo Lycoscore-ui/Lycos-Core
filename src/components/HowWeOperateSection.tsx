@@ -128,7 +128,7 @@ export const HowWeOperateSection: React.FC = () => {
             // OPERATIONAL PARADIGM
           </div>
           <h1 className="hero-heading">
-            <span>Synchronized Runs</span><span className="brand-dot">.</span>
+            <span>Synchronized Runs</span>
             <br />
             <span className="text-secondary">Absolute Accountability</span><span className="brand-dot">.</span>
           </h1>

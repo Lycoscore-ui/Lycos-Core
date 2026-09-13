@@ -168,38 +168,40 @@ export default function CaseStudiesSection({ caseStudiesList = mockCaseStudies }
           <div className="case-studies-explorer-grid">
             
             {/* Left Selection Sidebar */}
-            <div className="case-sidebar-list">
-              <span className="case-metrics-title">
+            <div className="case-sidebar-column">
+              <span className="case-metrics-title case-select-header">
                 Select Case Study
               </span>
 
-              {caseStudiesList.map((cs) => {
-                const isActive = cs.id === activeId;
-                const primaryMetric = cs.metrics.find(m => m.isHighlight) || cs.metrics[0];
+              <div className="case-sidebar-list">
+                {caseStudiesList.map((cs) => {
+                  const isActive = cs.id === activeId;
+                  const primaryMetric = cs.metrics.find(m => m.isHighlight) || cs.metrics[0];
 
-                return (
-                  <button
-                    key={cs.id}
-                    onClick={() => setActiveId(cs.id)}
-                    className={`case-sidebar-btn ${isActive ? 'active' : ''}`}
-                  >
-                    <div className="case-sidebar-top-row">
-                      <span className="case-sidebar-industry">{cs.industry}</span>
-                      <ChevronRight size={14} className={isActive ? 'neon-icon' : ''} />
-                    </div>
+                  return (
+                    <button
+                      key={cs.id}
+                      onClick={() => setActiveId(cs.id)}
+                      className={`case-sidebar-btn ${isActive ? 'active' : ''}`}
+                    >
+                      <div className="case-sidebar-top-row">
+                        <span className="case-sidebar-industry">{cs.industry}</span>
+                        <ChevronRight size={14} className={isActive ? 'neon-icon' : ''} />
+                      </div>
 
-                    <h4 className="case-sidebar-title">
-                      {cs.clientName}
-                    </h4>
+                      <h4 className="case-sidebar-title">
+                        {cs.clientName}
+                      </h4>
 
-                    {/* Tiny metric teaser */}
-                    <div className="case-sidebar-teaser">
-                      <span className="case-sidebar-teaser-value">{primaryMetric.value}</span>
-                      <span className="case-sidebar-teaser-label">{primaryMetric.label}</span>
-                    </div>
-                  </button>
-                );
-              })}
+                      {/* Tiny metric teaser */}
+                      <div className="case-sidebar-teaser">
+                        <span className="case-sidebar-teaser-value">{primaryMetric.value}</span>
+                        <span className="case-sidebar-teaser-label">{primaryMetric.label}</span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Right Explorer View - Detailed Case Study Workspace */}

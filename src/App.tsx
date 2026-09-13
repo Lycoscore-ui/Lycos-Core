@@ -278,7 +278,7 @@ const FALLBACK_PAGES: Record<string, any> = {
 
         tagline: '// ENTERPRISE INTELLIGENCE ARCHITECTURE',
 
-        title: 'Transformative AI Consulting.',
+        title: 'Transformative\nAI Consulting.',
 
         subtitle: 'Precision-Engineered. Grounded Governance. Enterprise Scale.',
 
@@ -611,6 +611,8 @@ export default function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const [mobileExpandedDropdown, setMobileExpandedDropdown] = useState<string | null>(null)
+
+  const [mobileUseCaseTab, setMobileUseCaseTab] = useState<'case' | 'results'>('case')
 
 
 
@@ -1671,73 +1673,44 @@ export default function App() {
 
 
     // GSAP ScrollTrigger vertical count-up animations
-
     const countUpTriggers: any[] = []
-
     gsap.utils.toArray('.count-up-trigger').forEach((el: any) => {
-
-      const targetVal = parseFloat(el.getAttribute('data-target') || '0')
+      const targetAttr = el.getAttribute('data-target')
+      if (!targetAttr) return
+      const targetVal = parseFloat(targetAttr)
+      if (isNaN(targetVal) || targetVal === 0) return
 
       const isPercentage = el.getAttribute('data-percent') === 'true'
-
       const obj = { val: 0 }
-
       const hasDecimals = targetVal % 1 !== 0
 
       const trigger = ScrollTrigger.create({
-
         trigger: el,
-
         start: 'top 90%',
-
         onEnter: () => {
-
           obj.val = 0
-
           gsap.to(obj, {
-
             val: targetVal,
-
             duration: 1.6,
-
             ease: 'power2.out',
-
             onUpdate: () => {
-
               el.innerText = `${hasDecimals ? obj.val.toFixed(1) : Math.round(obj.val)}${isPercentage ? '%' : ''}`
-
             }
-
           })
-
         },
-
         onEnterBack: () => {
-
           obj.val = 0
-
           gsap.to(obj, {
-
             val: targetVal,
-
             duration: 1.6,
-
             ease: 'power2.out',
-
             onUpdate: () => {
-
               el.innerText = `${hasDecimals ? obj.val.toFixed(1) : Math.round(obj.val)}${isPercentage ? '%' : ''}`
-
             }
-
           })
-
         }
-
       })
-
       countUpTriggers.push(trigger)
-
     })
 
 
@@ -1801,17 +1774,24 @@ export default function App() {
             
 
             <h1 className="hero-heading subpage-hero-title">
-
-              {block.title ? (
-
-                <>{block.title.replace(/\.$/, '')}<span className="accent-period">.</span></>
-
-              ) : (
-
-                <>Transformative AI Consulting<span className="accent-period">.</span></>
-
-              )}
-
+              {(() => {
+                const titleStr = block.title || 'Transformative\nAI Consulting.';
+                const clean = titleStr.replace(/\.$/, '');
+                const lines = clean.includes('\n') 
+                  ? clean.split('\n') 
+                  : (clean === 'Transformative AI Consulting' ? ['Transformative', 'AI Consulting'] : [clean]);
+                
+                if (lines.length > 1) {
+                  return (
+                    <>
+                      <span>{lines[0].replace(/\.$/, '')}</span>
+                      <br />
+                      <span className="hero-heading-secondary">{lines.slice(1).join(' ').replace(/\.$/, '')}<span className="accent-dot">.</span></span>
+                    </>
+                  );
+                }
+                return <>{lines[0]}<span className="accent-dot">.</span></>;
+              })()}
             </h1>
 
             
@@ -2316,9 +2296,27 @@ export default function App() {
 
 
 
+        {/* Mobile Tab Switcher */}
+        <div className="subpage-usecase-mobile-tabs">
+          <button
+            type="button"
+            className={`subpage-usecase-mobile-tab-btn ${mobileUseCaseTab === 'case' ? 'active' : ''}`}
+            onClick={() => setMobileUseCaseTab('case')}
+          >
+            Featured Use Case
+          </button>
+          <button
+            type="button"
+            className={`subpage-usecase-mobile-tab-btn ${mobileUseCaseTab === 'results' ? 'active' : ''}`}
+            onClick={() => setMobileUseCaseTab('results')}
+          >
+            Results & Achievements
+          </button>
+        </div>
+
         <div className="subpage-usecase-wrapper">
 
-          <div className="glass-panel subpage-usecase-main">
+          <div className={`glass-panel subpage-usecase-main ${mobileUseCaseTab === 'case' ? 'mobile-tab-active' : 'mobile-tab-hidden'}`}>
 
             <span className="subpage-usecase-badge">{block.badge}</span>
 
@@ -2358,7 +2356,7 @@ export default function App() {
 
 
 
-          <div className="subpage-usecase-side-col">
+          <div className={`subpage-usecase-side-col ${mobileUseCaseTab === 'results' ? 'mobile-tab-active' : 'mobile-tab-hidden'}`}>
 
             <div className="glass-panel subpage-usecase-side-panel">
 
@@ -2379,23 +2377,14 @@ export default function App() {
 
 
                   return (
-
                     <li key={rIdx} className="subpage-usecase-result-item">
-
                       {hasNum ? (
-
-                        <div className="count-up-trigger subpage-usecase-metric-num" data-target={numVal} data-percent={res.includes('%')}>0</div>
-
+                        <div className="count-up-trigger subpage-usecase-metric-num" data-target={numVal} data-percent={res.includes('%')}>{match ? match[1] : `${numVal}${res.includes('%') ? '%' : ''}`}</div>
                       ) : (
-
                         <CheckCircle size={18} className="neon-icon" />
-
                       )}
-
                       <div>{label}</div>
-
                     </li>
-
                   )
 
                 })}

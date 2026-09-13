@@ -346,7 +346,7 @@ export default function AIProductsSection() {
 
               <div className="outcomes-metrics-grid-2">
                 <div>
-                  <div className="count-up-trigger stat-metric">
+                  <div className="stat-metric">
                     65-80%
                   </div>
                   <p className="service-desc">
@@ -355,7 +355,7 @@ export default function AIProductsSection() {
                 </div>
 
                 <div>
-                  <div className="count-up-trigger stat-metric">
+                  <div className="stat-metric">
                     &lt; 90 Sec
                   </div>
                   <p className="service-desc">
@@ -587,21 +587,21 @@ export default function AIProductsSection() {
 
               <div className="outcomes-metrics-grid">
                 <div>
-                  <div className="count-up-trigger stat-metric">90%+</div>
+                  <div className="stat-metric">90%+</div>
                   <p className="service-desc">
                     average cycle time reduction, collapsing onboarding and processing pipelines from days to minutes.
                   </p>
                 </div>
 
                 <div>
-                  <div className="count-up-trigger stat-metric">0%</div>
+                  <div className="stat-metric">0%</div>
                   <p className="service-desc">
                     data-entry defect rate, completely shielding the organization from expensive manual reprocessing loops.
                   </p>
                 </div>
 
                 <div>
-                  <div className="count-up-trigger stat-metric">3x–18x</div>
+                  <div className="stat-metric">3x–18x</div>
                   <p className="service-desc">
                     transaction capacity scaling achieved across core business divisions without expanding operational headcount.
                   </p>
@@ -848,7 +848,7 @@ export default function AIProductsSection() {
 
               <div className="outcomes-metrics-grid-2">
                 <div>
-                  <div className="count-up-trigger stat-metric">
+                  <div className="stat-metric">
                     90%–99.9%
                   </div>
                   <p className="service-desc">
@@ -857,7 +857,7 @@ export default function AIProductsSection() {
                 </div>
 
                 <div>
-                  <div className="count-up-trigger stat-metric">
+                  <div className="stat-metric">
                     &lt; 10 ms
                   </div>
                   <p className="service-desc">
@@ -1089,7 +1089,7 @@ export default function AIProductsSection() {
 
               <div className="outcomes-metrics-grid-2">
                 <div>
-                  <div className="count-up-trigger stat-metric">
+                  <div className="stat-metric">
                     &lt; 1 Sec
                   </div>
                   <p className="service-desc">
@@ -1098,7 +1098,7 @@ export default function AIProductsSection() {
                 </div>
 
                 <div>
-                  <div className="count-up-trigger stat-metric">
+                  <div className="stat-metric">
                     99.9%
                   </div>
                   <p className="service-desc">
@@ -1330,7 +1330,7 @@ export default function AIProductsSection() {
 
               <div className="outcomes-metrics-grid-2">
                 <div>
-                  <div className="count-up-trigger stat-metric">
+                  <div className="stat-metric">
                     30–60%
                   </div>
                   <p className="service-desc">
@@ -1339,7 +1339,7 @@ export default function AIProductsSection() {
                 </div>
 
                 <div>
-                  <div className="count-up-trigger stat-metric">
+                  <div className="stat-metric">
                     15–25%
                   </div>
                   <p className="service-desc">

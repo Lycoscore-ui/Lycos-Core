@@ -274,7 +274,7 @@ export default function ProtocolKinetic() {
             </p>
           </div>
 
-          <div className="playbook-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+          <div className="playbook-grid playbook-grid-3">
             {phases.map((ph, i) => (
               <div key={i} className="glass-panel">
                 <span className="playbook-phase-badge">{ph.phase}</span>

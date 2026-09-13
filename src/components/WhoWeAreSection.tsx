@@ -141,7 +141,7 @@ export const WhoWeAreSection: React.FC = () => {
             // SYSTEMIC EXPERTISE
           </div>
           <h1 className="hero-heading">
-            <span>Quantifiable Performance Yield</span><span className="brand-dot">.</span>
+            <span>Quantifiable Performance Yield</span>
             <br />
             <span className="text-secondary">Proven Implementations</span><span className="brand-dot">.</span>
           </h1>

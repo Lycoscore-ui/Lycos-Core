@@ -270,7 +270,7 @@ export default function SplashPage() {
             </div>
 
             <h1 className="splash-title">
-              Precision AI Systems<span className="brand-dot">.</span>
+              Precision AI Systems
               <br />
               <span className="splash-title-sub">
                 Engineered with Instinct<span className="accent-dot">.</span>

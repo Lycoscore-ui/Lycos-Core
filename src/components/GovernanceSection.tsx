@@ -176,7 +176,7 @@ export const GovernanceSection: React.FC = () => {
             // ZERO-TRUST COMPLIANCE
           </div>
           <h1 className="hero-heading">
-            <span>Hardcoded Algorithmic</span><span className="brand-dot">.</span>
+            <span>Hardcoded Algorithmic</span>
             <br />
             <span className="text-secondary">Safety and Governance</span><span className="brand-dot">.</span>
           </h1>

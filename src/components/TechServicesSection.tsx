@@ -239,6 +239,10 @@ export default function TechServicesSection() {
             </p>
           </div>
           <div className="services-split-grid">
+            <div className="services-swipe-hint">
+              <span>Swipe left / right to explore solutions</span>
+              <span className="swipe-arrows">⟵ ⟶</span>
+            </div>
             <div className="services-nav-list">
               {services.map((s, idx) => (
                 <button
