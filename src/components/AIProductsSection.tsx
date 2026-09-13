@@ -176,6 +176,12 @@ export default function AIProductsSection() {
 
       {/* Below-the-Fold Section: Products Tab Area */}
       <section id="block-products" className="section">
+        {/* Mobile Swipe Hint */}
+        <div className="services-swipe-hint products-swipe-hint">
+          <span>Swipe left / right to explore products</span>
+          <span className="swipe-arrows">⟵ ⟶</span>
+        </div>
+
         {/* Tab Selection Area */}
         <div className="products-tabs-grid">
           {/* Tab 1: Sentinel */}

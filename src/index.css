@@ -13260,54 +13260,110 @@ h6 {
     white-space: nowrap !important;
   }
 
-  /* 7. AI Products: 5 Icons in 1 Row */
-  .products-tabs-grid {
-    display: grid !important;
-    grid-template-columns: repeat(5, 1fr) !important;
-    gap: 0.35rem !important;
-    margin-bottom: 1.5rem !important;
-    width: 100% !important;
+  /* 7. AI Products: Horizontally Scrollable Product Tabs with Prominent Size & Swipe Indication */
+  .products-swipe-hint {
+    margin-bottom: 0.85rem !important;
   }
 
-  .product-tab-btn {
-    padding: 0.4rem 0.2rem !important;
-    border-radius: 10px !important;
+  .products-tabs-grid,
+  #subpage-wrapper .products-tabs-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 0.85rem !important;
+    margin-bottom: 1.5rem !important;
+    padding: 0.25rem 0.25rem 0.85rem 0.25rem !important;
+    width: 100% !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(140, 255, 50, 0.25) transparent !important;
+  }
+
+  .products-tabs-grid::-webkit-scrollbar,
+  #subpage-wrapper .products-tabs-grid::-webkit-scrollbar {
+    height: 4px !important;
+  }
+
+  .products-tabs-grid::-webkit-scrollbar-thumb,
+  #subpage-wrapper .products-tabs-grid::-webkit-scrollbar-thumb {
+    background: rgba(140, 255, 50, 0.3) !important;
+    border-radius: 4px !important;
+  }
+
+  .product-tab-btn,
+  #subpage-wrapper .product-tab-btn {
+    flex: 0 0 150px !important;
+    min-width: 150px !important;
+    max-width: 160px !important;
+    padding: 0.85rem 0.6rem !important;
+    border-radius: 14px !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    min-width: 0 !important;
+    text-align: center !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    transition: all 0.25s ease !important;
   }
 
-  .tab-image-wrap {
-    width: 42px !important;
-    height: 42px !important;
-    margin: 0 auto !important;
-    border-radius: 8px !important;
+  .product-tab-btn.active,
+  #subpage-wrapper .product-tab-btn.active {
+    background: rgba(140, 255, 50, 0.08) !important;
+    border-color: var(--accent, #8CFF32) !important;
+    box-shadow: 0 0 18px rgba(140, 255, 50, 0.25) !important;
+  }
+
+  .tab-image-wrap,
+  #subpage-wrapper .product-tab-btn .tab-image-wrap {
+    width: 72px !important;
+    height: 72px !important;
+    margin: 0 auto 0.6rem auto !important;
+    border-radius: 12px !important;
     overflow: hidden !important;
     flex-shrink: 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
   }
 
-  .tab-card-img {
+  .product-tab-btn.active .tab-image-wrap,
+  #subpage-wrapper .product-tab-btn.active .tab-image-wrap {
+    border-color: var(--accent, #8CFF32) !important;
+    box-shadow: 0 0 12px rgba(140, 255, 50, 0.35) !important;
+  }
+
+  .tab-card-img,
+  #subpage-wrapper .product-tab-btn .tab-card-img {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
   }
 
-  .product-tab-btn .tab-tag {
-    display: none !important;
-  }
-
-  .product-tab-btn .tab-title {
-    font-size: 0.65rem !important;
-    text-align: center !important;
-    margin-top: 0.25rem !important;
-    line-height: 1.1 !important;
+  .product-tab-btn .tab-tag,
+  #subpage-wrapper .product-tab-btn .tab-tag {
+    display: block !important;
+    font-size: 0.6rem !important;
+    color: var(--text-gray, #94a3b8) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.4px !important;
+    font-weight: 700 !important;
+    margin-bottom: 0.2rem !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     max-width: 100% !important;
-    font-weight: 600 !important;
+  }
+
+  .product-tab-btn .tab-title,
+  #subpage-wrapper .product-tab-btn .tab-title {
+    font-size: 0.85rem !important;
+    text-align: center !important;
+    margin-top: 0.15rem !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+    font-weight: 700 !important;
+    color: #fff !important;
+    max-width: 100% !important;
   }
 }
 
